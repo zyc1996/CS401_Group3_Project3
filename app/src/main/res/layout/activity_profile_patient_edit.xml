@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile_patient_edit">
+    tools:context=".ui.EditPatientProfileActivity">
 
     <Button
         android:id="@+id/button7"
