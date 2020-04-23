@@ -61,8 +61,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Grab username, password, confirm password, doctor code the user typed in
         // Note: Need to rename XML Ids
 
-        username = ((EditText) findViewById(R.id.userNameEdit)).getText().toString();
-        password = ((EditText) findViewById(R.id.editPassword)).getText().toString();
+        username = ((EditText) findViewById(R.id.usernameEdit)).getText().toString();
+        password = ((EditText) findViewById(R.id.passwordEdit)).getText().toString();
         confirmPassword = ((EditText) findViewById(R.id.confirmPassword)).getText().toString();
         doctorCode = ((EditText) findViewById(R.id.doctorCode)).getText().toString();
 
