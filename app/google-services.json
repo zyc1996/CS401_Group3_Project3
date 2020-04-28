@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "667315961550",
+    "firebase_url": "https://pillpopper-e2ec4.firebaseio.com",
+    "project_id": "pillpopper-e2ec4",
+    "storage_bucket": "pillpopper-e2ec4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667315961550:android:ef31317cfc14b859ec1a9f",
+        "android_client_info": {
+          "package_name": "cs401.group3.pillpopper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667315961550-jiiamc7827gs821hr6a37n0n9tgvsso7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cs401.group3.pillpopper",
+            "certificate_hash": "a37f40ac54ed9d2ea59f7e0e770e557791e4bb84"
+          }
+        },
+        {
+          "client_id": "667315961550-7kb77osakblius9toqk1nfrmff4khgvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbPMFLM5BHoNCSfRYgwUHOpEAeppEB_Cg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667315961550-7kb77osakblius9toqk1nfrmff4khgvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
