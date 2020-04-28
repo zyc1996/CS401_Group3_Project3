@@ -30,22 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/description_edit_hint"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-        <Button
+    <Button
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button3"
             tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/patient_profile_image__description" />
 
     <EditText
         android:id="@+id/editText4"
@@ -93,6 +78,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/patient_description_edit"
+        android:layout_width="352dp"
+        android:layout_height="230dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/patient_description_fill"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
         android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
