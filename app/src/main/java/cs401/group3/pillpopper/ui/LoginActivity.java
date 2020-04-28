@@ -117,4 +117,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent(this, PatientHomepageActivity.class);
         startActivity(intent);
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if(resultCode == RESULT_OK){
+//            if(data.hasExtra("success_regist")){
+//                Log.d("success","Got here");
+//                Toast.makeText(this,data.getExtras().getString("success_regist"),Toast.LENGTH_LONG).show();
+//            }
+//            else if(data.hasExtra("fail_regist")){
+//                Toast.makeText(this,data.getExtras().getString("fail_regist"),Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 }

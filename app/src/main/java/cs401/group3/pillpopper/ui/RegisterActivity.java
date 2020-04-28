@@ -98,12 +98,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             Log.d("REGISTER", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String reply = "Registration Successful.";
+//                            Intent replyIntent = new Intent();
+//                            replyIntent.putExtra("success_regist","Registration Successful.");
+//                            setResult(RESULT_OK,replyIntent);
                             Toast.makeText(RegisterActivity.this, "Registration Successful.",
                                     Toast.LENGTH_LONG).show();
                         } else {
                             // If sign in fails, display a message to the user.
 
                             Log.d("REGISTER", "createUserWithEmail:failure", task.getException());
+                            String reply = "Registration failed.";
+//                            Intent replyIntent = new Intent();
+//                            replyIntent.putExtra("fail_regist","Registration failed.");
+//                            setResult(RESULT_OK,replyIntent);
                             Toast.makeText(RegisterActivity.this, "Registration failed.",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -112,6 +120,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         }
 
+
+        //sees the toast then delay the activity end
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        finish();
+                    }
+                },
+                5000);
     }
 
 }
