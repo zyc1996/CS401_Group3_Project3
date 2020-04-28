@@ -6,5 +6,6 @@
     <string name="password_title">Password:</string>
     <string name="register_button">Register</string>
     <string name="sign_in">Sign In</string>
-    <string name="enter_username">Name</string>
+    <string name="enter_username">Your Email Here</string>
+    <string name="enter_password">Your Password Here</string>
 </resources>
