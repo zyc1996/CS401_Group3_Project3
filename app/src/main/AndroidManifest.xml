@@ -18,9 +18,7 @@
         <activity android:name=".ui.MessageViewActivity"/>
         <activity android:name=".ui.MessagesActivity" />
         <activity android:name=".ui.PatientProfileActivity"/>
-        <activity android:name=".ui.PatientProfileEditActivity"
-            android:label = "Edit Patient Profile"
-            android:parentActivityName=".ui.PatientProfileActivity"/>
+        <activity android:name=".ui.ProfileEditActivity"/>
         <activity android:name=".ui.LoginStartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

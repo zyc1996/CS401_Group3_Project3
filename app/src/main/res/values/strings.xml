@@ -37,4 +37,7 @@
     <string name="description_edit_hint">Edit your profile description here</string>
     <string name="patient_description_fill">Say Something Cool About Yourself...</string>
     <string name="patient_profile_image__description">Patient Profile Image</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="user_name">User Name</string>
+    <string name="doctor_homepage_title">Hi DoctorName</string>
 </resources>

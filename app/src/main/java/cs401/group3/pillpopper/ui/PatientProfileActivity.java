@@ -8,10 +8,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.data.Patient;
 
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
+    private Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +21,8 @@ public class PatientProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_patient);
     }
 
-    public void launchPatientProfileEdit(View view) {
-        Intent intent  = new Intent(this, PatientProfileEditActivity.class);
+    public void launchProfileEdit(View view) {
+        Intent intent  = new Intent(this, ProfileEditActivity.class);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
