@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import cs401.group3.pillpopper.R;
 
 // The page to register a new user
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase Authenticator object
     private FirebaseAuth mAuth;
@@ -71,19 +71,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // confirm password and confirm password are the same before continuing
 
         if (username == null) {
-            Toast.makeText(RegisterActivity.this, "Please enter a username.",
+            Toast.makeText(LoginRegisterActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
         } else if (password == null) {
-            Toast.makeText(RegisterActivity.this, "Please enter a password.",
+            Toast.makeText(LoginRegisterActivity.this, "Please enter a password.",
                     Toast.LENGTH_SHORT).show();
 
         } else if (confirmPassword == null) {
-            Toast.makeText(RegisterActivity.this, "Please confirm your password.",
+            Toast.makeText(LoginRegisterActivity.this, "Please confirm your password.",
                     Toast.LENGTH_SHORT).show();
 
         } else if (!password.equals(confirmPassword)) {
-            Toast.makeText(RegisterActivity.this, "Password and confirm password do not match.",
+            Toast.makeText(LoginRegisterActivity.this, "Password and confirm password do not match.",
                     Toast.LENGTH_SHORT).show();
 
         } else {
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                            Intent replyIntent = new Intent();
 //                            replyIntent.putExtra("success_regist","Registration Successful.");
 //                            setResult(RESULT_OK,replyIntent);
-                            Toast.makeText(RegisterActivity.this, "Registration Successful.",
+                            Toast.makeText(LoginRegisterActivity.this, "Registration Successful.",
                                     Toast.LENGTH_LONG).show();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                            Intent replyIntent = new Intent();
 //                            replyIntent.putExtra("fail_regist","Registration failed.");
 //                            setResult(RESULT_OK,replyIntent);
-                            Toast.makeText(RegisterActivity.this, "Registration failed.",
+                            Toast.makeText(LoginRegisterActivity.this, "Registration failed.",
                                     Toast.LENGTH_LONG).show();
                         }
                     }

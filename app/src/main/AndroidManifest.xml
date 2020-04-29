@@ -17,19 +17,19 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MessageViewActivity"/>
         <activity android:name=".ui.MessagesActivity" />
-        <activity android:name=".ui.PatientHomepageActivity"/>
-        <activity android:name=".ui.EditPatientProfileActivity"
+        <activity android:name=".ui.PatientProfileActivity"/>
+        <activity android:name=".ui.PatientProfileEditActivity"
             android:label = "Edit Patient Profile"
-            android:parentActivityName=".ui.PatientHomepageActivity"/>
-        <activity android:name=".ui.LoginActivity">
+            android:parentActivityName=".ui.PatientProfileActivity"/>
+        <activity android:name=".ui.LoginStartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegisterActivity"
-            android:parentActivityName=".ui.LoginActivity"/>
+        <activity android:name=".ui.LoginRegisterActivity"
+            android:parentActivityName=".ui.LoginStartActivity"/>
     </application>
 
 </manifest>

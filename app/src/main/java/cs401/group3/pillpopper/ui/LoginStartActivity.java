@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import cs401.group3.pillpopper.R;
 
 // The "Main" starting activity, what is shown when the app is launched
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase authenticator
     private FirebaseAuth mAuth;
@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Confirm that fields have data etc (username, password)
 
         if (username == null) {
-            Toast.makeText(LoginActivity.this, "Please enter a username.",
+            Toast.makeText(LoginStartActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
         } else if (password == null) {
-            Toast.makeText(LoginActivity.this, "Please enter a password.",
+            Toast.makeText(LoginStartActivity.this, "Please enter a password.",
                     Toast.LENGTH_SHORT).show();
 
         } else {
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 // If sign in fails, display a message to the user
 
                                 Log.d("LOGIN", "signInWithEmail:failure");
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(LoginStartActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -108,13 +108,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // Private helper method to launch the register page
     private void launchRegisterActivity() {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, LoginRegisterActivity.class);
         startActivity(intent);
     }
 
     // Private helper method to launch the home page
     private void launchHomePageActivity() {
-        Intent intent = new Intent(this, PatientHomepageActivity.class);
+        Intent intent = new Intent(this, PatientProfileActivity.class);
         startActivity(intent);
     }
 
