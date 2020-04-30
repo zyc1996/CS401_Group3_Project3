@@ -14,14 +14,24 @@ public class Conversation {
         target_user_id = -1;
         target_user_name = "";
         messages = new ArrayList<>();
+        created_at = new Date();
         created_at.getTime();
     }
 
-    public Conversation(int target_id, String target_name){
+    public Conversation(int target_id, String target_name){ // target is the other user in this conversation
         target_user_id = target_id;
         target_user_name = target_name;
         messages = new ArrayList<>();
+        created_at = new Date();
         created_at.getTime();
+    }
+
+    public int get_target_user_id() {
+        return target_user_id;
+    }
+
+    public String get_target_user_name() {
+        return target_user_name;
     }
 
     public void send_message(String content) {

@@ -14,23 +14,39 @@ import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 
+import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.data.Patient;
+
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
     //private Patient patient;
 
     private TextView mDescription;
+    private Patient patient = new Patient(324525,"Jack Jumbo","Dummy Picture URL");
+
+    private TextView mName;
+    private TextView mCode;
+    private TextView mJoinDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_patient);
         mDescription = findViewById(R.id.description_text);
-
+        mName = findViewById(R.id.user_name);
+        mCode = findViewById(R.id.user_code_display);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.patientProfileToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
+
+        if(patient.get_personal_description() != null) {
+            mDescription.setText(patient.get_personal_description());
+        }
+        mName.setText(patient.get_user_name());
+        mCode.setText("Patient Code: " + patient.get_patient_id());
+        mJoinDate.setText("Member since: "+patient.get_created_at());
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -48,7 +64,13 @@ public class PatientProfileActivity extends AppCompatActivity {
 
     public void editProfile(MenuItem edit) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
+        String patient_Name = mName.getText().toString();
+        String patient_description = mDescription.getText().toString();
+
+        //pass the name and description over, no picture URL yet
+        intent.putExtra("name",patient_Name);
+        intent.putExtra("description",patient_description);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
     //receiving changes
@@ -56,10 +78,12 @@ public class PatientProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            //updates picture URL
             if(data.hasExtra("picture_URL")){
                 Log.d("TagP","Picture URL returned");
                 //TODO:Picture stuff later
             }
+            //update personal description
             if(data.hasExtra("description")){
                 Log.d("TagD","Description returned");
                 String description = data.getExtras().getString("description");
