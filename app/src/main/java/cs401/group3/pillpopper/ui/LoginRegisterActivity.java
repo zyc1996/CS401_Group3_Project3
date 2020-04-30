@@ -1,18 +1,13 @@
 package cs401.group3.pillpopper.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-//import android.support.v7.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,34 +36,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        setSupportActionBar(toolbar);
-
         // Get the current login instance from the Firebase Authenticator
         mAuth = FirebaseAuth.getInstance();
 
         // Grab object pointing to button in GUI and register THIS class as its event handler
         ((Button) findViewById(R.id.registerButton)).setOnClickListener(this);
-    }
-
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_back, menu);
-        return true;
-    }
-
-    public void onBack(MenuItem back) {
-        returnLoginActivity();
-    }
-
-    // Private helper method to launch the register page
-    private void returnLoginActivity() {
-        Intent intent = new Intent(this, LoginStartActivity.class);
-        startActivity(intent);
     }
 
     // When the page starts

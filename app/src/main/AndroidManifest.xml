@@ -6,7 +6,7 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
-        android:xlargeScreens="true"/>
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -15,10 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MessageViewActivity"/>
+        <activity android:name=".ui.MessageViewActivity" />
         <activity android:name=".ui.MessagesActivity" />
-        <activity android:name=".ui.PatientProfileActivity"/>
-        <activity android:name=".ui.ProfileEditActivity"/>
+        <activity android:name=".ui.PatientProfileActivity" />
+        <activity android:name=".ui.ProfileEditActivity" />
         <activity android:name=".ui.LoginStartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.LoginRegisterActivity"
-            android:parentActivityName=".ui.LoginStartActivity"/>
+        <activity
+            android:name=".ui.LoginRegisterActivity"
+            android:parentActivityName=".ui.LoginStartActivity" />
     </application>
 
 </manifest>

@@ -1,10 +1,10 @@
 package cs401.group3.pillpopper.ui;
 
-import android.os.Bundle;
+        import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import cs401.group3.pillpopper.R;
+        import cs401.group3.pillpopper.R;
 
 public class HomepagePatientActivity extends AppCompatActivity {
 
