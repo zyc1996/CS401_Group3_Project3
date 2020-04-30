@@ -11,7 +11,6 @@ import cs401.group3.pillpopper.R;
 
 // The "Main" starting activity, what is shown when the app is launched
 public class LoginActivity extends AppCompatActivity {
-
     // Buttons
     private Button mRegisterButton;
     private Button mLoginButton;

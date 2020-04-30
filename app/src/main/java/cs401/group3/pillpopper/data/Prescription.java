@@ -1,131 +1,44 @@
 package cs401.group3.pillpopper.data;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 public class Prescription {
+    private int id;
+    private String content;
+    private boolean timed; // true means that prescription is taken at a specific time
+                   // false means at any time that day (or with meals, etc)
+    private int times_per_day; // how many times prescription should repeat itself
+                       // <= 0 treated as once.
+    private int time_between_dose; // how long between each dose, if timed and times_per_day > 1
+                            // automatically repeat prescription in schedule after this much time
+    private boolean by_patient; // did the patient write this prescription themselves?
 
-    private ArrayList<Doctor> Doctor_Owner_List;
-    private ArrayList<Patient> Patient_List;
-    private Integer Days;
-    private String Time, End_date, Takes_Daily, Time_between_dose, pending_deletion, content, created_by, ls_note;
+    private String doctor_name; // if by_patient == false, save doctor's name & id with the prescription
+    private int doctor_id;
+    private Date created_at;
 
     public Prescription() {
-        Doctor_Owner_List = new ArrayList<>();
-        Doctor_Owner_List = new ArrayList<>();
-        Days = 0;
-        Time = "";
-        End_date = "";
-        Takes_Daily = "";
-        Time_between_dose = "";
-        pending_deletion = "";
         content = "";
-        created_by = "";
-        ls_note = "";
+        timed = false;
+        times_per_day = 0;
+        time_between_dose = 0; //Should this mean minutes?
+        by_patient = true;
+        created_at.getTime();
     }
 
-    public Prescription(ArrayList<Doctor> Doctor_Owner_List, ArrayList<Patient> Patient_List, Integer Days, String Time, String End_date, String Takes_Daily, String Time_between_dose, String pending_deletion, String content, String created_by, String ls_note) {
-        this.Doctor_Owner_List = Doctor_Owner_List;
-        this.Patient_List = Patient_List;
-        this.Days = Days;
-        this.Time = Time;
-        this.End_date = End_date;
-        this.Takes_Daily = Takes_Daily;
-        this.Time_between_dose = Time_between_dose;
-        this.pending_deletion = pending_deletion;
-        this.content = content;
-        this.created_by = created_by;
-        this.ls_note = ls_note;
+    public Prescription(String content_in, boolean timed_in, int times_in
+            , int time_between_in) {
+        content = content_in;
+        timed = timed_in;
+        times_per_day = times_in;
+        time_between_dose = time_between_in; //Should this mean minutes?
+        by_patient = true;
+        created_at.getTime();
     }
 
-    public void update_Presciption() {}
-
-    public void notification() {}
-
-    public ArrayList<Doctor> getDoctor_Owner_List() {
-        return Doctor_Owner_List;
-    }
-
-    public void setDoctor_Owner_List(ArrayList<Doctor> doctor_Owner_List) {
-        Doctor_Owner_List = doctor_Owner_List;
-    }
-
-    public ArrayList<Patient> getPatient_List() {
-        return Patient_List;
-    }
-
-    public void setPatient_List(ArrayList<Patient> patient_List) {
-        Patient_List = patient_List;
-    }
-
-    public Integer getDays() {
-        return Days;
-    }
-
-    public void setDays(Integer days) {
-        Days = days;
-    }
-
-    public String getTime() {
-        return Time;
-    }
-
-    public void setTime(String time) {
-        Time = time;
-    }
-
-    public String getEnd_date() {
-        return End_date;
-    }
-
-    public void setEnd_date(String end_date) {
-        End_date = end_date;
-    }
-
-    public String getTakes_Daily() {
-        return Takes_Daily;
-    }
-
-    public void setTakes_Daily(String takes_Daily) {
-        Takes_Daily = takes_Daily;
-    }
-
-    public String getTime_between_dose() {
-        return Time_between_dose;
-    }
-
-    public void setTime_between_dose(String time_between_dose) {
-        Time_between_dose = time_between_dose;
-    }
-
-    public String getPending_deletion() {
-        return pending_deletion;
-    }
-
-    public void setPending_deletion(String pending_deletion) {
-        this.pending_deletion = pending_deletion;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getCreated_by() {
-        return created_by;
-    }
-
-    public void setCreated_by(String created_by) {
-        this.created_by = created_by;
-    }
-
-    public String getLs_note() {
-        return ls_note;
-    }
-
-    public void setLs_note(String ls_note) {
-        this.ls_note = ls_note;
+    public void by_doctor(int id_in, String name_in){
+        by_patient = false;
+        doctor_id = id_in;
+        doctor_name = name_in;
     }
 }

@@ -3,33 +3,28 @@ package cs401.group3.pillpopper.data;
 import java.util.ArrayList;
 
 public class Patient extends User {
-
-    private Integer patient_ID;
+    private int patient_id;
+    private ArrayList<Prescription>[] schedule;
 
     public Patient() {
-        patient_ID = 0;
-        name = "";
-        picture = "";
-        personal_description = "";
-        list_of_prescription = new ArrayList<>();
-        list_of_messages = new ArrayList<>();
+        this.patient_id = -1;
+        this.schedule = new ArrayList[7];
     }
 
-    public Patient(Integer ID, String name, String picture, String description, ArrayList<Prescription> list_of_prescription, ArrayList<Message> list_of_messages) {
-        this.patient_ID = ID;
-        this.name = name;
-        this.picture = picture;
-        this.personal_description = description;
-        this.list_of_prescription = list_of_prescription;
-        this.list_of_messages = list_of_messages;
+    public Patient(int id_in, String name_in, String picture_in, String description_in) {
+        this.patient_id = id_in;
+        this.username = name_in;
+        this.picture_url = picture_in;
+        this.personal_description = description_in;
+        this.schedule = new ArrayList[7];
     }
 
-    public void Prescription_adjustment() {}
+    public int get_patient_id() {
+        return patient_id;
+    }
 
-    public void Prescription_request_delete() {}
-
-    public Integer getPatient_ID() { return patient_ID; }
-
-    public void setPatient_ID(Integer ID) { this.patient_ID = ID; }
+    public void set_patient_id(int id_in) {
+        this.patient_id = id_in;
+    }
 
 }
