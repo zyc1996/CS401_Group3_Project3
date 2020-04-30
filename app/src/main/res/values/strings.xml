@@ -40,4 +40,11 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="user_name">User Name</string>
     <string name="doctor_homepage_title">Hi DoctorName</string>
+    <string name="timed">Timed</string>
+    <string name="untimed">Untimed</string>
+    <string name="time_indose">Time indose</string>
+    <string name="times_taken_per_day">Times taken per day</string>
+    <string name="hours_between_doses">Hours between doses</string>
+    <string name="submit_prescription_button">Submit</string>
+    <string name="prescription_description">Prescription description</string>
 </resources>
