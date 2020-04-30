@@ -1,5 +1,6 @@
 package cs401.group3.pillpopper.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prescription {
@@ -109,7 +110,8 @@ public class Prescription {
         this.doctor_id = doctor_id;
     }
 
-    public Date get_created_at() {
-        return this.created_at;
+    public String get_created_at() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(created_at);
     }
 }
