@@ -1,36 +1,47 @@
 package cs401.group3.pillpopper.data;
 
+import java.util.Date;
+
 public class Message {
-    //doctor_Owner
-    //Patient_Owner
-    private String date, content;
-    //posted_by
+    private int id;
+    private String content;
+    private boolean sent_by_user, edited;
+    private Date timestamp;
+
+    public Message(String input, boolean from_user, int id_in) {
+        timestamp.getTime();
+        content = input;
+        id = id_in;
+        sent_by_user = from_user; //is the message from the user? If not, it is from the other user
+        edited = false;
+    }
 
     public Message() {
-        //doctor_Owner =
-        //Patient_Owner =
-        date = "00/00/0000";
-        content = "";
-        //posted_by =
+        this.timestamp.getTime();
+        this.content = "";
+        sent_by_user = false;
+        edited = false;
+        id = -1; //value to mark non-normal message
     }
 
-    public Message(String date, String content) {
-        //doctor_Owner =
-        //Patient_Owner =
-        this.date = date;
-        this.content = content;
-        //posted_by =
+    public String get_content() { return content; }
+
+    public int get_id() { return id; }
+
+    public void content_edit(String input) {
+        edited = true;
+        content = input;
     }
 
-    public void content_edit() {}
+    public boolean from_this_user(){
+        return sent_by_user;
+    }
 
-    public void message_to() {}
+    public boolean is_edited(){
+        return edited;
+    }
 
-    public String getDate() { return date; }
-
-    public void setDate(String date) { this.date = date; }
-
-    public String getContent() { return content; }
-
-    public void setContent(String content) { this.content = content; }
+    public Date get_timestamp() {
+        return timestamp;
+    }
 }

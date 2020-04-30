@@ -13,7 +13,7 @@
     <string name="password_fill_hint">Password</string>
     <string name="regist_description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="regist_title">Create a new account</string>
-    <string name="username_fill_hint">Username</string>
+    <string name="username_fill_hint">Username (Your Email)</string>
     <string name="patient_homepage_title">Hi PatientName!</string>
     <string name="add_a_patient_by_code_button">Add a patient by code</string>
     <string name="patient_code_fill_hint">Patient code</string>
@@ -35,4 +35,9 @@
     <string name="submit_changes_button">Submit changes</string>
     <string name="profile_picture_url_hint">Profile picture URL (optional)</string>
     <string name="description_edit_hint">Edit your profile description here</string>
+    <string name="patient_description_fill">Say Something Cool About Yourself...</string>
+    <string name="patient_profile_image__description">Patient Profile Image</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="user_name">User Name</string>
+    <string name="doctor_homepage_title">Hi DoctorName</string>
 </resources>

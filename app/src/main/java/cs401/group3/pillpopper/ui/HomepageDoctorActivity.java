@@ -1,14 +1,18 @@
 package cs401.group3.pillpopper.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-public class EditPatientProfileActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import cs401.group3.pillpopper.R;
+
+public class HomepageDoctorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_profile_patient_edit);
+        setContentView(R.layout.activity_homepage_doctor);
     }
+
+
 }
