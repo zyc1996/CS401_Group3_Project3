@@ -47,8 +47,4 @@
     <string name="hours_between_doses">Hours between doses</string>
     <string name="submit_prescription_button">Submit</string>
     <string name="prescription_description">Prescription description</string>
-    <string name="back_button">Back</string>
-    <string name="toolbar_messages_button">Messages</string>
-    <string name="toolbar_profile_button">Profile</string>
-    <string name="toolbar_logout_button">Logout</string>
 </resources>

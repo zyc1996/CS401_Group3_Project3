@@ -1,7 +1,5 @@
 package cs401.group3.pillpopper.data;
 
-import android.annotation.SuppressLint;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,20 +32,6 @@ public class User {
         conversations = new ArrayList<Conversation>();
         created_at = new Date();
         created_at.getTime();
-    }
-
-    public String login(String user_name, String password){
-        //Check if username exists in database
-        //first check doctor collection
-        //if it exists in doctor collection, return string + id
-        //return "doctor " + doctor id;
-
-        //next check patient collection
-        //if it exists in patient collection, return string + id
-        //return "patient " + patient id;
-
-        //else return none
-        return "none";
     }
 
     //Send a message to another user
@@ -143,6 +127,5 @@ public class User {
     public String get_created_at() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(created_at);
-
     }
 }
