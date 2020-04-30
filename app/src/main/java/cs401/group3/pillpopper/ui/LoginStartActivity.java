@@ -114,7 +114,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     // Private helper method to launch the home page
     private void launchHomePageActivity() {
-        Intent intent = new Intent(this, PatientProfileActivity.class);
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
         startActivity(intent);
     }
 

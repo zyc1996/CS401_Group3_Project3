@@ -15,6 +15,7 @@ import cs401.group3.pillpopper.data.Patient;
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
+    //dummy variable
     private Patient patient = new Patient(324525,"Jack Jumbo","Dummy Picture URL");
 
     private TextView mDescription;
@@ -26,6 +27,10 @@ public class PatientProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_patient);
+
+        //for database usage
+        Intent intent = getIntent();
+        int patientID = intent.getExtras().getInt("patient_ID");
 
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);
