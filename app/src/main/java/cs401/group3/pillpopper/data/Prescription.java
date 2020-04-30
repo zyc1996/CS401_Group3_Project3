@@ -47,14 +47,11 @@ public class Prescription {
 
     public boolean register(){
         class Entry{
-            private String content;
-            private boolean timed;
-            private int times_per_day;
-            private int time_between_dose;
-            private boolean by_patient;
-            private String doctor_name;
-            private int doctor_id;
-            private Date created_at;
+            public String content;
+            public boolean timed;
+            public int times_per_day;
+            public int time_between_dose;
+            public Date created_at;
         }
 
         Entry new_entry = new Entry();
@@ -65,7 +62,7 @@ public class Prescription {
         new_entry.created_at = this.created_at;
 
         DatabaseReference ref;
-        ref = mDatabase.child("patients").push();
+        ref = mDatabase.child("prescriptions").push();
         ref.setValue(new_entry);
 
         this.id = ref.getKey();
