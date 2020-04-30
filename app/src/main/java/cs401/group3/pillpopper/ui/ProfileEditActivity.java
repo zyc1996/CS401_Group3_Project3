@@ -2,6 +2,7 @@ package cs401.group3.pillpopper.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -23,8 +24,12 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     public void confirmChanges(View view){
+
         String pictureURL = mPictureURL.getText().toString();
         String description = mDescription.getText().toString();
+
+        Log.d("tagP","Picture URL: " + pictureURL);
+        Log.d("tagD","Personal Description: "+ description);
 
         Intent replyIntent = new Intent();
         replyIntent.putExtra("picture_URL", pictureURL);
