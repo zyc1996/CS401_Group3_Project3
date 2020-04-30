@@ -28,50 +28,50 @@
         app:layout_constraintTop_toBottomOf="@+id/user_name">
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/monday_radio_button"
+            android:id="@+id/monday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/monday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/tuesday_radio_button"
+            android:id="@+id/tuesday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tuesday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/wednesday_radio_button"
+            android:id="@+id/wednesday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/wednesday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/thursday_radio_button"
+            android:id="@+id/thursday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/thursday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/friday_radio_button"
+            android:id="@+id/friday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/friday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/saturday_radio_button"
+            android:id="@+id/saturday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/saturday_button" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/sunday_radio_button"
+            android:id="@+id/sunday_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sunday_button" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/schedule_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/timed"
+            android:onClick="checkButton"
             android:textSize="24sp" />
 
         <RadioButton
@@ -92,12 +93,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/untimed"
+            android:onClick="checkButton"
+            android:checked="true"
             android:textSize="24sp" />
 
     </RadioGroup>
 
     <EditText
-        android:id="@+id/does_time_fill"
+        android:id="@+id/dose_time_fill"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -107,7 +110,7 @@
         android:hint="@string/time_indose"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/schedule_type" />
 
     <TextView
         android:id="@+id/times_taken_hint"
@@ -118,7 +121,7 @@
         android:text="@string/times_taken_per_day"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/does_time_fill" />
+        app:layout_constraintTop_toBottomOf="@+id/dose_time_fill" />
 
     <EditText
         android:id="@+id/times_taken"
@@ -126,13 +129,13 @@
         android:layout_height="40dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="28dp"
+        android:autofillHints=""
         android:ems="10"
         android:inputType="number"
-        android:textSize="24sp"
         android:labelFor="@id/times_taken"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/does_time_fill"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/dose_time_fill" />
 
     <EditText
         android:id="@+id/dosage_break_time"
@@ -178,6 +181,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit_prescription_button"
+        android:onClick="submitPrescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
