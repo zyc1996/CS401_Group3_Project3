@@ -16,7 +16,7 @@ public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
     private Patient patient = new Patient("Jack Jumbo",
-            "somewhere@some.place","Dummy Picture URL", "letmein");
+            "somewhere@some.place", "letmein");
 
     private TextView mDescription;
     private TextView mName;

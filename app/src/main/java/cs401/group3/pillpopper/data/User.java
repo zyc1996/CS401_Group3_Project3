@@ -4,7 +4,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
@@ -14,7 +13,6 @@ public class User {
             picture_url, //option url for profile image
             personal_description, //optional profile description
             password;
-    protected ArrayList<Conversation> conversations;
     protected Date created_at;
     protected DatabaseReference mDatabase;
 
@@ -25,7 +23,6 @@ public class User {
         picture_url = "";
         personal_description = "";
         password = "";
-        conversations = new ArrayList<Conversation>();
         created_at = new Date();
         created_at.getTime();
         accountType = 0;
@@ -39,7 +36,6 @@ public class User {
         password = password_in;
         picture_url = "";
         personal_description = "";
-        conversations = new ArrayList<Conversation>();
         created_at = new Date();
         created_at.getTime();
         accountType = 0;
@@ -62,67 +58,32 @@ public class User {
     }
 
     //Send a message to another user
-    public boolean send_message(String content, int target_id){ //returns true if message was sent, false if error
-            //check if we already have a conversation with the target
-        for(int i = 0; i < conversations.size(); i++){
-            if(target_id == conversations.get(i).get_target_user_id()){
-                conversations.get(i).send_message(content);
-                return true;
-            }
-        }
+    public static boolean send_message(String content, String sender_id, String target_id){ //returns true if message was sent, false if error
+            //check if sender exists and that we already have a conversation with the target
+            //if we do, we call
+            //Conversation.send_message(content, sender_id, conv_id);
 
 
         //if we reached this point, we do not have a conversation with the target yet
         //check if target id exists in database
 
-        //
-        //DATABASE STUFF **********************************************
-        //
+        //if they do
+        Conversation new_convo = new Conversation(sender_id, target_id);
+        Conversation.send_message(content, sender_id, new_convo.get_id());
+
 
         //if target does not exist, return false
-        //else create a conversation with the target and add target's name from database
-        String target_name = "";
-        Conversation new_convo = new Conversation(target_id, target_name);
-        new_convo.send_message(content);
-        conversations.add(new_convo);
-        return true;
+        return false;
     }
 
-    //similar to send_message, but as the recipient of a message from another user
-    public boolean receive_message(String content,int target_id){
-        //check if we already have a conversation with the target
-        for(int i = 0; i < conversations.size(); i++){
-            if(target_id == conversations.get(i).get_target_user_id()){
-                conversations.get(i).send_message(content);
-                return true;
-            }
-        }
-
-
-        //if we reached this point, we do not have a conversation with the target yet
-        //check if target id exists in database
-
-        //
-        //DATABASE STUFF **********************************************
-        //
-
-        //if target does not exist, return false
-        //else create a conversation with the target and add target's name from database
-        String target_name = "";
-        Conversation new_convo = new Conversation(target_id, target_name);
-        new_convo.message_receive(content);
-        conversations.add(new_convo);
-        return true;
-    }
-
-    boolean is_doctor(){
+    public boolean is_doctor(){
         if(accountType == 2){
             return true;
         }
         return false;
     }
 
-    boolean is_patient(){
+    public boolean is_patient(){
         if(accountType == 1){
             return true;
         }

@@ -14,19 +14,16 @@ public class Patient extends User {
         user_name = "";
         email = "";
         password = "";
-        conversations = new ArrayList<Conversation>();
         created_at = new Date();
         accountType = 1;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public Patient(String name_in, String email_in, String picture_in, String password_in) {
+    public Patient(String name_in, String email_in, String password_in) {
         this.user_name = name_in;
         this.email = email_in;
-        this.picture_url = picture_in;
         this.password = password_in;
-        conversations = new ArrayList<Conversation>();
         created_at = new Date();
         accountType = 1;
 
@@ -37,14 +34,12 @@ public class Patient extends User {
         class Entry{
             public String user_name;
             public String email;
-            public String picture_url;
             public String password;
             public Date created_at;
         }
         Entry new_entry = new Entry();
         new_entry.user_name = this.user_name;
         new_entry.email = this.email;
-        new_entry.picture_url = this.picture_url;
         new_entry.password = this.password;
         new_entry.created_at = this.created_at;
 
@@ -53,6 +48,11 @@ public class Patient extends User {
         ref.setValue(new_entry);
 
         this.patient_id = ref.getKey();
+
+        //TEST
+        Prescription test = new Prescription("Test content", true,
+            3, 200);
+        add_prescription(this.patient_id, test,"mon");
 
         return true;
     }
@@ -65,11 +65,16 @@ public class Patient extends User {
         this.patient_id = patient_id;
     }
 
-    public void add_prescription(Prescription new_prescription, String day){
+    public static void add_prescription(String patient_id, Prescription new_prescription, String day){
+        //day should be of format mon/tue/wed/thu/fri/sat/sun
         //database add
+        new_prescription.register();
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("patients");
+        ref.child(patient_id).child("prescriptions").child(day).child(new_prescription.get_id()).setValue(true);
     }
 
-    public void remove_prescription(String prescription_id, String day){
+    public static void remove_prescription(String patient_id, String prescription_id, String day){
         //database remove
     }
 }

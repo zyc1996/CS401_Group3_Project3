@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
 
 // The page to register a new user
@@ -44,8 +45,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         ((Button) findViewById(R.id.registerButton)).setOnClickListener(this);
 
         //TEST ****************
-
-        Patient person = new Patient("Test guy", "somewhere@some.place", "test", "letmein");
+        Doctor person = new Doctor( "Test guy", "somewhere@some.place", "letmein");
                 person.register();
         //TEST ****************
 
