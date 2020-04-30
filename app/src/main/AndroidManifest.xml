@@ -21,11 +21,10 @@
         <activity android:name=".ui.HomepageDoctorActivity"/>
         <activity android:name=".ui.DoctorProfileActivity"
             android:parentActivityName=".ui.HomepageDoctorActivity"/>
-
         <activity android:name=".ui.HomepagePatientActivity"/>
         <activity android:name=".ui.PatientProfileActivity"
             android:parentActivityName=".ui.HomepagePatientActivity"/>
-
+        <activity android:name=".ui.AddPrescriptionActivity"/>
         <activity android:name=".ui.ProfileEditActivity" />
 
         <activity android:name=".ui.LoginStartActivity">
