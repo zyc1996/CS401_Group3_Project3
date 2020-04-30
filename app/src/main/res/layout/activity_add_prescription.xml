@@ -6,77 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.AddPrescriptionActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name">
-
-        <Button
-            android:id="@+id/monday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/monday_button" />
-
-        <Button
-            android:id="@+id/tuesday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/tuesday_button" />
-
-        <Button
-            android:id="@+id/wednesday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/wednesday_button" />
-
-        <Button
-            android:id="@+id/thursday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/thursday_button" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <Button
-            android:id="@+id/friday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/friday_button" />
-
-        <Button
-            android:id="@+id/staurday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/saturday_button" />
-
-        <Button
-            android:id="@+id/sunday_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/sunday_button" />
-    </LinearLayout>
-
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
@@ -89,15 +18,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_name">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/monday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/tuesday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuesday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/wednesday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wednesday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/thursday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thursday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/friday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/friday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/saturday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/saturday_button" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/sunday_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sunday_button" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:orientation="horizontal"
+
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/user_name">
 
         <RadioButton
             android:id="@+id/timed_radio_button"
@@ -117,16 +98,16 @@
 
     <EditText
         android:id="@+id/does_time_fill"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/time_indose"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
         android:id="@+id/times_taken_hint"
