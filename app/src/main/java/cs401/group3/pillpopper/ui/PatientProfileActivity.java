@@ -32,12 +32,12 @@ public class PatientProfileActivity extends AppCompatActivity {
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
 
-        if(patient.getPersonal_description() != null) {
-            mDescription.setText(patient.getPersonal_description());
+        if(patient.get_personal_description() != null) {
+            mDescription.setText(patient.get_personal_description());
         }
-        mName.setText(patient.getUser_name());
+        mName.setText(patient.get_user_name());
         mCode.setText("Patient Code: " + patient.get_patient_id());
-        mJoinDate.setText("Member since: "+patient.getCreated_at());
+        mJoinDate.setText("Member since: "+patient.get_created_at());
     }
 
     public void launchProfileEdit(View view) {
