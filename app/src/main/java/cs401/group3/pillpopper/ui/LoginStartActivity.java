@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.data.User;
 
 // The "Main" starting activity, what is shown when the app is launched
 public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
@@ -88,7 +89,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
                                 Log.d("LOGIN", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                launchHomePageActivity();
+                                launchHomePageActivity(username);
 
                             } else {
                                 // If sign in fails, display a message to the user
@@ -113,8 +114,16 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private helper method to launch the home page
-    private void launchHomePageActivity() {
-        Intent intent = new Intent(this, PatientProfileActivity.class);
+    private void launchHomePageActivity(String username) {
+        /*
+        User user = User.findByUsername(username);
+        if (user.isDoctor()) {
+            // launch as doctor
+        } else {
+            // launch as patient
+        }
+        */
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
         startActivity(intent);
     }
 

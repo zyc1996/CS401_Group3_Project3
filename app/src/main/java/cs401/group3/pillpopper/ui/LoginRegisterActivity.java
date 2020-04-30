@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-//import android.support.v7.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -62,11 +61,6 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
     }
 
     public void onBack(MenuItem back) {
-        returnLoginActivity();
-    }
-
-    // Private helper method to launch the register page
-    private void returnLoginActivity() {
         Intent intent = new Intent(this, LoginStartActivity.class);
         startActivity(intent);
     }

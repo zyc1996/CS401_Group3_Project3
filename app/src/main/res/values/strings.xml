@@ -41,4 +41,7 @@
     <string name="user_name">User Name</string>
     <string name="doctor_homepage_title">Hi DoctorName</string>
     <string name="back_button">Back</string>
+    <string name="toolbar_messages_button">Messages</string>
+    <string name="toolbar_profile_button">Profile</string>
+    <string name="toolbar_logout_button">Logout</string>
 </resources>
