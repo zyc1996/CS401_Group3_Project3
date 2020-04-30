@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,13 +15,23 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     private EditText mPictureURL; //holds the profile picture URL
     private EditText mDescription; //hold the personal description
+    private TextView mName; //hold the user's name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
+
+        Intent intent = getIntent();
+        String name = intent.getExtras().getString("name");
+        String description = intent.getExtras().getString("description");
+
+        mName = findViewById(R.id.user_name);
         mPictureURL = findViewById(R.id.profile_pic_url_fill);
         mDescription = findViewById(R.id.patient_description_edit);
+
+        mName.setText(name);
+        mDescription.setText(description);
     }
 
     public void confirmChanges(View view){

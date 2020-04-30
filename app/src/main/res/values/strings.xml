@@ -29,7 +29,7 @@
     <string name="messaging_with_title">Messaging with</string>
     <string name="conversations_list_title">Your Conversations</string>
     <string name="personal_description_title">Personal description</string>
-    <string name="default_personal_description">I am a sample person</string>
+    <string name="default_personal_description">This person is lazy and didn\'t write any description</string>
     <string name="patientname_title">PatientName</string>
     <string name="edit_profile_button">Edit</string>
     <string name="submit_changes_button">Submit changes</string>

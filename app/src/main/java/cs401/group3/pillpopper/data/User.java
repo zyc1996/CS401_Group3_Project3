@@ -1,35 +1,59 @@
 package cs401.group3.pillpopper.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class User {
+    protected String user_name, email,
+            picture_url, //option url for profile image
+            personal_description, //optional profile description
+            password;
+    protected ArrayList<Conversation> conversations;
+    protected Date created_at;
 
-    protected String name, picture, personal_description;
-    protected ArrayList<Prescription> list_of_prescription;
-    protected ArrayList<Message> list_of_messages;
-
-    public User() {
-        name = "";
-        picture = "";
+    public User(){
+        user_name = "";
+        email = "";
+        picture_url = "";
         personal_description = "";
-        list_of_prescription = new ArrayList<>();
-        list_of_messages = new ArrayList<>();
+        password = "";
+        conversations = new ArrayList<Conversation>();
+        created_at = new Date();
     }
-    public void Message_create() {}
 
-    public void Message_delete() {}
+    public User(String name_in, String email_in, String password_in){
+        user_name = name_in;
+        email = email_in;
+        password = password_in;
+        picture_url = "";
+        personal_description = "";
+        conversations = new ArrayList<Conversation>();
+        created_at.getTime();
+    }
 
-    public String getName() { return name; }
+    public String getUser_name() {
+        return user_name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
 
-    public String getPicture() { return picture; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setPicture(String picture) { this.picture = picture; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public String getDescription() { return personal_description; }
+    public String getPicture_url() {
+        return picture_url;
+    }
 
-    public void setDescription(String description) { this.personal_description = description; }
+    public void setPicture_url(String picture_url) {
+        this.picture_url = picture_url;
+    }
 
     public String getPersonal_description() {
         return personal_description;
@@ -39,19 +63,19 @@ public class User {
         this.personal_description = personal_description;
     }
 
-    public ArrayList<Prescription> getList_of_prescription() {
-        return list_of_prescription;
+    public String getPassword() {
+        return password;
     }
 
-    public void setList_of_prescription(ArrayList<Prescription> list_of_prescription) {
-        this.list_of_prescription = list_of_prescription;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public ArrayList<Message> getList_of_messages() {
-        return list_of_messages;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    public void setList_of_messages(ArrayList<Message> list_of_messages) {
-        this.list_of_messages = list_of_messages;
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 }
