@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import cs401.group3.pillpopper.R;
 
-public class PatientHomepageActivity extends AppCompatActivity {
+public class HomepagePatientActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_patient);
+        setContentView(R.layout.activity_homepage_patient);
     }
+
+
 }
