@@ -1,8 +1,6 @@
 package cs401.group3.pillpopper.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 //import android.support.v7.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,7 +42,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_login_register);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
@@ -60,11 +57,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login_register, menu);
+        getMenuInflater().inflate(R.menu.menu_back, menu);
         return true;
     }
 
-    public void onRegisterBack(MenuItem back) {
+    public void onBack(MenuItem back) {
         returnLoginActivity();
     }
 

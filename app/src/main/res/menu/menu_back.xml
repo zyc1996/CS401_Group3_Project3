@@ -4,7 +4,7 @@
     <item
         android:id="@+id/registerToolbarBack"
         android:icon="@drawable/ic_menu_back"
-        android:title="@string/login_register_back_button"
-        android:onClick="onRegisterBack"
+        android:title="@string/back_button"
+        android:onClick="onBack"
         app:showAsAction="ifRoom|withText" />
 </menu>
