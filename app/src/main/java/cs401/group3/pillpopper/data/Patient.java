@@ -49,4 +49,8 @@ public class Patient extends User {
             }
         }
     }
+
+    public ArrayList<Prescription> get_schedule(int day) {
+        return schedule[day];
+    }
 }

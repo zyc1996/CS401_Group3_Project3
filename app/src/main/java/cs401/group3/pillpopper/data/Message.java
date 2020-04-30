@@ -1,5 +1,6 @@
 package cs401.group3.pillpopper.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message {
@@ -58,7 +59,8 @@ public class Message {
         return edited;
     }
 
-    public Date get_created_at() {
-        return created_at;
+    public String get_created_at() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(created_at);
     }
 }
