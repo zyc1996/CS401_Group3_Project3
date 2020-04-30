@@ -16,7 +16,7 @@ public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
     //dummy variable
-    private Patient patient = new Patient(324525,"Jack Jumbo","Dummy Picture URL");
+    private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
 
     private TextView mDescription;
     private TextView mName;
@@ -30,7 +30,7 @@ public class PatientProfileActivity extends AppCompatActivity {
 
         //for database usage
         Intent intent = getIntent();
-        int patientID = intent.getExtras().getInt("patient_ID");
+        String patientID = intent.getExtras().getString("patient_ID");
 
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);

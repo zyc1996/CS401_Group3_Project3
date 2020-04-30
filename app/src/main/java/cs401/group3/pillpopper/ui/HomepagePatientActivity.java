@@ -13,7 +13,7 @@ import cs401.group3.pillpopper.data.Patient;
 
 public class HomepagePatientActivity extends AppCompatActivity {
 
-    private Patient patient = new Patient(324525,"Jack Jumbo","Dummy Picture URL");
+    private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
     private int REQUEST_CODE = 2;
 
     private TextView mUserName;
@@ -29,7 +29,7 @@ public class HomepagePatientActivity extends AppCompatActivity {
 
     public void launchPatientProfile(View view){
         Intent intent = new Intent(this,PatientProfileActivity.class);
-        int patientID = patient.get_patient_id();
+        String patientID = patient.get_patient_id();
         intent.putExtra("patient_ID",patientID);
         startActivity(intent);
     }
