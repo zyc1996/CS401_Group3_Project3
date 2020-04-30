@@ -1,18 +1,23 @@
 package cs401.group3.pillpopper.data;
 
-import android.annotation.SuppressLint;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
-    protected String user_name, email,
+    protected int accountType; //0 is user, 1 is patient, 2 is doctor
+    protected String user_name,
+            email,
             picture_url, //option url for profile image
             personal_description, //optional profile description
             password;
     protected ArrayList<Conversation> conversations;
     protected Date created_at;
+    protected DatabaseReference mDatabase;
+
 
     public User(){
         user_name = "";
@@ -23,6 +28,9 @@ public class User {
         conversations = new ArrayList<Conversation>();
         created_at = new Date();
         created_at.getTime();
+        accountType = 0;
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public User(String name_in, String email_in, String password_in){
@@ -34,6 +42,9 @@ public class User {
         conversations = new ArrayList<Conversation>();
         created_at = new Date();
         created_at.getTime();
+        accountType = 0;
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public String login(String user_name, String password){
@@ -102,6 +113,20 @@ public class User {
         new_convo.message_receive(content);
         conversations.add(new_convo);
         return true;
+    }
+
+    boolean is_doctor(){
+        if(accountType == 2){
+            return true;
+        }
+        return false;
+    }
+
+    boolean is_patient(){
+        if(accountType == 1){
+            return true;
+        }
+        return false;
     }
 
     public String get_user_name() {

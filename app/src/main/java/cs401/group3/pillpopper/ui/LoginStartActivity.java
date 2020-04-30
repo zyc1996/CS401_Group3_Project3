@@ -54,6 +54,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // Link the login button to send you to the home page
         mLoginButton = findViewById(R.id.signInButton);
         mLoginButton.setOnClickListener(this);
+
     }
 
     @Override

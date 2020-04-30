@@ -15,7 +15,8 @@ import cs401.group3.pillpopper.data.Patient;
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
-    private Patient patient = new Patient(324525,"Jack Jumbo","Dummy Picture URL");
+    private Patient patient = new Patient("Jack Jumbo",
+            "somewhere@some.place","Dummy Picture URL", "letmein");
 
     private TextView mDescription;
     private TextView mName;
