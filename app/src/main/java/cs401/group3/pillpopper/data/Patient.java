@@ -48,12 +48,6 @@ public class Patient extends User {
         ref.setValue(new_entry);
 
         this.patient_id = ref.getKey();
-
-        //TEST
-        Prescription test = new Prescription("Test content", true,
-            3, 200);
-        add_prescription(this.patient_id, test,"mon");
-
         return true;
     }
 

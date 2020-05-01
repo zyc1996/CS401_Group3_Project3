@@ -91,12 +91,8 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
             q.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("my tag", "checkpoint");
-                    Log.i("my tag", dataSnapshot.toString());
                     if(dataSnapshot.exists()){
-                        Log.i("my tag", "checkpoint 2");
                         for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
-                            Log.i("my tag", "checkpoint 3");
                             if (snapElement.child("password").getValue().toString().equals(password)) {
                                 Log.i("my tag", "Logged in successfully");
                                 launchHomePageActivity();
@@ -111,8 +107,26 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                 }
             });
 
+            result = FirebaseDatabase.getInstance().getReference("doctors");
+            q = result.orderByChild("email").equalTo(username);
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchHomePageActivity();
+                            }
+                        }
+                    }
+                }
 
-            return;
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
 
             // Step 3: Confirm sign in with mAuth
 /*
