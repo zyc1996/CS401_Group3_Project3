@@ -4,13 +4,13 @@
     <item
         android:id="@+id/toolbarProfileEdit"
         android:icon="@drawable/ic_menu_edit"
-        android:title="@string/toolbar_messages_button"
+        android:title="@string/edit_profile_button"
         android:onClick="editProfile"
         app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/toolbarProfileBack"
         android:icon="@drawable/ic_menu_back"
-        android:title="@string/toolbar_logout_button"
+        android:title="@string/back_button"
         android:onClick="profileBack"
         app:showAsAction="ifRoom|withText" />
 </menu>

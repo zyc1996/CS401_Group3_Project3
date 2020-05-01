@@ -13,15 +13,18 @@ import cs401.group3.pillpopper.R;
 
 public class ProfileEditActivity extends AppCompatActivity {
 
+    /*
     private EditText mPictureURL; //holds the profile picture URL
     private EditText mDescription; //hold the personal description
     private TextView mName; //hold the user's name
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
+        /*
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
         String description = intent.getExtras().getString("description");
@@ -32,8 +35,11 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         mName.setText(name);
         mDescription.setText(description);
+         */
     }
 
+
+    /*
     public void confirmChanges(View view){
 
         String pictureURL = mPictureURL.getText().toString();
@@ -49,6 +55,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         setResult(RESULT_OK,replyIntent);
         finish();
     }
-
+    */
 
 }
+
