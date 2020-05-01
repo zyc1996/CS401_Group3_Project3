@@ -30,7 +30,6 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     // Firebase authenticator
     private FirebaseAuth mAuth;
-    private ValueEventListener listener;
 
     // Buttons
     private Button mRegisterButton;
@@ -75,59 +74,15 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // STEP2: Data validation
         // Confirm that fields have data etc (username, password)
 
-        if (username == null) {
+        if (username.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (password == null) {
+        } else if (password.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a password.",
                     Toast.LENGTH_SHORT).show();
 
         } else {
-
-            DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
-            Query q = result.orderByChild("email").equalTo(username);
-
-            q.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
-                            if (snapElement.child("password").getValue().toString().equals(password)) {
-                                Log.i("my tag", "Logged in successfully");
-                                launchHomePageActivity();
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.i("my tag", "Login error");
-                }
-            });
-
-            result = FirebaseDatabase.getInstance().getReference("doctors");
-            q = result.orderByChild("email").equalTo(username);
-            q.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
-                            if (snapElement.child("password").getValue().toString().equals(password)) {
-                                Log.i("my tag", "Logged in successfully");
-                                launchHomePageActivity();
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.i("my tag", "Login error");
-                }
-            });
-
 
             DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
             Query q = result.orderByChild("email").equalTo(username);
@@ -211,11 +166,13 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
         intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 1);
         startActivity(intent);
     }
     private void launchDoctorHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepageDoctorActivity.class);
         intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 2);
         startActivity(intent);
     }
 
