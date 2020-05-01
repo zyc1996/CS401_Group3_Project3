@@ -128,6 +128,50 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                 }
             });
 
+
+            DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
+            Query q = result.orderByChild("email").equalTo(username);
+
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchPatientHomePageActivity(snapElement.getKey());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
+
+            result = FirebaseDatabase.getInstance().getReference("doctors");
+            q = result.orderByChild("email").equalTo(username);
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchDoctorHomePageActivity(snapElement.getKey());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
+
             // Step 3: Confirm sign in with mAuth
 /*
             mAuth.signInWithEmailAndPassword(username, password)
@@ -164,8 +208,14 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private helper method to launch the home page
-    private void launchHomePageActivity() {
+    private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
+        intent.putExtra("user_ID",userID);
+        startActivity(intent);
+    }
+    private void launchDoctorHomePageActivity(String userID) {
+        Intent intent = new Intent(this, HomepageDoctorActivity.class);
+        intent.putExtra("user_ID",userID);
         startActivity(intent);
     }
 
