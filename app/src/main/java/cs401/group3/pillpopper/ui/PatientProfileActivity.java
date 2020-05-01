@@ -3,11 +3,14 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
@@ -32,6 +35,11 @@ public class PatientProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String patientID = intent.getExtras().getString("patient_ID");
 
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profilePatientToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
+
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);
         mCode = findViewById(R.id.user_code_display);
@@ -40,12 +48,27 @@ public class PatientProfileActivity extends AppCompatActivity {
         if(patient.get_personal_description() != null) {
             mDescription.setText(patient.get_personal_description());
         }
+
         mName.setText(patient.get_user_name());
         mCode.setText("Patient Code: " + patient.get_patient_id());
         mJoinDate.setText("Member since: "+patient.get_created_at());
+
+        Intent intent = getIntent();
+        if (intent.getExtras().equals(null)) {
+            return;
+        }
+        String patientID = intent.getExtras().getString("patient_ID");
     }
 
-    public void launchProfileEdit(View view) {
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String patient_Name = mName.getText().toString();
         String patient_description = mDescription.getText().toString();
@@ -54,6 +77,11 @@ public class PatientProfileActivity extends AppCompatActivity {
         intent.putExtra("name",patient_Name);
         intent.putExtra("description",patient_description);
         startActivityForResult(intent,REQUEST_CODE);
+    }
+
+    public void onBack(MenuItem back) {
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
+        startActivity(intent);
     }
 
     //receiving changes
