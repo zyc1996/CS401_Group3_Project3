@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,7 +53,15 @@ public class DoctorProfileActivity extends AppCompatActivity {
         mJoinDate.setText("Member since: "+doctor.get_created_at());
     }
 
-    public void launchProfileEdit(View view) {
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
         String doctor_description = mDescription.getText().toString();
@@ -62,12 +71,9 @@ public class DoctorProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-        return true;
+    public void onBack(MenuItem back) {
+        Intent intent = new Intent(this, LoginStartActivity.class);
+        startActivity(intent);
     }
 
     //receiving changes
