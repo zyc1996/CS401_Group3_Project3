@@ -27,7 +27,7 @@ public class HomepagePatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homepage_patient);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
