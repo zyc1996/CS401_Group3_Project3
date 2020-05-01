@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cs401.group3.pillpopper.R;
-import cs401.group3.pillpopper.data.Doctor;
 
 public class HomepageDoctorActivity extends AppCompatActivity {
 
@@ -25,7 +24,7 @@ public class HomepageDoctorActivity extends AppCompatActivity {
         userID = intent.getExtras().getString("user_ID");
 
         mUserName = findViewById(R.id.user_name_title);
-        mUserName.setText(doctor.get_user_name());
+//        mUserName.setText(doctor.get_user_name());
     }
 
     public void launchDoctorProfile(View view){

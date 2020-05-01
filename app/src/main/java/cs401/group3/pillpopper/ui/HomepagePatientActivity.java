@@ -8,8 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
+
 import cs401.group3.pillpopper.R;
-import cs401.group3.pillpopper.data.Patient;
+import cs401.group3.pillpopper.data.Prescription;
 
 public class HomepagePatientActivity extends AppCompatActivity {
 
@@ -28,7 +30,7 @@ public class HomepagePatientActivity extends AppCompatActivity {
         userID = intent.getExtras().getString("user_ID");
 
         mUserName = findViewById(R.id.user_name_title);
-        mUserName.setText(patient.get_user_name());
+//        mUserName.setText(patient.get_user_name());
     }
 
     public void launchPatientProfile(View view){
@@ -48,5 +50,41 @@ public class HomepagePatientActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        boolean[] days;
+        boolean scheduleType=false;
+        String startTime = "", description = "";
+        int timesPerDay=0, breakHours=0;
+
+        Prescription prescription;
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
+            //Step 1: get all the returning datas
+            if (data.hasExtra("days")) {
+                days = Arrays.copyOf(data.getExtras().getBooleanArray("days"), 7);
+            }
+            if (data.hasExtra("schedule_type")) {
+                scheduleType = data.getExtras().getBoolean("schedule_type");
+                if (scheduleType) {
+                    if (data.hasExtra("start_time")) {
+                        startTime = data.getExtras().getString("start_time");
+                    }
+                }
+            }
+            if (data.hasExtra("times_per_day")) {
+                timesPerDay = data.getExtras().getInt("times_per_day");
+            }
+            if (data.hasExtra("break_hours")) {
+                breakHours = data.getExtras().getInt("break_hours");
+            }
+            if (data.hasExtra("description")) {
+                description = data.getExtras().getString("description");
+            }
+
+            //step 2: construct the prescription
+            prescription = new Prescription(description,scheduleType,timesPerDay,breakHours,startTime);
+
+            //step 3: load prescription into patient's date array
+        }
     }
 }
