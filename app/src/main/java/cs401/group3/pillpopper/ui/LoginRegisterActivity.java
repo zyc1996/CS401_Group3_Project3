@@ -62,7 +62,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // STEP 1: get user info from GUI
         // Grab username, password, confirm password, doctor code the user typed in
         // Note: Need to rename XML Ids
-        userFullName = ((EditText) findViewById(R.id.name_field).getText().toString();
+        userFullName = ((EditText) findViewById(R.id.name_field)).getText().toString();
         username = ((EditText) findViewById(R.id.usernameEdit)).getText().toString();
         password = ((EditText) findViewById(R.id.passwordEdit)).getText().toString();
         confirmPassword = ((EditText) findViewById(R.id.confirmPassword)).getText().toString();
@@ -71,8 +71,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // STEP2: Data validation
         // Confirm that all 3 fields have data etc (username, password, confirm password)
         // confirm password and confirm password are the same before continuing
-
-        if (username == null) {
+        if(userFullName == null){
+            Toast.makeText(LoginRegisterActivity.this, "Please enter your full name.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if (username == null) {
             Toast.makeText(LoginRegisterActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
