@@ -16,6 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import cs401.group3.pillpopper.R;
 
@@ -24,6 +30,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     // Firebase authenticator
     private FirebaseAuth mAuth;
+    private ValueEventListener listener;
 
     // Buttons
     private Button mRegisterButton;
@@ -54,7 +61,6 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // Link the login button to send you to the home page
         mLoginButton = findViewById(R.id.signInButton);
         mLoginButton.setOnClickListener(this);
-
     }
 
     @Override
@@ -79,7 +85,37 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
         } else {
 
+            DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
+            Query q = result.orderByChild("email").equalTo(username);
+
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.i("my tag", "checkpoint");
+                    Log.i("my tag", dataSnapshot.toString());
+                    if(dataSnapshot.exists()){
+                        Log.i("my tag", "checkpoint 2");
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            Log.i("my tag", "checkpoint 3");
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchHomePageActivity();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
+
+
+            return;
+
             // Step 3: Confirm sign in with mAuth
+/*
             mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -102,7 +138,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                         }
 
                     });
-
+*/
         }
 
     }
@@ -115,7 +151,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     // Private helper method to launch the home page
     private void launchHomePageActivity() {
-        Intent intent = new Intent(this, PatientProfileActivity.class);
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
         startActivity(intent);
     }
 
