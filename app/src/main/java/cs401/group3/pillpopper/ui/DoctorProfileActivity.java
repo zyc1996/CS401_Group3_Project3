@@ -31,10 +31,6 @@ public class DoctorProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_doctor);
 
-        //for database usage
-        Intent intent = getIntent();
-        String doctorID = intent.getExtras().getString("doctor_ID");
-
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileDoctorToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -51,6 +47,13 @@ public class DoctorProfileActivity extends AppCompatActivity {
         mName.setText(doctor.get_user_name());
         mCode.setText("Doctor Code: " + doctor.get_doctor_id());
         mJoinDate.setText("Member since: "+doctor.get_created_at());
+
+        //for database usage
+        Intent intent = getIntent();
+        if (intent.getExtras().equals(null)) {
+            return;
+        }
+        String doctorID = intent.getExtras().getString("doctor_ID");
     }
 
     // Menu icons are inflated just as they were with actionbar

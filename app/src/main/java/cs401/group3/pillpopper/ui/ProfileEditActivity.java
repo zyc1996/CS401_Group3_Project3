@@ -25,10 +25,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-        Intent intent = getIntent();
-        String name = intent.getExtras().getString("name");
-        String description = intent.getExtras().getString("description");
-
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileEditToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -38,6 +34,12 @@ public class ProfileEditActivity extends AppCompatActivity {
         mPictureURL = findViewById(R.id.profile_pic_url_fill);
         mDescription = findViewById(R.id.patient_description_edit);
 
+        Intent intent = getIntent();
+        if (intent.getExtras().equals(null)) {
+            return;
+        }
+        String name = intent.getExtras().getString("name");
+        String description = intent.getExtras().getString("description");
         mName.setText(name);
         mDescription.setText(description);
     }
