@@ -1,9 +1,13 @@
 package cs401.group3.pillpopper.data;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prescription {
-    private int id;
+    private String id;
     private String content;
     private boolean timed; // true means that prescription is taken at a specific time
                    // false means at any time that day (or with meals, etc)
@@ -11,20 +15,18 @@ public class Prescription {
                        // <= 0 treated as once.
     private int time_between_dose; // how long between each dose, if timed and times_per_day > 1
                             // automatically repeat prescription in schedule after this much time
-    private boolean by_patient; // did the patient write this prescription themselves?
-
-    private String doctor_name; // if by_patient == false, save doctor's name & id with the prescription
-    private int doctor_id;
     private Date created_at;
+    private DatabaseReference mDatabase;
 
     public Prescription() {
         content = "";
         timed = false;
         times_per_day = 0;
         time_between_dose = 0; //Should this mean minutes?
-        by_patient = true;
         created_at = new Date();
         created_at.getTime();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public Prescription(String content_in, boolean timed_in, int times_in
@@ -33,23 +35,46 @@ public class Prescription {
         timed = timed_in;
         times_per_day = times_in;
         time_between_dose = time_between_in; //Should this mean minutes?
-        by_patient = true;
         created_at = new Date();
         created_at.getTime();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public void by_doctor(int id_in, String name_in){
-        by_patient = false;
-        doctor_id = id_in;
-        doctor_name = name_in;
+        //does doctor field exist in database object?
     }
 
+    public boolean register(){
+        class Entry{
+            public String content;
+            public boolean timed;
+            public int times_per_day;
+            public int time_between_dose;
+            public Date created_at;
+        }
 
-    public int get_id() {
+        Entry new_entry = new Entry();
+        new_entry.content = this.content;
+        new_entry.timed = this.timed;
+        new_entry.times_per_day = this.times_per_day;
+        new_entry.time_between_dose = this.time_between_dose;
+        new_entry.created_at = this.created_at;
+
+        DatabaseReference ref;
+        ref = mDatabase.child("prescriptions").push();
+        ref.setValue(new_entry);
+
+        this.id = ref.getKey();
+
+        return true;
+    }
+
+    public String get_id() {
         return this.id;
     }
 
-    public void set_id(int id) {
+    public void set_id(String id) {
         this.id = id;
     }
 
@@ -85,31 +110,8 @@ public class Prescription {
         this.time_between_dose = time_between_dose;
     }
 
-    public boolean is_by_patient() {
-        return this.by_patient;
-    }
-
-    public void set_by_patient(boolean by_patient) {
-        this.by_patient = by_patient;
-    }
-
-    public String get_doctor_name() {
-        return this.doctor_name;
-    }
-
-    public void set_doctor_name(String doctor_name) {
-        this.doctor_name = doctor_name;
-    }
-
-    public int get_doctor_id() {
-        return this.doctor_id;
-    }
-
-    public void set_doctor_id(int doctor_id) {
-        this.doctor_id = doctor_id;
-    }
-
-    public Date get_created_at() {
-        return this.created_at;
+    public String get_created_at() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(created_at);
     }
 }
