@@ -39,7 +39,6 @@ public class HomepageDoctorActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mUserName = findViewById(R.id.user_name_title);
-        mUserName.setText(doctor.get_user_name());
 
         Intent intent = getIntent();
         userID = intent.getExtras().getString("user_ID");
@@ -61,23 +60,21 @@ public class HomepageDoctorActivity extends AppCompatActivity {
                     Log.i("my tag", user_info.getValue().toString());
                 }
             }
-
-            // Menu icons are inflated just as they were with actionbar
-            @Override
-            public boolean onCreateOptionsMenu(Menu menu) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.menu_homepage, menu);
-                return true;
-            }
-
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.i("my tag", "User data retrieval error");
             }
         });
         mUserName = findViewById(R.id.user_name_title);
+    }
+
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+        return true;
     }
 
     public void launchDoctorProfile(View view){
@@ -95,8 +92,7 @@ public class HomepageDoctorActivity extends AppCompatActivity {
 
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
-        String doctorID = doctor.get_doctor_id();
-        intent.putExtra("doctor_ID",doctorID);
+        //intent.putExtra("doctor_ID",doctorID);
         startActivity(intent);
     }
 

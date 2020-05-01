@@ -31,10 +31,6 @@ public class PatientProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_patient);
 
-        //for database usage
-        Intent intent = getIntent();
-        String patientID = intent.getExtras().getString("patient_ID");
-
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.profilePatientToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -45,19 +41,23 @@ public class PatientProfileActivity extends AppCompatActivity {
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
 
-        if(patient.get_personal_description() != null) {
-            mDescription.setText(patient.get_personal_description());
-        }
+
 
         mName.setText(patient.get_user_name());
         mCode.setText("Patient Code: " + patient.get_patient_id());
         mJoinDate.setText("Member since: "+patient.get_created_at());
 
+
+        //for database usage
         Intent intent = getIntent();
-        if (intent.getExtras().equals(null)) {
+        if (intent.getExtras()) {
             return;
         }
         String patientID = intent.getExtras().getString("patient_ID");
+
+        if(patient.get_personal_description() != null) {
+            mDescription.setText(patient.get_personal_description());
+        }
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -79,7 +79,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
-    public void onBack(MenuItem back) {
+    public void profileBack(MenuItem back) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
         startActivity(intent);
     }

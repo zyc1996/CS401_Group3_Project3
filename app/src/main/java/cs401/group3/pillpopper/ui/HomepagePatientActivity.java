@@ -40,8 +40,6 @@ public class HomepagePatientActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mUserName = findViewById(R.id.user_name_title);
-        mUserName.setText(patient.get_user_name());
-
 
         Intent intent = getIntent();
         userID = intent.getExtras().getString("user_ID");
@@ -86,11 +84,20 @@ public class HomepagePatientActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void launchProfile(MenuItem profile){
+        Intent intent = new Intent(this,PatientProfileActivity.class);
+        intent.putExtra("patient_ID",userID);
+        startActivity(intent);
+    }
+
+    /*
     public void launchPatientProfile(View view){
         Intent intent = new Intent(this,PatientProfileActivity.class);
         intent.putExtra("patient_ID",userID);
         startActivity(intent);
     }
+
+     */
 
     public void onLogout(MenuItem logout) {
         Intent intent = new Intent(this, LoginStartActivity.class);
@@ -109,4 +116,6 @@ public class HomepagePatientActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+
 }
