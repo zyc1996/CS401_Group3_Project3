@@ -110,6 +110,7 @@ public class HomepagePatientActivity extends AppCompatActivity {
         Intent intent = new Intent (this,AddPrescriptionActivity.class);
         String name = mUserName.getText().toString();
         intent.putExtra("name",name);
+        intent.putExtra("user_ID",userID);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
@@ -125,6 +126,8 @@ public class HomepagePatientActivity extends AppCompatActivity {
         Prescription prescription;
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
+            Log.i("my tag", data.getExtras().toString());
 
             //Step 1: get all the returning datas
             if (data.hasExtra("days")) {

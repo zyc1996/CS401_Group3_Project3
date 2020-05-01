@@ -20,6 +20,8 @@ import cs401.group3.pillpopper.R;
 
 public class AddPrescriptionActivity extends AppCompatActivity {
 
+    private String userID;
+
     private TextView mName;
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     private RadioGroup mScheduleType;
@@ -38,6 +40,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
+        userID = intent.getExtras().getString("user_ID");
 
         mName = findViewById(R.id.user_name);
         mName.setText(name);
@@ -192,6 +195,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);
         replyIntent.putExtra("description",description);
+        replyIntent.putExtra("user_ID",userID);
 
         setResult(RESULT_OK,replyIntent);
         finish();
