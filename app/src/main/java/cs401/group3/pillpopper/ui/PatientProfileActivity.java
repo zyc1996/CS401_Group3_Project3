@@ -3,11 +3,13 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
@@ -32,6 +34,11 @@ public class PatientProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String patientID = intent.getExtras().getString("patient_ID");
 
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profilePatientToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
+
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);
         mCode = findViewById(R.id.user_code_display);
@@ -54,6 +61,14 @@ public class PatientProfileActivity extends AppCompatActivity {
         intent.putExtra("name",patient_Name);
         intent.putExtra("description",patient_description);
         startActivityForResult(intent,REQUEST_CODE);
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
     }
 
     //receiving changes

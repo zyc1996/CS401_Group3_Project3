@@ -16,7 +16,9 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white"></androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@android:color/white">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/user_name_title"
@@ -125,21 +127,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/profile_open_temp"
-        android:layout_width="53dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="20dp"
-        android:onClick="launchPatientProfile"
-        android:text="P"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/user_name_title"
-        app:layout_constraintTop_toBottomOf="@+id/registerToolbar"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
