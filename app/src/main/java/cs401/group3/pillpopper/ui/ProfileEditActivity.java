@@ -17,6 +17,7 @@ import cs401.group3.pillpopper.R;
 public class ProfileEditActivity extends AppCompatActivity {
 
     private String userID;
+    private int ACCOUNT_TYPE;
 
     private EditText mPictureURL; //holds the profile picture URL
     private EditText mDescription; //hold the personal description
@@ -41,6 +42,8 @@ public class ProfileEditActivity extends AppCompatActivity {
             return;
         }
         userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
+
         String name = intent.getExtras().getString("name");
         String description = intent.getExtras().getString("description");
         mName.setText(name);
@@ -72,6 +75,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         replyIntent.putExtra("picture_URL", pictureURL);
         replyIntent.putExtra("description", description);
         replyIntent.putExtra("user_ID",userID);
+        replyIntent.putExtra("account_type",ACCOUNT_TYPE);
 
         setResult(RESULT_OK,replyIntent);
         finish();

@@ -47,15 +47,20 @@ public class HomepagePatientActivity extends AppCompatActivity {
         mUserName = findViewById(R.id.user_name_title);
 
         Intent intent = getIntent();
+
+        if (intent.getExtras() == null) {
+            return;
+        }
+
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
-
         DatabaseReference result;
         if(ACCOUNT_TYPE == 2){
             result = FirebaseDatabase.getInstance().getReference("doctors");
         } else {
             result = FirebaseDatabase.getInstance().getReference("patients");
         }
+
 
         result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -87,12 +92,15 @@ public class HomepagePatientActivity extends AppCompatActivity {
 
     public void launchMessages(MenuItem messages) {
         Intent intent = new Intent(this, MessagesActivity.class);
+        intent.putExtra("patient_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
     public void launchProfile(MenuItem profile){
         Intent intent = new Intent(this,PatientProfileActivity.class);
         intent.putExtra("patient_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
