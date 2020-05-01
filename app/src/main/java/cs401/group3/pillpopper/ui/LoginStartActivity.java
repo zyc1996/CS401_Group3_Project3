@@ -85,7 +85,6 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
         } else {
 
-            // TEST***********************
             DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
             Query q = result.orderByChild("email").equalTo(username);
 
@@ -108,14 +107,12 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Log.i("my tag", "Logged in error");
+                    Log.i("my tag", "Login error");
                 }
             });
 
 
             return;
-            // TEST************************
-
 
             // Step 3: Confirm sign in with mAuth
 /*
