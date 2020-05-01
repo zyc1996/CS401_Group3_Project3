@@ -21,6 +21,7 @@ import cs401.group3.pillpopper.R;
 public class AddPrescriptionActivity extends AppCompatActivity {
 
     private String userID;
+    private int ACCOUNT_TYPE;
 
     private TextView mName;
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
@@ -30,8 +31,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     Calendar calendar;
     int hour, minute;
 
-    private Boolean days[] = new Boolean[]{false,false,false,false,false,false,false};
-    private Boolean scheduleType = false; //false = untimed, true = timed
+    private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
+    private boolean scheduleType = false; //false = untimed, true = timed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
         userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
         mName = findViewById(R.id.user_name);
         mName.setText(name);
@@ -161,10 +163,12 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mSelected = findViewById(radioID);
         String type = mSelected.getText().toString();
 
-        if(type == "Timed"){
+        Log.i("my tag", type);
+
+        if(type.equals("Timed")){
             scheduleType = true;
         }
-        else if(type == "Untimed"){
+        else if(type.equals("Untimed")){
             scheduleType = false;
         }
         else{
@@ -196,6 +200,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         replyIntent.putExtra("break_hours", breakHours);
         replyIntent.putExtra("description",description);
         replyIntent.putExtra("user_ID",userID);
+        replyIntent.putExtra("account_type",ACCOUNT_TYPE);
+
+        Log.i("my tag", replyIntent.getExtras().toString());
 
         setResult(RESULT_OK,replyIntent);
         finish();

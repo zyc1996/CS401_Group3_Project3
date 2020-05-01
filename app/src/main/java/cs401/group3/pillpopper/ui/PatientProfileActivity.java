@@ -97,6 +97,9 @@ public class PatientProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            if(data.hasExtra("dummy_data")){
+                //dummy data idk
+            }
             //updates picture URL
             if(data.hasExtra("picture_URL")){
                 Log.d("TagP","Picture URL returned");

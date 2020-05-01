@@ -76,10 +76,6 @@ public class HomepagePatientActivity extends AppCompatActivity {
                 Log.i("my tag", "User data retrieval error");
             }
         });
-
-
-
-        mUserName = findViewById(R.id.user_name_title);
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -131,18 +127,18 @@ public class HomepagePatientActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        boolean[] days = new boolean[]{false,false,false,false,false,false,false};
-        boolean scheduleType=false;
-        String startTime = "", description = "";
-        int timesPerDay=0, breakHours=0;
-
-        Prescription prescription;
-
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Log.i("my tag", data.getExtras().toString());
+            boolean[] days = new boolean[]{false,false,false,false,false,false,false};
+            boolean scheduleType=false;
+            String startTime = "", description = "";
+            int timesPerDay=0, breakHours=0;
+            Prescription prescription;
 
             //Step 1: get all the returning datas
+            if(data.hasExtra("Dummy Extra")){
+                //idk dummy variables
+            }
             if (data.hasExtra("days")) {
                 days = Arrays.copyOf(data.getExtras().getBooleanArray("days"), 7);
             }
