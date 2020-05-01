@@ -77,7 +77,6 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                     Toast.LENGTH_SHORT).show();
 
         } else {
-
             // Step 3: Confirm sign in with mAuth
             mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

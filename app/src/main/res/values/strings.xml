@@ -47,4 +47,5 @@
     <string name="hours_between_doses">Hours between doses</string>
     <string name="submit_prescription_button">Submit</string>
     <string name="prescription_description">Prescription description</string>
+    <string name="name_field_hint">Your Full Name</string>
 </resources>
