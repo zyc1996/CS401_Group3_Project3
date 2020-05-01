@@ -1,11 +1,11 @@
 package cs401.group3.pillpopper.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +20,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     private int REQUEST_CODE = 1;
     //dummy variable
     private String userID;
+    private int ACCOUNT_TYPE;
     private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
 
     private TextView mDescription;
@@ -27,6 +28,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     private TextView mCode;
     private TextView mJoinDate;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         }
 
         userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
         if(patient.get_personal_description() != null) {
             mDescription.setText(patient.get_personal_description());
@@ -80,6 +83,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         intent.putExtra("name",patient_Name);
         intent.putExtra("description",patient_description);
         intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
