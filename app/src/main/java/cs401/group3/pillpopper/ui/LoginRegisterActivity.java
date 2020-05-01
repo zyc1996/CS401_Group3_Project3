@@ -1,6 +1,7 @@
 package cs401.group3.pillpopper.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
     private ValueEventListener listener;
 
     // Class variables to hold Username, Password, Doctor Code
+    private String userFullName;
     private String username;
     private String password;
     private String confirmPassword;
@@ -66,7 +68,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // STEP 1: get user info from GUI
         // Grab username, password, confirm password, doctor code the user typed in
         // Note: Need to rename XML Ids
-
+        userFullName = ((EditText) findViewById(R.id.name_field)).getText().toString();
         username = ((EditText) findViewById(R.id.usernameEdit)).getText().toString();
         password = ((EditText) findViewById(R.id.passwordEdit)).getText().toString();
         confirmPassword = ((EditText) findViewById(R.id.confirmPassword)).getText().toString();
@@ -75,8 +77,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // STEP2: Data validation
         // Confirm that all 3 fields have data etc (username, password, confirm password)
         // confirm password and confirm password are the same before continuing
-
-        if (username == null) {
+        if(userFullName == null){
+            Toast.makeText(LoginRegisterActivity.this, "Please enter your full name.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if (username == null) {
             Toast.makeText(LoginRegisterActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
@@ -95,6 +100,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         } else {
 
         // STEP 3: At this point all info correct go to create new user
+
+
             mAuth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -104,7 +111,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
 
                             Log.d("REGISTER", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String reply = "Registration Successful.";
+//                            String reply = "Registration Successful.";
 //                            Intent replyIntent = new Intent();
 //                            replyIntent.putExtra("success_regist","Registration Successful.");
 //                            setResult(RESULT_OK,replyIntent);
@@ -114,7 +121,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                             // If sign in fails, display a message to the user.
 
                             Log.d("REGISTER", "createUserWithEmail:failure", task.getException());
-                            String reply = "Registration failed.";
+//                            String reply = "Registration failed.";
 //                            Intent replyIntent = new Intent();
 //                            replyIntent.putExtra("fail_regist","Registration failed.");
 //                            setResult(RESULT_OK,replyIntent);
@@ -123,12 +130,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                         }
                     }
                 });
-
         }
 
 
         //sees the toast then delay the activity end
-        new android.os.Handler().postDelayed(
+        new Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         finish();
