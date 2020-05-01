@@ -90,20 +90,6 @@ public class User {
         return false;
     }
 
-    boolean is_doctor(){
-        if(accountType == 2){
-            return true;
-        }
-        return false;
-    }
-
-    boolean is_patient(){
-        if(accountType == 1){
-            return true;
-        }
-        return false;
-    }
-
     public String get_user_name() {
         return user_name;
     }
