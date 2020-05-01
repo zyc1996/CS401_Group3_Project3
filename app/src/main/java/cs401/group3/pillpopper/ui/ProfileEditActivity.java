@@ -16,6 +16,8 @@ import cs401.group3.pillpopper.R;
 
 public class ProfileEditActivity extends AppCompatActivity {
 
+    private String userID;
+
     private EditText mPictureURL; //holds the profile picture URL
     private EditText mDescription; //hold the personal description
     private TextView mName; //hold the user's name
@@ -38,6 +40,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         if (intent.getExtras().equals(null)) {
             return;
         }
+        userID = intent.getExtras().getString("user_ID");
         String name = intent.getExtras().getString("name");
         String description = intent.getExtras().getString("description");
         mName.setText(name);
@@ -68,6 +71,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         Intent replyIntent = new Intent();
         replyIntent.putExtra("picture_URL", pictureURL);
         replyIntent.putExtra("description", description);
+        replyIntent.putExtra("user_ID",userID);
 
         setResult(RESULT_OK,replyIntent);
         finish();

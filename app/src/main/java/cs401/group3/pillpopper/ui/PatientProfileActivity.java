@@ -19,6 +19,7 @@ public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
     //dummy variable
+    private String userID;
     private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
 
     private TextView mDescription;
@@ -50,10 +51,12 @@ public class PatientProfileActivity extends AppCompatActivity {
 
         //for database usage
         Intent intent = getIntent();
-        if (intent.getExtras()) {
+
+        if (intent.getExtras() == null) {
             return;
         }
-        String patientID = intent.getExtras().getString("patient_ID");
+
+        userID = intent.getExtras().getString("user_ID");
 
         if(patient.get_personal_description() != null) {
             mDescription.setText(patient.get_personal_description());
@@ -76,6 +79,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         //pass the name and description over, no picture URL yet
         intent.putExtra("name",patient_Name);
         intent.putExtra("description",patient_description);
+        intent.putExtra("user_ID",userID);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
