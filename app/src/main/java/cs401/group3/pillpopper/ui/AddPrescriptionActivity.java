@@ -4,6 +4,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.Calendar;
 
@@ -35,6 +38,11 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_prescription);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.addPrescriptionToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
@@ -151,6 +159,19 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mBreakHours = findViewById(R.id.dosage_break_time);
         mDescription = findViewById(R.id.prescription_description_fill);
 
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_back, menu);
+        return true;
+    }
+
+    public void onBack(MenuItem back) {
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
+        startActivity(intent);
     }
 
     public void checkButton(View view){

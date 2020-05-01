@@ -73,7 +73,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     }
 
     public void onBack(MenuItem back) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
+        Intent intent = new Intent(this, HomepagePatientActivity.class);
         startActivity(intent);
     }
 
