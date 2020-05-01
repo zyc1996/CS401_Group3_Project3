@@ -1,8 +1,10 @@
 package cs401.group3.pillpopper.data;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Date;
@@ -34,7 +36,8 @@ public class UserTest {
      * Date class testing object
      */
     private Date created_at;
-    private DatabaseReference mDatabase;
+
+    protected DatabaseReference mDatabase;
 
     /**
      * Helper method to initialize variables before every test
@@ -45,17 +48,43 @@ public class UserTest {
     }
 
     /**
-     * Method to test User's login method
+     * Method to test User's login method if patient does not exist
      */
     @Test
     public void testLogin() {
+        //Check if username exists in database
+        //first check doctor collection
+        //if it exists in doctor collection, return string + id
+        //return "doctor " + doctor id;
+
+        //next check patient collection
+        //if it exists in patient collection, return string + id
+        //return "patient " + patient id;
+
+        //else return none
+        assertEquals(testUser.login("testName", "TestPass"), "none");
     }
 
     /**
-     * Method to test User's send_message method
+     * Method to test User's send_message method with a target that does not exist
      */
     @Test
-    public void testSend_message() {
+    public void testSend_messageFalse() {
+        //check if sender exists and that we already have a conversation with the target
+        //if we do, we call
+        //Conversation.send_message(content, sender_id, conv_id);
+
+
+        //if we reached this point, we do not have a conversation with the target yet
+        //check if target id exists in database
+
+        //if they do
+        //Conversation new_convo = new Conversation(sender_id, target_id);
+        //Conversation.send_message(content, sender_id, new_convo.get_id());
+
+        assertFalse(testUser.send_message("test", "sender_id", String "test_id"));
+        //if target does not exist, return false
+
     }
 
     /**
@@ -64,7 +93,7 @@ public class UserTest {
     @Test
     public void testIs_doctor() {
         //testUser accountType = 0
-        assertEquals(testUser.is_doctor(), false);
+        assertFalse(testUser.is_doctor());
     }
 
     /**
@@ -73,7 +102,7 @@ public class UserTest {
     @Test
     public void testIs_patient() {
         //testUser accountType = 0
-        assertEquals(testUser.is_patient(), false);
+        assertFalse(testUser.is_patient());
     }
 
 }
