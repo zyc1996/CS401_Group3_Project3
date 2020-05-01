@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbarProfileEdit"
+        android:icon="@drawable/ic_menu_edit"
+        android:title="@string/edit_profile_button"
+        android:onClick="editProfile"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/toolbarProfileBack"
+        android:icon="@drawable/ic_menu_back"
+        android:title="@string/back_button"
+        android:onClick="profileBack"
+        app:showAsAction="ifRoom|withText" />
+</menu>
