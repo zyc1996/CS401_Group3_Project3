@@ -10,6 +10,19 @@ import java.util.Date;
 public class PrescriptionTest {
 
     /**
+     * Doctor class testing object
+     */
+    private Prescription testPre;
+
+    /**
+     * Helper method to initialize variables before every test
+     */
+    @Before
+    public void init(){
+        testPre = new Prescription();
+    }
+
+    /**
      * Method to test if Prescription is by a doctor existing in the database
      */
     @Test
@@ -17,8 +30,11 @@ public class PrescriptionTest {
         //does doctor field exist in database object?
     }
 
+    /**
+     * Method to test Register method to add Prescription class object to database
+     */
     @Test
     public void testRegister() {
-
+        assertTrue(testPre.register());
     }
 }
