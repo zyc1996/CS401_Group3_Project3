@@ -90,7 +90,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                         for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
                             if (snapElement.child("password").getValue().toString().equals(password)) {
                                 Log.i("my tag", "Logged in successfully");
-                                launchPatientHomePageActivity();
+                                launchPatientHomePageActivity(snapElement.getKey());
                             }
                         }
                     }
@@ -111,7 +111,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                         for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
                             if (snapElement.child("password").getValue().toString().equals(password)) {
                                 Log.i("my tag", "Logged in successfully");
-                                launchDoctorHomePageActivity();
+                                launchDoctorHomePageActivity(snapElement.getKey());
                             }
                         }
                     }
@@ -159,12 +159,14 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private helper method to launch the home page
-    private void launchPatientHomePageActivity() {
+    private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
+        intent.putExtra("user_ID",userID);
         startActivity(intent);
     }
-    private void launchDoctorHomePageActivity() {
+    private void launchDoctorHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepageDoctorActivity.class);
+        intent.putExtra("user_ID",userID);
         startActivity(intent);
     }
 

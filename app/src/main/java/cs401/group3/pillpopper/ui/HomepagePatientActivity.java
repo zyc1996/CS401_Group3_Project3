@@ -13,7 +13,8 @@ import cs401.group3.pillpopper.data.Patient;
 
 public class HomepagePatientActivity extends AppCompatActivity {
 
-    private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
+    private String userID;
+    private final int ACCOUNT_TYPE = 1;
     private int REQUEST_CODE = 2;
 
     private TextView mUserName;
@@ -22,6 +23,9 @@ public class HomepagePatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_patient);
+
+        Intent intent = getIntent();
+        userID = intent.getExtras().getString("user_ID");
 
         mUserName = findViewById(R.id.user_name_title);
         mUserName.setText(patient.get_user_name());
