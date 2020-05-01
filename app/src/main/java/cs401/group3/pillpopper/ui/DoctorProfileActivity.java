@@ -3,11 +3,14 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
@@ -28,9 +31,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_doctor);
 
-        //for database usage
-        Intent intent = getIntent();
-        String doctorID = intent.getExtras().getString("doctor_ID");
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileDoctorToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
 
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);
@@ -43,6 +47,21 @@ public class DoctorProfileActivity extends AppCompatActivity {
         mName.setText(doctor.get_user_name());
         mCode.setText("Doctor Code: " + doctor.get_doctor_id());
         mJoinDate.setText("Member since: "+doctor.get_created_at());
+
+        //for database usage
+        Intent intent = getIntent();
+        if (intent.getExtras().equals(null)) {
+            return;
+        }
+        String doctorID = intent.getExtras().getString("doctor_ID");
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
     }
 
     public void launchProfileEdit(View view) {
@@ -53,6 +72,11 @@ public class DoctorProfileActivity extends AppCompatActivity {
         intent.putExtra("name",doctor_name);
         intent.putExtra("description",doctor_description);
         startActivityForResult(intent,REQUEST_CODE);
+    }
+
+    public void onBack(MenuItem back) {
+        Intent intent = new Intent(this, LoginStartActivity.class);
+        startActivity(intent);
     }
 
     //receiving changes

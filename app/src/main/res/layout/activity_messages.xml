@@ -6,21 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.MessagesActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/messagesToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white">
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/conversation_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:text="@string/conversations_list_title"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/messagesToolbar" />
 
     <ScrollView
         android:id="@+id/conversation_list"
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"

@@ -8,9 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +30,6 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     // Firebase authenticator
     private FirebaseAuth mAuth;
-    private ValueEventListener listener;
 
     // Buttons
     private Button mRegisterButton;
@@ -70,11 +74,11 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // STEP2: Data validation
         // Confirm that fields have data etc (username, password)
 
-        if (username == null) {
+        if (username.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (password == null) {
+        } else if (password.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a password.",
                     Toast.LENGTH_SHORT).show();
 
@@ -162,11 +166,13 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
         intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 1);
         startActivity(intent);
     }
     private void launchDoctorHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepageDoctorActivity.class);
         intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 2);
         startActivity(intent);
     }
 

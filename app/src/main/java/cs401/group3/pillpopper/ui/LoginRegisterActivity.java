@@ -1,14 +1,25 @@
 package cs401.group3.pillpopper.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
+import cs401.group3.pillpopper.data.User;
 
 // The page to register a new user
 public class LoginRegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,6 +56,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
 
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
+
         // Get the current login instance from the Firebase Authenticator
         //mAuth = FirebaseAuth.getInstance();
 
@@ -52,12 +69,23 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
 
         email_taken = false;
     }
-
-
     // When the page starts
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_back, menu);
+        return true;
+    }
+
+    public void onBack(MenuItem back) {
+        Intent intent = new Intent(this, LoginStartActivity.class);
+        startActivity(intent);
     }
 
     /**
