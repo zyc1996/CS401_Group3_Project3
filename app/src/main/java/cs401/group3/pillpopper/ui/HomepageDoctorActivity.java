@@ -30,8 +30,7 @@ public class HomepageDoctorActivity extends AppCompatActivity {
 
     public void launchDoctorProfile(View view){
         Intent intent = new Intent(this,DoctorProfileActivity.class);
-        String doctorID = doctor.get_doctor_id();
-        intent.putExtra("doctor_ID",doctorID);
+        intent.putExtra("doctor_ID",userID);
         startActivity(intent);
     }
 

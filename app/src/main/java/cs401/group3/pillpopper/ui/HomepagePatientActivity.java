@@ -33,8 +33,7 @@ public class HomepagePatientActivity extends AppCompatActivity {
 
     public void launchPatientProfile(View view){
         Intent intent = new Intent(this,PatientProfileActivity.class);
-        String patientID = patient.get_patient_id();
-        intent.putExtra("patient_ID",patientID);
+        intent.putExtra("patient_ID",userID);
         startActivity(intent);
     }
 
