@@ -52,4 +52,5 @@
     <string name="toolbar_messages_button">Messages</string>
     <string name="toolbar_profile_button">Profile</string>
     <string name="toolbar_logout_button">Logout</string>
+    <string name="prescription_start_time">Prescription Start Time</string>
 </resources>

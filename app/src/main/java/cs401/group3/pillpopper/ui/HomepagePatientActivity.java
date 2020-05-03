@@ -88,14 +88,14 @@ public class HomepagePatientActivity extends AppCompatActivity {
 
     public void launchMessages(MenuItem messages) {
         Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("patient_ID",userID);
+        intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
     public void launchProfile(MenuItem profile){
         Intent intent = new Intent(this,PatientProfileActivity.class);
-        intent.putExtra("patient_ID",userID);
+        intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }

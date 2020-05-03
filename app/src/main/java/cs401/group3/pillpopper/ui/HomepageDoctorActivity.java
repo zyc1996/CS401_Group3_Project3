@@ -78,7 +78,8 @@ public class HomepageDoctorActivity extends AppCompatActivity {
 
     public void launchDoctorProfile(View view){
         Intent intent = new Intent(this,DoctorProfileActivity.class);
-        intent.putExtra("doctor_ID",userID);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
@@ -86,12 +87,15 @@ public class HomepageDoctorActivity extends AppCompatActivity {
     //click on patient to add stuff
     public void launchMessages(MenuItem messages) {
         Intent intent = new Intent(this, MessagesActivity.class);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
-        //intent.putExtra("doctor_ID",doctorID);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 

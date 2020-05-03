@@ -18,6 +18,8 @@ import cs401.group3.pillpopper.data.Doctor;
 public class DoctorProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
+    private String userID;
+    private int ACCOUNT_TYPE;
     private Doctor doctor = new Doctor("Doc Mike","docmike@gmail.com","123456");
 
 
@@ -53,7 +55,8 @@ public class DoctorProfileActivity extends AppCompatActivity {
         if (intent.getExtras().equals(null)) {
             return;
         }
-        String doctorID = intent.getExtras().getString("doctor_ID");
+        userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -64,13 +67,15 @@ public class DoctorProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    public void launchProfileEdit(View view) {
+    public void editProfile(View view) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
         String doctor_description = mDescription.getText().toString();
 
         intent.putExtra("name",doctor_name);
         intent.putExtra("description",doctor_description);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
