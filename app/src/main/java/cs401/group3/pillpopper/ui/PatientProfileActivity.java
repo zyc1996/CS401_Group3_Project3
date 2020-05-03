@@ -54,7 +54,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         //for database usage
         Intent intent = getIntent();
 
-        if (intent.getExtras() == null) {
+        if (intent.getExtras().isEmpty()) {
             return;
         }
 

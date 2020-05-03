@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -58,9 +59,27 @@ public class ProfileEditActivity extends AppCompatActivity {
         return true;
     }
 
+    //Re write the back button handling plz, state was never fixed
     public void onBack(MenuItem back) {
-        Intent intent = new Intent(this, PatientProfileActivity.class);
-        startActivity(intent);
+        Intent intent;
+        if(ACCOUNT_TYPE == 2){
+            intent = new Intent(this, DoctorProfileActivity.class);
+            startActivity(intent);
+        }
+        else if(ACCOUNT_TYPE == 1) {
+            intent = new Intent(this, PatientProfileActivity.class);
+            startActivity(intent);
+        }else{
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            Toast.makeText(ProfileEditActivity.this,"ERROR ACCOUNT TYPE, APP LOGOUT",Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    10000);
+            intent = new Intent(this, LoginStartActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void confirmChanges(View view){

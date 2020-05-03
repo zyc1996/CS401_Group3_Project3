@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -116,12 +115,12 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         return true;
     }
 
-    public void launchDoctorProfile(View view){
-        Intent intent = new Intent(this,DoctorProfileActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
+//    public void launchDoctorProfile(View view){
+//        Intent intent = new Intent(this,DoctorProfileActivity.class);
+//        intent.putExtra("user_ID",userID);
+//        intent.putExtra("account_type",ACCOUNT_TYPE);
+//        startActivity(intent);
+//    }
 
     //needs database to find patient
     //click on patient to add stuff

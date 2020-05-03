@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
     private int REQUEST_CODE = 1;
     private String userID;
     private int ACCOUNT_TYPE;
+    //dummy doctor
     private Doctor doctor = new Doctor("Doc Mike","docmike@gmail.com","123456");
 
 
@@ -52,7 +52,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
         //for database usage
         Intent intent = getIntent();
-        if (intent.getExtras().equals(null)) {
+        if (intent.getExtras().isEmpty()) {
             return;
         }
         userID = intent.getExtras().getString("user_ID");
@@ -67,7 +67,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    public void editProfile(View view) {
+    public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
         String doctor_description = mDescription.getText().toString();
@@ -79,8 +79,8 @@ public class DoctorProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
-    public void onBack(MenuItem back) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
+    public void profileBack(MenuItem back) {
+        Intent intent = new Intent(this, DoctorProfileActivity.class);
         startActivity(intent);
     }
 

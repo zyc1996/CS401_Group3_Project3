@@ -3,14 +3,11 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,10 +51,11 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_patient_doctor_view);
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        setSupportActionBar(toolbar);
+//        // Find the toolbar view inside the activity layout
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
+//        // Sets the Toolbar to act as the ActionBar for this Activity window.
+//        setSupportActionBar(toolbar);
+
 
         Intent intent = getIntent();
         if(intent.getExtras() == null){
@@ -124,41 +122,15 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
-        return true;
-    }
 
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("user_ID", patientID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
+//    // Menu icons are inflated just as they were with actionbar
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_back, menu);
+//        return true;
+//    }
 
-    public void launchProfile(MenuItem profile){
-        Intent intent = new Intent(this,PatientProfileActivity.class);
-        intent.putExtra("user_ID", patientID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
-
-    /*
-    public void launchPatientProfile(View view){
-        Intent intent = new Intent(this,PatientProfileActivity.class);
-        intent.putExtra("patient_ID",userID);
-        startActivity(intent);
-    }
-
-     */
-
-    public void onLogout(MenuItem logout) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
-        startActivity(intent);
-    }
 
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);
@@ -169,22 +141,6 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
 
-//    public void launchEditPrescription(View v){
-//        Intent intent = new Intent (this, EditPrescriptionActivity.class);
-//        String name = mUserName.getText().toString();
-//        intent.putExtra("name",name);
-//        intent.putExtra("user_ID",userID);
-//        intent.putExtra("account_type",ACCOUNT_TYPE);
-//        intent.putExtra("prescription_ID",prescription.get_id());
-//
-//        intent.putExtra("schedule_type",prescription.is_timed());
-//        intent.putExtra("start_time",prescription.get_Start_time());
-//        intent.putExtra("times_per_day",prescription.get_times_per_day());
-//        intent.putExtra("break_hours",prescription.get_time_between_dose());
-//        intent.putExtra("description",prescription.get_content());
-//
-//        startActivityForResult(intent, REQUEST_CODE_EDIT);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
