@@ -1,6 +1,5 @@
 package cs401.group3.pillpopper.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,18 @@ import cs401.group3.pillpopper.data.Patient;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
     private List<Patient> patient;
-    private Context context;
+    private OnPatientListener mOnPatientListener;
 
-    public PatientAdapter(List<Patient> patient, Context context) {
+    public PatientAdapter(List<Patient> patient, OnPatientListener onPatientListener) {
         this.patient = patient;
-        this.context = context;
+        this.mOnPatientListener = onPatientListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_patient,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,mOnPatientListener);
     }
 
     @Override
@@ -46,18 +45,32 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         return patient.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView mPatientProfile;
-        public TextView mPatientName;
-        public TextView mPatientDescription;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+         ImageView mPatientProfile;
+         TextView mPatientName;
+         TextView mPatientDescription;
+        OnPatientListener onPatientListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnPatientListener onPatientListener) {
             super(itemView);
 
             mPatientProfile = (ImageView) itemView.findViewById(R.id.patient_profile);
             mPatientName = (TextView) itemView.findViewById(R.id.patient_name);
             mPatientDescription = (TextView) itemView.findViewById(R.id.patient_description);
+
+            this.onPatientListener = onPatientListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onPatientListener.onPatientClick(getAdapterPosition());
         }
     }
 
+    //detect click
+    public interface OnPatientListener{
+        void onPatientClick (int position);
+    }
 }

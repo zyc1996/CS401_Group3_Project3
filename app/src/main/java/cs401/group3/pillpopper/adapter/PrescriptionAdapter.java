@@ -1,6 +1,5 @@
 package cs401.group3.pillpopper.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import cs401.group3.pillpopper.data.Prescription;
 public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapter.ViewHolder> {
 
     private List<Prescription> prescription;
-    private Context context;
     private RecyclerViewClickListener mRecyclerViewClickListener;
 
     public interface RecyclerViewClickListener{
@@ -26,7 +24,6 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
 
     public PrescriptionAdapter(List<Prescription> prescription, RecyclerViewClickListener recyclerViewClickListener) {
         this.prescription = prescription;
-        this.context = context;
         this.mRecyclerViewClickListener = recyclerViewClickListener;
     }
 

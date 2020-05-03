@@ -26,7 +26,7 @@ import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PatientAdapter;
 import cs401.group3.pillpopper.data.Patient;
 
-public class HomepageDoctorActivity extends AppCompatActivity {
+public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
 
     private String userID;
     private int ACCOUNT_TYPE;
@@ -47,8 +47,6 @@ public class HomepageDoctorActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.homepageDoctorToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
-
-        mUserName = findViewById(R.id.user_name_title);
 
         Intent intent = getIntent();
         userID = intent.getExtras().getString("user_ID");
@@ -143,6 +141,16 @@ public class HomepageDoctorActivity extends AppCompatActivity {
 
     public void onLogout(MenuItem logout) {
         Intent intent = new Intent(this, LoginStartActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPatientClick(int position) {
+        Intent intent = new Intent(this,DoctorViewHomepagePatientActivity.class);
+        String patientName = patients.get(position).get_user_name();
+        intent.putExtra("patient_name",patientName);
+        String patientID = patients.get(position).get_patient_id();
+        intent.putExtra("patient_ID",patientID);
         startActivity(intent);
     }
 
