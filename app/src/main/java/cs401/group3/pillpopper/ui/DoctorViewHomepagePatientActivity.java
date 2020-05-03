@@ -54,6 +54,9 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+        if(intent.getExtras() == null){
+            return;
+        }
 
         if(intent.hasExtra("Dummy by pass string")){ //cuz somehow data is having a delay pass again
 
