@@ -23,14 +23,6 @@ public class PrescriptionTest {
     }
 
     /**
-     * Method to test if Prescription is by a doctor existing in the database
-     */
-    @Test
-    public void testBy_doctor() {
-        //does doctor field exist in database object?
-    }
-
-    /**
      * Method to test Register method to add Prescription class object to database
      */
     @Test

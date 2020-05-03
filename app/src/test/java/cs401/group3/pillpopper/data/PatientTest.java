@@ -46,12 +46,4 @@ public class PatientTest {
         testPat.add_prescription("test_id", testPre, "mon");
     }
 
-    /**
-     * Method to test remove_prescription method to remove Prescription class object to database by patient id with day
-     */
-    @Test
-    public void testRemove_prescription() {
-        //database remove
-        testPat.remove_prescription("test_id", testPre, "mon");
-    }
 }

@@ -15,7 +15,7 @@ public class DoctorTest {
      * Helper method to initialize variables before every test
      */
     @Before
-    public void init(){
+    public void init() {
         testDoc = new Doctor();
     }
 
@@ -25,21 +25,5 @@ public class DoctorTest {
     @Test
     public void testRegister() {
         assertTrue(testDoc.register());
-    }
-
-    /**
-     * Method to test add_Patient method to add Patient by id
-     */
-    @Test
-    public void testAdd_patient() {
-        assertTrue(testDoc.add_patient("test_id"));
-    }
-
-    /**
-     * Method to test add_Patient method to remove Patient by id
-     */
-    @Test
-    public void testRemove_patient() {
-        assertTrue(testDoc.remove_patient("test_id"));
     }
 }

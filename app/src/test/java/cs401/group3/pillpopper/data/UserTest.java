@@ -48,24 +48,6 @@ public class UserTest {
     }
 
     /**
-     * Method to test User's login method if patient does not exist
-     */
-    @Test
-    public void testLogin() {
-        //Check if username exists in database
-        //first check doctor collection
-        //if it exists in doctor collection, return string + id
-        //return "doctor " + doctor id;
-
-        //next check patient collection
-        //if it exists in patient collection, return string + id
-        //return "patient " + patient id;
-
-        //else return none
-        assertEquals(testUser.login("testName", "TestPass"), "none");
-    }
-
-    /**
      * Method to test User's send_message method with a target that does not exist
      */
     @Test
