@@ -18,27 +18,33 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
 
     private List<Prescription> prescription;
     private Context context;
+    private RecyclerViewClickListener mRecyclerViewClickListener;
 
-    public PrescriptionAdapter(List<Prescription> prescription) {
+    public interface RecyclerViewClickListener{
+        void recyclerViewListClicked(int position);
+    }
+
+    public PrescriptionAdapter(List<Prescription> prescription, RecyclerViewClickListener recyclerViewClickListener) {
         this.prescription = prescription;
         this.context = context;
+        this.mRecyclerViewClickListener = recyclerViewClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_prescription,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mRecyclerViewClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Prescription onePrescription = prescription.get(position);
 
-        if(onePrescription.getStart_time().isEmpty()) {
+        if(onePrescription.get_Start_time().isEmpty()) {
             holder.mPrescriptionStartTime.setText("Un-timed Prescription");
         }else{
-            holder.mPrescriptionStartTime.setText(onePrescription.getStart_time());
+            holder.mPrescriptionStartTime.setText(onePrescription.get_Start_time());
         }
         holder.mPrescriptionDescription.setText(onePrescription.get_content());
     }
@@ -48,15 +54,31 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
         return prescription.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView mPrescriptionStartTime;
-        public TextView mPrescriptionDescription;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView mPrescriptionStartTime;
+        TextView mPrescriptionDescription;
 
-        public ViewHolder(@NonNull View itemView) {
+        RecyclerViewClickListener recyclerViewClickListener;
+
+        public ViewHolder(@NonNull View itemView, RecyclerViewClickListener recyclerViewClickListener) {
             super(itemView);
 
             mPrescriptionStartTime = (TextView) itemView.findViewById(R.id.prescription_start_time);
             mPrescriptionDescription = (TextView) itemView.findViewById(R.id.prescription_description);
+            this.recyclerViewClickListener = recyclerViewClickListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            recyclerViewClickListener.recyclerViewListClicked(getAdapterPosition());
+        }
+    }
+
+    public void refreshList(List<Prescription> prescription){
+        this.prescription.clear();
+        this.prescription.addAll(prescription);
+        notifyDataSetChanged();
     }
 }

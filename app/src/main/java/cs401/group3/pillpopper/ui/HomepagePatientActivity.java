@@ -30,12 +30,13 @@ import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.Prescription;
 
-public class HomepagePatientActivity extends AppCompatActivity {
+public class HomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
 
     private String userID;
     private int ACCOUNT_TYPE;
     private Patient patient;
-    private int REQUEST_CODE = 2;
+    private int REQUEST_CODE_ADD = 2;
+    private int REQUEST_CODE_EDIT = 3;
     private DataSnapshot user_info;
 
     private TextView mUserName;
@@ -43,7 +44,9 @@ public class HomepagePatientActivity extends AppCompatActivity {
     //recyclerView
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
-    private List<Prescription> prescription;
+
+    //dummy data (local)
+    private List<Prescription> prescription = new ArrayList<>();
 
 
     @Override
@@ -93,32 +96,31 @@ public class HomepagePatientActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        prescription = new ArrayList<>();
+        if(prescription.isEmpty()){
+            Random random = new Random();
+            for(int i = 0; i < 10; i++){
+                //dummy data
 
-        //dummy test data
-        Random random = new Random();
-        for(int i = 0; i < 10; i++){
-            //dummy data
-
-            String content = "Dummy prescription " + (i+1);
-            boolean timed;
-            if(i%2 == 0){
-                timed = true;
-            }else{
-                timed = false;
+                String content = "Dummy prescription " + (i+1);
+                boolean timed;
+                if(i%2 == 0){
+                    timed = true;
+                }else{
+                    timed = false;
+                }
+                int times_in = random.nextInt(9)+1;
+                int time_between = random.nextInt(3)+1;
+                String start_time = "";
+                if(timed) {
+                    start_time = (random.nextInt(11)+1) + ":00 pm";
+                }
+                Prescription p = new Prescription(content,timed,times_in,time_between,start_time);
+                p.set_id("Position" + i);
+                prescription.add(p);
             }
-            int times_in = random.nextInt(9)+1;
-            int time_between = random.nextInt(3)+1;
-            String start_time = "";
-            if(timed) {
-               start_time = (random.nextInt(11)+1) + ":00 pm";
-            }
-            Prescription p = new Prescription(content,timed,times_in,time_between,start_time);
-            prescription.add(p);
         }
 
-        adapter = new PrescriptionAdapter(prescription);
-
+        adapter = new PrescriptionAdapter(prescription,this);
         mRecyclerView.setAdapter(adapter);
 
     }
@@ -160,19 +162,36 @@ public class HomepagePatientActivity extends AppCompatActivity {
     }
 
     public void launchAddPrescription(View view){
-        Intent intent = new Intent (this,AddPrescriptionActivity.class);
+        Intent intent = new Intent (this, AddPrescriptionActivity.class);
         String name = mUserName.getText().toString();
         intent.putExtra("name",name);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivityForResult(intent,REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_CODE_ADD);
     }
+
+//    public void launchEditPrescription(View v){
+//        Intent intent = new Intent (this, EditPrescriptionActivity.class);
+//        String name = mUserName.getText().toString();
+//        intent.putExtra("name",name);
+//        intent.putExtra("user_ID",userID);
+//        intent.putExtra("account_type",ACCOUNT_TYPE);
+//        intent.putExtra("prescription_ID",prescription.get_id());
+//
+//        intent.putExtra("schedule_type",prescription.is_timed());
+//        intent.putExtra("start_time",prescription.get_Start_time());
+//        intent.putExtra("times_per_day",prescription.get_times_per_day());
+//        intent.putExtra("break_hours",prescription.get_time_between_dose());
+//        intent.putExtra("description",prescription.get_content());
+//
+//        startActivityForResult(intent, REQUEST_CODE_EDIT);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_ADD && resultCode == RESULT_OK) {
 
             boolean[] days = new boolean[]{false,false,false,false,false,false,false};
             boolean scheduleType=false;
@@ -241,7 +260,64 @@ public class HomepagePatientActivity extends AppCompatActivity {
             }
 
         }
+        else if (requestCode == REQUEST_CODE_EDIT && resultCode == RESULT_OK){
+            int changeIndex = -1;
+            if(data.hasExtra("Dummy Extra")){
+                //idk dummy variables
+            }
+            //check with ID first
+            if(data.hasExtra("prescription_ID")){
+                String returnedID = data.getExtras().getString("prescription_ID");
+                //fetch the correct prescription
+
+                Log.i("return tag1",returnedID);
+                for(int i = 0; i < prescription.size(); i++){
+                    Log.i("return tag2", prescription.get(i).get_id());
+                    if(prescription.get(i).get_id().equals(returnedID)){
+                        changeIndex = i;
+                    }
+                }
+                if(changeIndex == -1){ //if somehow not found
+                    return;
+                }else{// if found
+                    if(data.hasExtra("schedule_type")){
+                        prescription.get(changeIndex).set_timed(data.getExtras().getBoolean("schedule_type"));
+                        if(data.getExtras().getBoolean("schedule_type")){
+                            prescription.get(changeIndex).setStart_time(data.getExtras().getString("start_time"));
+                        }else{
+                            prescription.get(changeIndex).setStart_time("");
+                        }
+                    }
+                    if(data.hasExtra("times_per_day")){
+                        prescription.get(changeIndex).set_times_per_day(data.getExtras().getInt("times_per_day"));
+                    }
+                    if(data.hasExtra("break_hours")){
+                        prescription.get(changeIndex).set_time_between_dose(data.getExtras().getInt("break_hours"));
+                    }
+                    if(data.hasExtra("description")){
+                        prescription.get(changeIndex).set_content(data.getExtras().getString("description"));
+                    }
+                }
+            }
+            adapter.notifyItemChanged(changeIndex);
+        }
     }
 
+    @Override
+    public void recyclerViewListClicked(int position) {
+        Intent intent = new Intent(this, EditPrescriptionActivity.class);
+        String name = mUserName.getText().toString();
+        intent.putExtra("name",name);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
+        intent.putExtra("prescription_ID",prescription.get(position).get_id());
+
+        intent.putExtra("schedule_type",prescription.get(position).is_timed());
+        intent.putExtra("start_time",prescription.get(position).get_Start_time());
+        intent.putExtra("times_per_day",prescription.get(position).get_times_per_day());
+        intent.putExtra("break_hours",prescription.get(position).get_time_between_dose());
+        intent.putExtra("description",prescription.get(position).get_content());
+        startActivityForResult(intent,REQUEST_CODE_EDIT);
+    }
 
 }

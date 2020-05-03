@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/edit_prescription"
         android:layout_width="109dp"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
