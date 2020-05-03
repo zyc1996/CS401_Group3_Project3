@@ -14,6 +14,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +37,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     private Patient patient;
     private int REQUEST_CODE_ADD = 2;
     private int REQUEST_CODE_EDIT = 3;
-//    private DataSnapshot user_info;
+    private DataSnapshot user_info;
 
     private TextView mPatientName;
 
@@ -46,7 +52,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage_patient);
+        setContentView(R.layout.activity_homepage_patient_doctor_view);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
@@ -57,36 +63,31 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         if(intent.getExtras() == null){
             return;
         }
-
-        if(intent.hasExtra("Dummy by pass string")){ //cuz somehow data is having a delay pass again
-
-        }
-
-        mPatientName = findViewById(R.id.view_patient_name_title);
+        mPatientName = findViewById(R.id.unique_view_patient_name_from_doc);
         patientName = intent.getExtras().getString("patient_name");
         Log.i("string check", patientName);
         mPatientName.setText(patientName); //WHY DO YOU CRASH FOR NULL OBJECT REFERENCE WHEN THERE IS NO NULL OBJECT
         Log.i("crash tag", mPatientName.getText().toString());
         patientID = intent.getExtras().getString("patient_ID");
 
-        /*Currently does work with database so I'm taking these out*/
-//        DatabaseReference result;
-//        result = FirebaseDatabase.getInstance().getReference("patients");
-//
-//        result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    user_info = dataSnapshot;
-//                    Log.i("my tag", user_info.getValue().toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.i("my tag", "User data retrieval error");
-//            }
-//        });
+
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
+
+        result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_info = dataSnapshot;
+                    Log.i("my tag", user_info.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
 
         //set recyclerview bounds
         mRecyclerView = findViewById(R.id.prescription_list);
