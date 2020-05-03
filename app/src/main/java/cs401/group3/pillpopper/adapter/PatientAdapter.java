@@ -15,11 +15,11 @@ import java.util.List;
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
 
-public class patientAdapter extends RecyclerView.Adapter<patientAdapter.ViewHolder> {
+public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
     private List<Patient> patient;
     private Context context;
 
-    public patientAdapter(List<Patient> patient, Context context) {
+    public PatientAdapter(List<Patient> patient, Context context) {
         this.patient = patient;
         this.context = context;
     }

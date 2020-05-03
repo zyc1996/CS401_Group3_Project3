@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,9 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.Prescription;
 
@@ -33,6 +39,12 @@ public class HomepagePatientActivity extends AppCompatActivity {
     private DataSnapshot user_info;
 
     private TextView mUserName;
+
+    //recyclerView
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<Prescription> prescription;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +88,39 @@ public class HomepagePatientActivity extends AppCompatActivity {
                 Log.i("my tag", "User data retrieval error");
             }
         });
+
+        mRecyclerView = findViewById(R.id.prescription_list);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        prescription = new ArrayList<>();
+
+        //dummy test data
+        Random random = new Random();
+        for(int i = 0; i < 10; i++){
+            //dummy data
+
+            String content = "Dummy prescription " + (i+1);
+            boolean timed;
+            if(i%2 == 0){
+                timed = true;
+            }else{
+                timed = false;
+            }
+            int times_in = random.nextInt(9)+1;
+            int time_between = random.nextInt(3)+1;
+            String start_time = "";
+            if(timed) {
+               start_time = (random.nextInt(11)+1) + ":00 pm";
+            }
+            Prescription p = new Prescription(content,timed,times_in,time_between,start_time);
+            prescription.add(p);
+        }
+
+        adapter = new PrescriptionAdapter(prescription);
+
+        mRecyclerView.setAdapter(adapter);
+
     }
 
     // Menu icons are inflated just as they were with actionbar

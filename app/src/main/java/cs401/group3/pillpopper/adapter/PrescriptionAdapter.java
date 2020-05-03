@@ -14,12 +14,12 @@ import java.util.List;
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Prescription;
 
-public class prescriptionAdapter extends RecyclerView.Adapter<prescriptionAdapter.ViewHolder> {
+public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapter.ViewHolder> {
 
     private List<Prescription> prescription;
     private Context context;
 
-    public prescriptionAdapter(List<Prescription> prescription) {
+    public PrescriptionAdapter(List<Prescription> prescription) {
         this.prescription = prescription;
         this.context = context;
     }
@@ -35,7 +35,11 @@ public class prescriptionAdapter extends RecyclerView.Adapter<prescriptionAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Prescription onePrescription = prescription.get(position);
 
-        holder.mPrescriptionStartTime.setText(onePrescription.getStart_time());
+        if(onePrescription.getStart_time().isEmpty()) {
+            holder.mPrescriptionStartTime.setText("Un-timed Prescription");
+        }else{
+            holder.mPrescriptionStartTime.setText(onePrescription.getStart_time());
+        }
         holder.mPrescriptionDescription.setText(onePrescription.get_content());
     }
 

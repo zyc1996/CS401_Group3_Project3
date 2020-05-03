@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".adapter.patientAdapter"></activity>
-        <activity android:name=".adapter.prescriptionAdapter" />
+        <activity android:name=".adapter.PatientAdapter"></activity>
+        <activity android:name=".adapter.PrescriptionAdapter" />
         <activity android:name=".ui.MessageViewActivity" />
         <activity android:name=".ui.MessagesActivity" />
         <activity android:name=".ui.HomepageDoctorActivity" />
