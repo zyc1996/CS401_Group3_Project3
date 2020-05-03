@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,6 +17,9 @@ import cs401.group3.pillpopper.data.Doctor;
 public class DoctorProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
+    private String userID;
+    private int ACCOUNT_TYPE;
+    //dummy doctor
     private Doctor doctor = new Doctor("Doc Mike","docmike@gmail.com","123456");
 
 
@@ -50,10 +52,11 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
         //for database usage
         Intent intent = getIntent();
-        if (intent.getExtras().equals(null)) {
+        if (intent.getExtras().isEmpty()) {
             return;
         }
-        String doctorID = intent.getExtras().getString("doctor_ID");
+        userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -64,18 +67,20 @@ public class DoctorProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    public void launchProfileEdit(View view) {
+    public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
         String doctor_description = mDescription.getText().toString();
 
         intent.putExtra("name",doctor_name);
         intent.putExtra("description",doctor_description);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
-    public void onBack(MenuItem back) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
+    public void profileBack(MenuItem back) {
+        Intent intent = new Intent(this, DoctorProfileActivity.class);
         startActivity(intent);
     }
 

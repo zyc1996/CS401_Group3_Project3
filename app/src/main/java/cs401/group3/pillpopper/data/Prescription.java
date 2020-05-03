@@ -75,7 +75,7 @@ public class Prescription {
         return true;
     }
 
-    public String getStart_time() {
+    public String get_Start_time() {
         return start_time;
     }
 
