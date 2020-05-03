@@ -3,7 +3,6 @@ package cs401.group3.pillpopper.data;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Patient extends User {
@@ -48,12 +47,6 @@ public class Patient extends User {
         ref.setValue(new_entry);
 
         this.patient_id = ref.getKey();
-
-        //TEST
-        Prescription test = new Prescription("Test content", true,
-            3, 200);
-        add_prescription(this.patient_id, test,"mon");
-
         return true;
     }
 

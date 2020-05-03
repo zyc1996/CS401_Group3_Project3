@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.MessageViewActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/messageViewToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white"></androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/recipient_name"
         android:layout_width="wrap_content"
@@ -22,17 +31,18 @@
         android:id="@+id/message_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:text="@string/messaging_with_title"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/messageViewToolbar" />
 
     <ScrollView
         android:id="@+id/message_box"
         android:layout_width="360dp"
-        android:layout_height="550dp"
+        android:layout_height="480dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

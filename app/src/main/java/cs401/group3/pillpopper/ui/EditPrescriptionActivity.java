@@ -18,15 +18,16 @@ import java.util.Calendar;
 
 import cs401.group3.pillpopper.R;
 
-public class AddPrescriptionActivity extends AppCompatActivity {
+public class EditPrescriptionActivity extends AppCompatActivity {
 
     private String userID;
     private int ACCOUNT_TYPE;
+    private String prescriptionID;
 
     private TextView mName;
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     private RadioGroup mScheduleType;
-    private RadioButton mSelected;
+    private RadioButton mSelected,mTimed,mUntimed;
     private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
     Calendar calendar;
     int hour, minute;
@@ -37,12 +38,18 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_prescription);
+        setContentView(R.layout.activity_edit_prescription);
 
         Intent intent = getIntent();
+        if(intent.getExtras() == null){
+            return;
+        }
+
         String name = intent.getExtras().getString("name");
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
+        prescriptionID = intent.getExtras().getString("prescription_ID");
+
 
         mName = findViewById(R.id.user_name);
         mName.setText(name);
@@ -133,7 +140,19 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
 
         mScheduleType = findViewById(R.id.schedule_type);
+        mTimed = findViewById(R.id.timed_radio_button);
+        mUntimed = findViewById(R.id.untimed_radio_button);
+        boolean isTimed = intent.getExtras().getBoolean("schedule_type");
+        if(isTimed){
+            mTimed.setChecked(true);
+        }else{
+            mUntimed.setChecked(true);
+        }
+
+
         mStartTime = findViewById(R.id.dose_time_fill);
+        String startTime = intent.getExtras().getString("start_time");
+        mStartTime.setText(startTime);
         mStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +160,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 hour = calendar.get(Calendar.HOUR_OF_DAY);
                 minute = calendar.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddPrescriptionActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditPrescriptionActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         mStartTime.setText(String.format("%02d:%02d",hourOfDay,minute));
@@ -153,8 +172,16 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
 
         mTimesPerDay = findViewById(R.id.times_taken);
+        int timesPerDay = intent.getExtras().getInt("times_per_day");
+        mTimesPerDay.setText(String.valueOf(timesPerDay));
+
         mBreakHours = findViewById(R.id.dosage_break_time);
+        int breakHours = intent.getExtras().getInt("break_hours");
+        mBreakHours.setText(String.valueOf(breakHours));
+
         mDescription = findViewById(R.id.prescription_description_fill);
+        String description = intent.getExtras().getString("description");
+        mDescription.setText(description);
 
     }
 
@@ -190,7 +217,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         description = mDescription.getText().toString();
 
         Intent replyIntent = new Intent();
-        replyIntent.putExtra("days",days);
         replyIntent.putExtra("schedule_type",scheduleType);
         //if it is timed
         if(scheduleType){
@@ -199,8 +225,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);
         replyIntent.putExtra("description",description);
+
         replyIntent.putExtra("user_ID",userID);
         replyIntent.putExtra("account_type",ACCOUNT_TYPE);
+        replyIntent.putExtra("prescription_ID",prescriptionID);
 
         Log.i("my tag", replyIntent.getExtras().toString());
 

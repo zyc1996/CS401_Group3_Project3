@@ -3,11 +3,13 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
@@ -15,6 +17,9 @@ import cs401.group3.pillpopper.data.Doctor;
 public class DoctorProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
+    private String userID;
+    private int ACCOUNT_TYPE;
+    //dummy doctor
     private Doctor doctor = new Doctor("Doc Mike","docmike@gmail.com","123456");
 
 
@@ -28,9 +33,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_doctor);
 
-        //for database usage
-        Intent intent = getIntent();
-        String doctorID = intent.getExtras().getString("doctor_ID");
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileDoctorToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
 
         mDescription = findViewById(R.id.description_text);
         mName = findViewById(R.id.user_name);
@@ -43,16 +49,39 @@ public class DoctorProfileActivity extends AppCompatActivity {
         mName.setText(doctor.get_user_name());
         mCode.setText("Doctor Code: " + doctor.get_doctor_id());
         mJoinDate.setText("Member since: "+doctor.get_created_at());
+
+        //for database usage
+        Intent intent = getIntent();
+        if (intent.getExtras().isEmpty()) {
+            return;
+        }
+        userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
     }
 
-    public void launchProfileEdit(View view) {
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
         String doctor_description = mDescription.getText().toString();
 
         intent.putExtra("name",doctor_name);
         intent.putExtra("description",doctor_description);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
+    }
+
+    public void profileBack(MenuItem back) {
+        Intent intent = new Intent(this, DoctorProfileActivity.class);
+        startActivity(intent);
     }
 
     //receiving changes

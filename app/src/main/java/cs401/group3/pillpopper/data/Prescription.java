@@ -9,6 +9,7 @@ import java.util.Date;
 public class Prescription {
     private String id;
     private String content;
+    private String start_time;
     private boolean timed; // true means that prescription is taken at a specific time
                    // false means at any time that day (or with meals, etc)
     private int times_per_day; // how many times prescription should repeat itself
@@ -21,6 +22,7 @@ public class Prescription {
     public Prescription() {
         content = "";
         timed = false;
+        start_time = "";
         times_per_day = 0;
         time_between_dose = 0; //Should this mean minutes?
         created_at = new Date();
@@ -30,9 +32,10 @@ public class Prescription {
     }
 
     public Prescription(String content_in, boolean timed_in, int times_in
-            , int time_between_in) {
+            , int time_between_in, String start_Time) {
         content = content_in;
         timed = timed_in;
+        start_time = start_Time;
         times_per_day = times_in;
         time_between_dose = time_between_in; //Should this mean minutes?
         created_at = new Date();
@@ -51,12 +54,14 @@ public class Prescription {
             public boolean timed;
             public int times_per_day;
             public int time_between_dose;
+            public String start_time;
             public Date created_at;
         }
 
         Entry new_entry = new Entry();
         new_entry.content = this.content;
         new_entry.timed = this.timed;
+        new_entry.start_time = this.start_time;
         new_entry.times_per_day = this.times_per_day;
         new_entry.time_between_dose = this.time_between_dose;
         new_entry.created_at = this.created_at;
@@ -68,6 +73,14 @@ public class Prescription {
         this.id = ref.getKey();
 
         return true;
+    }
+
+    public String get_Start_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
     }
 
     public String get_id() {
