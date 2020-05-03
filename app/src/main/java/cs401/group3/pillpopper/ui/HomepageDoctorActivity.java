@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,7 +19,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.adapter.PatientAdapter;
+import cs401.group3.pillpopper.data.Patient;
 
 public class HomepageDoctorActivity extends AppCompatActivity {
 
@@ -25,6 +32,10 @@ public class HomepageDoctorActivity extends AppCompatActivity {
     private int ACCOUNT_TYPE;
     private TextView mUserName;
     private DataSnapshot user_info;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<Patient> patients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +76,37 @@ public class HomepageDoctorActivity extends AppCompatActivity {
             }
         });
         mUserName = findViewById(R.id.user_name_title);
+
+        mRecyclerView = findViewById(R.id.patient_list);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //patient dummy test data
+        if(patients.isEmpty()) {
+            Patient p = new Patient("Jacky Jack", "JJ@gmail.com", "letmein");
+            p.set_patient_id("Patient 1");
+            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
+            patients.add(p);
+            p = new Patient("Lilly Rose", "LR@gmail.com", "letmein");
+            p.set_patient_id("Patient 2");
+            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
+            patients.add(p);
+            p = new Patient("Mike McDonalds", "MM@gmail.com", "letmein");
+            p.set_patient_id("Patient 3");
+            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
+            patients.add(p);
+            p = new Patient("Rick Randy", "RR@gmail.com", "letmein");
+            p.set_patient_id("Patient 4");
+            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
+            patients.add(p);
+            p = new Patient("Abby Enderson", "AE@gmail.com", "letmein");
+            p.set_patient_id("Patient 5");
+            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
+
+        }
+
+        adapter = new PatientAdapter(patients,this);
+        mRecyclerView.setAdapter(adapter);
     }
 
 
