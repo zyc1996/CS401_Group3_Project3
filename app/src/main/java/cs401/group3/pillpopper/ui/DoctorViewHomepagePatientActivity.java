@@ -73,6 +73,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         Log.i("crash tag", mPatientName.getText().toString());
         patientID = intent.getExtras().getString("patient_ID");
 
+        day_selection = "Monday";
 
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
@@ -103,7 +104,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
 
     }
 
-    public void refresh_prescription_list(){
+    public void refresh_prescription_list() {
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
         result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,10 +118,11 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
 
                     // for each day in the prescriptions section of the user's data,
                     // get the prescription keys for the selected day
-                    for(DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()){
-                        prescription_keys.add(key.getKey());
+                    if(dataSnapshot.child("prescriptions").exists()){
+                        for (DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()) {
+                            prescription_keys.add(key.getKey());
+                        }
                     }
-
                     //next, query the database with the keys you received.
                     populate_prescriptions(prescription_keys);
                 }
@@ -131,9 +133,11 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                 Log.i("my tag", "User data retrieval error");
             }
         });
+    }
 
     public void populate_prescriptions(ArrayList<String> keys){
         prescription_list.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("prescriptions")

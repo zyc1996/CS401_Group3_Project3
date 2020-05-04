@@ -54,26 +54,8 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         Intent intent = getIntent();
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
+        refresh_patient_list();
 
-        DatabaseReference result;
-
-        result = FirebaseDatabase.getInstance().getReference("doctors");
-        result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    user_info = dataSnapshot;
-                    Log.i("my tag", user_info.getValue().toString());
-                    mUserName = findViewById(R.id.user_name_title);
-                    mUserName.setText(user_info.child("user_name").getValue(String.class));
-                    refresh_patient_list();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.i("my tag", "User data retrieval error");
-            }
-        });
         mUserName = findViewById(R.id.user_name_title);
 
         mRecyclerView = findViewById(R.id.patient_list);
@@ -88,14 +70,33 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
 
     public void refresh_patient_list(){
         DatabaseReference result;
-        ArrayList<String> keys;
-        keys = new ArrayList<String>();
-        result = FirebaseDatabase.getInstance().getReference("doc");
-        for(DataSnapshot key : user_info.child("patients").getChildren()){
-            keys.add(key.getKey());
-        }
 
-        populate_patients(keys);
+        result = FirebaseDatabase.getInstance().getReference("doctors");
+        result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_info = dataSnapshot;
+                    Log.i("my tag", user_info.getValue().toString());
+                    mUserName = findViewById(R.id.user_name_title);
+                    mUserName.setText(user_info.child("user_name").getValue(String.class));
+
+                    ArrayList<String> keys;
+                    keys = new ArrayList<String>();
+
+                    for(DataSnapshot key : user_info.child("patients").getChildren()){
+                        keys.add(key.getKey());
+                    }
+
+                    populate_patients(keys);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
     }
 
 
@@ -159,10 +160,12 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
 
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
-        result.orderByChild("user_name").equalTo(mPatientEmail.getText().toString()).
+        result.orderByChild("email").equalTo(patientEmail).
                 limitToFirst(1).addValueEventListener(new ValueEventListener(){
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot){
+                        Log.i("my tag", dataSnapshot.toString());
+
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Doctor.add_patient(userID, data.getKey());
                             refresh_patient_list();

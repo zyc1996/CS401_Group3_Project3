@@ -94,8 +94,12 @@ public class User {
     }
 
     public String get_created_at() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         return format.format(created_at);
 
+    }
+
+    public void set_created_at(Date created_at) {
+        this.created_at = created_at;
     }
 }

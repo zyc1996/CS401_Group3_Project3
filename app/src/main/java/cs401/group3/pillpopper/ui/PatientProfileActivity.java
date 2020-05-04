@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
 
@@ -73,9 +75,17 @@ public class PatientProfileActivity extends AppCompatActivity {
                     patient = new Patient(dataSnapshot.child("user_name").getValue(String.class),
                             dataSnapshot.child("email").getValue(String.class),
                             "");
-                    patient.set_personal_description(dataSnapshot.child("description").getValue(String.class));
+                    patient.set_personal_description(dataSnapshot.child("personal_description").getValue(String.class));
+                    patient.set_created_at(dataSnapshot.child("created_at").getValue(Date.class));
 
                     Log.i("my tag", dataSnapshot.getValue().toString());
+
+                    if(patient.get_personal_description() != null) {
+                        mDescription.setText(patient.get_personal_description());
+                    }
+                    mName.setText(patient.get_user_name());
+                    mCode.setText("Patient Email: " + patient.get_email());
+                    mJoinDate.setText("Member since: "+patient.get_created_at());
                 }
             }
 
@@ -84,13 +94,6 @@ public class PatientProfileActivity extends AppCompatActivity {
                 Log.i("my tag", "User data retrieval error");
             }
         });
-
-        if(patient.get_personal_description() != null) {
-            mDescription.setText(patient.get_personal_description());
-        }
-        mName.setText(patient.get_user_name());
-        mCode.setText("Patient Email: " + patient.get_email());
-        mJoinDate.setText("Member since: "+patient.get_created_at());
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -122,6 +125,9 @@ public class PatientProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        String up_desc = "" , up_pic = "";
+
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
             if(data.hasExtra("dummy_data")){
                 //dummy data idk
@@ -130,13 +136,15 @@ public class PatientProfileActivity extends AppCompatActivity {
             if(data.hasExtra("picture_URL")){
                 Log.d("TagP","Picture URL returned");
                 //TODO:Picture stuff later
+                up_pic = data.getExtras().getString("picture_URL");
             }
             //update personal description
             if(data.hasExtra("description")){
                 Log.d("TagD","Description returned");
-                String description = data.getExtras().getString("description");
-                mDescription.setText(description);
+                up_desc = data.getExtras().getString("description");
             }
+            Patient.update_patient(userID, up_pic, up_desc);
+            mDescription.setText(up_desc);
         }
     }
 }

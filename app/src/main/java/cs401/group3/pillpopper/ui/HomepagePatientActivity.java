@@ -71,8 +71,6 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
 
-
-
         mRecyclerView = findViewById(R.id.prescription_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

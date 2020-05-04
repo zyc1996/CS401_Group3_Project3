@@ -70,4 +70,12 @@ public class Patient extends User {
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
         ref.child(patient_id).child("prescriptions").child(day).child(new_prescription.get_id()).setValue(true);
     }
+
+    public static void update_patient(String patient_id_in, String pic_in, String desc_in ){
+        //database update
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("patients");
+        ref.child(patient_id_in).child("personal_description").setValue(desc_in);
+        ref.child(patient_id_in).child("picture_url").setValue(pic_in);
+    }
 }
