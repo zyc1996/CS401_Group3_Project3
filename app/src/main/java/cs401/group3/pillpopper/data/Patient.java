@@ -35,12 +35,16 @@ public class Patient extends User {
             public String email;
             public String password;
             public Date created_at;
+            public String picture_url;
+            public String personal_description;
         }
         Entry new_entry = new Entry();
         new_entry.user_name = this.user_name;
         new_entry.email = this.email;
         new_entry.password = this.password;
         new_entry.created_at = this.created_at;
+        new_entry.picture_url = this.get_picture_url();
+        new_entry.personal_description = this.get_personal_description();
 
         DatabaseReference ref;
         ref = mDatabase.child("patients").push();
@@ -59,7 +63,7 @@ public class Patient extends User {
     }
 
     public static void add_prescription(String patient_id, Prescription new_prescription, String day){
-        //day should be of format mon/tue/wed/thu/fri/sat/sun
+
         //database add
         new_prescription.register();
         DatabaseReference ref;

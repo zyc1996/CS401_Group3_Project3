@@ -43,25 +43,6 @@ public class User {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    //Send a message to another user
-    public static boolean send_message(String content, String sender_id, String target_id){ //returns true if message was sent, false if error
-            //check if sender exists and that we already have a conversation with the target
-            //if we do, we call
-            //Conversation.send_message(content, sender_id, conv_id);
-
-
-        //if we reached this point, we do not have a conversation with the target yet
-        //check if target id exists in database
-
-        //if they do
-        Conversation new_convo = new Conversation(sender_id, target_id);
-        Conversation.send_message(content, sender_id, new_convo.get_id());
-
-
-        //if target does not exist, return false
-        return false;
-    }
-
     public boolean is_doctor(){
         if(accountType == 2){
             return true;

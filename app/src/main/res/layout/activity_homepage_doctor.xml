@@ -40,7 +40,8 @@
         android:text="@string/add_a_patient_by_code_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_title" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name_title"
+        android:onClick="addPatient"/>
 
     <EditText
         android:id="@+id/patient_code_fill"

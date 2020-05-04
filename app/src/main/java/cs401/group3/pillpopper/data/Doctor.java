@@ -1,6 +1,7 @@
 package cs401.group3.pillpopper.data;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 
@@ -25,12 +26,14 @@ public class Doctor extends User {
             public String picture_url;
             public String password;
             public Date created_at;
+            public String personal_description;
         }
         Entry new_entry = new Entry();
         new_entry.user_name = this.user_name;
         new_entry.email = this.email;
         new_entry.picture_url = this.picture_url;
         new_entry.password = this.password;
+        new_entry.personal_description = this.get_personal_description();
         new_entry.created_at = this.created_at;
 
         DatabaseReference ref;
@@ -47,5 +50,12 @@ public class Doctor extends User {
 
     public void set_doctor_id(String doctor_id) {
         this.doctor_id = doctor_id;
+    }
+
+    public static void add_patient(String doctor_id, String patient_id){
+        //database add
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("doctors");
+        ref.child(doctor_id).child("patients").child(patient_id).setValue(true);
     }
 }

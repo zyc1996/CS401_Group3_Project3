@@ -12,6 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
 
@@ -21,7 +27,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     //dummy variable
     private String userID;
     private int ACCOUNT_TYPE;
-    private Patient patient = new Patient("Jack Jumbo","someone@gmail.com","123456");
+    private Patient patient;
 
     private TextView mDescription;
     private TextView mName;
@@ -44,13 +50,6 @@ public class PatientProfileActivity extends AppCompatActivity {
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
 
-
-
-        mName.setText(patient.get_user_name());
-        mCode.setText("Patient Code: " + patient.get_patient_id());
-        mJoinDate.setText("Member since: "+patient.get_created_at());
-
-
         //for database usage
         Intent intent = getIntent();
 
@@ -61,9 +60,37 @@ public class PatientProfileActivity extends AppCompatActivity {
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
+
+        patient = new Patient();
+
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
+
+        result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    patient = new Patient(dataSnapshot.child("user_name").getValue(String.class),
+                            dataSnapshot.child("email").getValue(String.class),
+                            "");
+                    patient.set_personal_description(dataSnapshot.child("description").getValue(String.class));
+
+                    Log.i("my tag", dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
+
         if(patient.get_personal_description() != null) {
             mDescription.setText(patient.get_personal_description());
         }
+        mName.setText(patient.get_user_name());
+        mCode.setText("Patient Email: " + patient.get_email());
+        mJoinDate.setText("Member since: "+patient.get_created_at());
     }
 
     // Menu icons are inflated just as they were with actionbar

@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
@@ -35,6 +34,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     private int REQUEST_CODE_ADD = 2;
     private int REQUEST_CODE_EDIT = 3;
     private DataSnapshot user_info;
+    private String day_selection;
 
     private TextView mPatientName;
 
@@ -43,18 +43,13 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     private RecyclerView.Adapter adapter;
 
     //dummy data (local)
-    private List<Prescription> prescription = new ArrayList<>();
+    private List<Prescription> prescription_list = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_patient_doctor_view);
-
-//        // Find the toolbar view inside the activity layout
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
-//        // Sets the Toolbar to act as the ActionBar for this Activity window.
-//        setSupportActionBar(toolbar);
 
 
         Intent intent = getIntent();
@@ -87,50 +82,74 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
             }
         });
 
+        refresh_prescription_list();
+
         //set recyclerview bounds
         mRecyclerView = findViewById(R.id.prescription_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //create dummy prescription if there isn't any
-        if(prescription.isEmpty()){
-            Random random = new Random();
-            for(int i = 0; i < 10; i++){
-                //dummy data
-
-                String content = "Dummy prescription " + (i+1);
-                boolean timed;
-                if(i%2 == 0){
-                    timed = true;
-                }else{
-                    timed = false;
-                }
-                int times_in = random.nextInt(9)+1;
-                int time_between = random.nextInt(3)+1;
-                String start_time = "";
-                if(timed) {
-                    start_time = (random.nextInt(11)+1) + ":00 pm";
-                }
-                Prescription p = new Prescription(content,timed,times_in,time_between,start_time);
-                p.set_id("Position" + i);
-                prescription.add(p);
-            }
-        }
-
-        adapter = new PrescriptionAdapter(prescription,this);
+        adapter = new PrescriptionAdapter(prescription_list,this);
         mRecyclerView.setAdapter(adapter);
-
     }
 
+    public void refresh_prescription_list(){
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
+        result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_info = dataSnapshot;
+                    Log.i("my tag", user_info.getValue().toString());
+                    ArrayList<String> prescription_keys;
+                    prescription_keys = new ArrayList<String>();
 
-//    // Menu icons are inflated just as they were with actionbar
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_back, menu);
-//        return true;
-//    }
+                    // for each day in the prescriptions section of the user's data,
+                    // get the prescription keys for the selected day
+                    for(DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()){
+                        prescription_keys.add(key.getKey());
+                    }
 
+                    //next, query the database with the keys you received.
+                    populate_prescriptions(prescription_keys);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
+    }
+
+    public void populate_prescriptions(ArrayList<String> keys){
+        prescription_list.clear();
+        //for each key in keys, query the database
+        for(String key : keys){
+            FirebaseDatabase.getInstance().getReference("prescriptions")
+                    .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataIn) {
+
+                    Prescription new_entry = new Prescription(
+                            dataIn.child("content").getValue(String.class),
+                            dataIn.child("timed").getValue(Boolean.class),
+                            dataIn.child("times_per_day").getValue(Integer.class),
+                            dataIn.child("time_between_dose").getValue(Integer.class),
+                            dataIn.child("start_time").getValue(String.class)
+                    );
+                    new_entry.set_id(dataIn.getKey());
+                    prescription_list.add(new_entry);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "User data retrieval error");
+                }
+            });
+        }
+    }
 
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);
@@ -226,9 +245,9 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                 //fetch the correct prescription
 
                 Log.i("return tag1",returnedID);
-                for(int i = 0; i < prescription.size(); i++){
-                    Log.i("return tag2", prescription.get(i).get_id());
-                    if(prescription.get(i).get_id().equals(returnedID)){
+                for(int i = 0; i < prescription_list.size(); i++){
+                    Log.i("return tag2", prescription_list.get(i).get_id());
+                    if(prescription_list.get(i).get_id().equals(returnedID)){
                         changeIndex = i;
                     }
                 }
@@ -236,21 +255,21 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                     return;
                 }else{// if found
                     if(data.hasExtra("schedule_type")){
-                        prescription.get(changeIndex).set_timed(data.getExtras().getBoolean("schedule_type"));
+                        prescription_list.get(changeIndex).set_timed(data.getExtras().getBoolean("schedule_type"));
                         if(data.getExtras().getBoolean("schedule_type")){
-                            prescription.get(changeIndex).setStart_time(data.getExtras().getString("start_time"));
+                            prescription_list.get(changeIndex).setStart_time(data.getExtras().getString("start_time"));
                         }else{
-                            prescription.get(changeIndex).setStart_time("");
+                            prescription_list.get(changeIndex).setStart_time("");
                         }
                     }
                     if(data.hasExtra("times_per_day")){
-                        prescription.get(changeIndex).set_times_per_day(data.getExtras().getInt("times_per_day"));
+                        prescription_list.get(changeIndex).set_times_per_day(data.getExtras().getInt("times_per_day"));
                     }
                     if(data.hasExtra("break_hours")){
-                        prescription.get(changeIndex).set_time_between_dose(data.getExtras().getInt("break_hours"));
+                        prescription_list.get(changeIndex).set_time_between_dose(data.getExtras().getInt("break_hours"));
                     }
                     if(data.hasExtra("description")){
-                        prescription.get(changeIndex).set_content(data.getExtras().getString("description"));
+                        prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
                     }
                 }
             }
@@ -265,14 +284,48 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         intent.putExtra("name",name);
         intent.putExtra("user_ID", patientID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
-        intent.putExtra("prescription_ID",prescription.get(position).get_id());
+        intent.putExtra("prescription_ID", prescription_list.get(position).get_id());
 
-        intent.putExtra("schedule_type",prescription.get(position).is_timed());
-        intent.putExtra("start_time",prescription.get(position).get_Start_time());
-        intent.putExtra("times_per_day",prescription.get(position).get_times_per_day());
-        intent.putExtra("break_hours",prescription.get(position).get_time_between_dose());
-        intent.putExtra("description",prescription.get(position).get_content());
+        intent.putExtra("schedule_type", prescription_list.get(position).is_timed());
+        intent.putExtra("start_time", prescription_list.get(position).get_Start_time());
+        intent.putExtra("times_per_day", prescription_list.get(position).get_times_per_day());
+        intent.putExtra("break_hours", prescription_list.get(position).get_time_between_dose());
+        intent.putExtra("description", prescription_list.get(position).get_content());
         startActivityForResult(intent,REQUEST_CODE_EDIT);
     }
 
+    public void mondayButton(View v){
+        day_selection = "Monday";
+        refresh_prescription_list();
+    }
+
+    public void tuesdayButton(View v){
+        day_selection = "Tuesday";
+        refresh_prescription_list();
+    }
+
+    public void wednesdayButton(View v){
+        day_selection = "Monday";
+        refresh_prescription_list();
+    }
+
+    public void thursdayButton(View v){
+        day_selection = "Thursday";
+        refresh_prescription_list();
+    }
+
+    public void fridayButton(View v){
+        day_selection = "Friday";
+        refresh_prescription_list();
+    }
+
+    public void saturdayButton(View v){
+        day_selection = "Saturday";
+        refresh_prescription_list();
+    }
+
+    public void sundayButton(View v){
+        day_selection = "Sunday";
+        refresh_prescription_list();
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PatientAdapter;
+import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
 
 public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
@@ -30,6 +32,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     private String userID;
     private int ACCOUNT_TYPE;
     private TextView mUserName;
+    private TextView mPatientEmail;
     private DataSnapshot user_info;
 
     private RecyclerView mRecyclerView;
@@ -51,20 +54,18 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
-
         DatabaseReference result;
-        if(ACCOUNT_TYPE == 2){
-            result = FirebaseDatabase.getInstance().getReference("doctors");
-        } else {
-            result = FirebaseDatabase.getInstance().getReference("patients");
-        }
 
+        result = FirebaseDatabase.getInstance().getReference("doctors");
         result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     user_info = dataSnapshot;
                     Log.i("my tag", user_info.getValue().toString());
+                    mUserName = findViewById(R.id.user_name_title);
+                    mUserName.setText(user_info.child("user_name").getValue(String.class));
+                    refresh_patient_list();
                 }
             }
             @Override
@@ -72,40 +73,52 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                 Log.i("my tag", "User data retrieval error");
             }
         });
-        mUserName = findViewById(R.id.user_name_title);
 
         mRecyclerView = findViewById(R.id.patient_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //patient dummy test data
-        if(patients.isEmpty()) {
-            Patient p = new Patient("Jacky Jack", "JJ@gmail.com", "letmein");
-            p.set_patient_id("Patient 1");
-            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
-            patients.add(p);
-            p = new Patient("Lilly Rose", "LR@gmail.com", "letmein");
-            p.set_patient_id("Patient 2");
-            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
-            patients.add(p);
-            p = new Patient("Mike McDonalds", "MM@gmail.com", "letmein");
-            p.set_patient_id("Patient 3");
-            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
-            patients.add(p);
-            p = new Patient("Rick Randy", "RR@gmail.com", "letmein");
-            p.set_patient_id("Patient 4");
-            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
-            patients.add(p);
-            p = new Patient("Abby Enderson", "AE@gmail.com", "letmein");
-            p.set_patient_id("Patient 5");
-            p.set_personal_description("This is just a really long string that in hopes to test out the scroll view of the patient adapter of which hold this patient object that I dont't know if it even works or not but if it works then perfect and I don't want to debuug this shtty piece of sht APP over and over again cuz it's a waste of time and effort and I just don't like this project at all so please for the love of god just end my life already");
-
-        }
-
         adapter = new PatientAdapter(patients,this);
         mRecyclerView.setAdapter(adapter);
     }
 
+
+    public void refresh_patient_list(){
+        DatabaseReference result;
+        ArrayList<String> keys;
+        keys = new ArrayList<String>();
+        result = FirebaseDatabase.getInstance().getReference("doc");
+        for(DataSnapshot key : user_info.child("patients").getChildren()){
+            keys.add(key.getKey());
+        }
+
+        populate_patients(keys);
+    }
+
+
+    public void populate_patients(ArrayList<String> keys){
+        patients.clear();
+        //for each key in keys, query the database
+        for(String key : keys){
+            FirebaseDatabase.getInstance().getReference("patients")
+                    .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataIn) {
+
+                    Patient new_entry = new Patient(
+                            dataIn.child("user_name").getValue(String.class),
+                            dataIn.child("email").getValue(String.class), "");
+                    new_entry.set_patient_id(dataIn.getKey());
+                    patients.add(new_entry);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "User data retrieval error");
+                }
+            });
+        }
+    }
 
     // Menu icons are inflated just as they were with actionbar
     @Override
@@ -115,12 +128,6 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         return true;
     }
 
-//    public void launchDoctorProfile(View view){
-//        Intent intent = new Intent(this,DoctorProfileActivity.class);
-//        intent.putExtra("user_ID",userID);
-//        intent.putExtra("account_type",ACCOUNT_TYPE);
-//        startActivity(intent);
-//    }
 
     //needs database to find patient
     //click on patient to add stuff
@@ -152,7 +159,23 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         startActivity(intent);
     }
 
-    //needs database to find patient
-    //click on patient to add stuff
+    public void addPatient(View v){
+
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
+        result.orderByChild("user_name").equalTo(mPatientEmail.getText().toString()).
+                limitToFirst(1).addValueEventListener(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot){
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            Doctor.add_patient(userID, data.getKey());
+                            refresh_patient_list();
+                        }
+                    }
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("my tag", "User data retrieval error");
+                    }
+        });
+    }
 }
 
