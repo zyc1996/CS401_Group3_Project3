@@ -15,8 +15,8 @@
     <string name="regist_title">Create a new account</string>
     <string name="username_fill_hint">Username (Your Email)</string>
     <string name="patient_homepage_title">Hi PatientName!</string>
-    <string name="add_a_patient_by_code_button">Add a patient by code</string>
-    <string name="patient_code_fill_hint">Patient code</string>
+    <string name="add_a_patient_by_email_button">Add a patient by Email</string>
+    <string name="patient_email_fill_hint">Patient Email</string>
     <string name="wednesday_button">Wednesday</string>
     <string name="monday_button">Monday</string>
     <string name="thursday_button">Thursday</string>

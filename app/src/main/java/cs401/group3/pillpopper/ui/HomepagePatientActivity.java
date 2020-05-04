@@ -156,28 +156,12 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         return true;
     }
 
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
-
     public void launchProfile(MenuItem profile){
         Intent intent = new Intent(this,PatientProfileActivity.class);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
-
-    /*
-    public void launchPatientProfile(View view){
-        Intent intent = new Intent(this,PatientProfileActivity.class);
-        intent.putExtra("patient_ID",userID);
-        startActivity(intent);
-    }
-
-     */
 
     public void onLogout(MenuItem logout) {
         finish();

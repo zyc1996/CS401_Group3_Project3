@@ -3,11 +3,15 @@ package cs401.group3.pillpopper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,10 +55,10 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_patient_doctor_view);
 
-//        // Find the toolbar view inside the activity layout
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
-//        // Sets the Toolbar to act as the ActionBar for this Activity window.
-//        setSupportActionBar(toolbar);
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.doctor_view_toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
 
 
         Intent intent = getIntent();
@@ -123,14 +127,16 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     }
 
 
-//    // Menu icons are inflated just as they were with actionbar
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_back, menu);
-//        return true;
-//    }
-
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_back, menu);
+        return true;
+    }
+    public void onBack(MenuItem back) {
+        finish();
+    }
 
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);

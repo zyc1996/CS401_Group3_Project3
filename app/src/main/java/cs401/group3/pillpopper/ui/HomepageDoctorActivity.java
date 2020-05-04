@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     private int ACCOUNT_TYPE;
     private TextView mUserName;
     private DataSnapshot user_info;
+    private EditText mPatientEmail;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
@@ -104,6 +107,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
 
         adapter = new PatientAdapter(patients,this);
         mRecyclerView.setAdapter(adapter);
+        mPatientEmail = findViewById(R.id.patient_email_fill);
     }
 
 
@@ -113,22 +117,6 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_homepage, menu);
         return true;
-    }
-
-//    public void launchDoctorProfile(View view){
-//        Intent intent = new Intent(this,DoctorProfileActivity.class);
-//        intent.putExtra("user_ID",userID);
-//        intent.putExtra("account_type",ACCOUNT_TYPE);
-//        startActivity(intent);
-//    }
-
-    //needs database to find patient
-    //click on patient to add stuff
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
     }
 
     public void launchProfile(MenuItem profile) {
@@ -150,6 +138,12 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         String patientID = patients.get(position).get_patient_id();
         intent.putExtra("patient_ID",patientID);
         startActivity(intent);
+    }
+
+    public void addPatient(View view) {
+        String patientEmail = mPatientEmail.getText().toString();
+
+        //Data base work from here
     }
 
     //needs database to find patient
