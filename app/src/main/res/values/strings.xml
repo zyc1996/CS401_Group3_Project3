@@ -58,6 +58,5 @@
     <string name="patient_email_display">Example@email.org</string>
     <string name="member_since_mm_dd_yy">Member since: MM/DD/YY</string>
     <string name="doctor_email_display">Eample@email.org</string>
-    <string name="member_since_mm_dd_yy">Member since: MM/DD/YY</string>
     <string name="doctor_email">Doctor Email</string>
 </resources>

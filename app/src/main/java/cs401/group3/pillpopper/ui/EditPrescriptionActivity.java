@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,7 +24,6 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     private String prescriptionID;
 
     private TextView mName;
-    private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     private RadioGroup mScheduleType;
     private RadioButton mSelected,mTimed,mUntimed;
     private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
@@ -53,91 +51,6 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
         mName = findViewById(R.id.user_name);
         mName.setText(name);
-
-        mMonday = findViewById(R.id.monday_checkbox);
-        mMonday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mMonday.isChecked()){
-                    days[0] = true;
-                }
-                else{
-                    days[0] = false;
-                }
-            }
-        });
-        mTuesday = findViewById(R.id.tuesday_checkbox);
-        mTuesday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mTuesday.isChecked()){
-                    days[1] = true;
-                }
-                else{
-                    days[1] = false;
-                }
-            }
-        });
-        mWednesday = findViewById(R.id.wednesday_checkbox);
-        mWednesday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mWednesday.isChecked()){
-                    days[2] = true;
-                }
-                else{
-                    days[2] = false;
-                }
-            }
-        });
-        mThursday = findViewById(R.id.thursday_checkbox);
-        mThursday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mThursday.isChecked()){
-                    days[3] = true;
-                }
-                else{
-                    days[3] = false;
-                }
-            }
-        });
-        mFriday = findViewById(R.id.friday_checkbox);
-        mFriday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mFriday.isChecked()){
-                    days[4] = true;
-                }
-                else{
-                    days[4] = false;
-                }
-            }
-        });
-        mSaturday = findViewById(R.id.saturday_checkbox);
-        mSaturday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mSaturday.isChecked()){
-                    days[5] = true;
-                }
-                else{
-                    days[5] = false;
-                }
-            }
-        });
-        mSunday = findViewById(R.id.sunday_checkbox);
-        mSunday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mSunday.isChecked()){
-                    days[6] = true;
-                }
-                else{
-                    days[6] = false;
-                }
-            }
-        });
 
         mScheduleType = findViewById(R.id.schedule_type);
         mTimed = findViewById(R.id.timed_radio_button);
