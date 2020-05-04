@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
@@ -70,15 +71,14 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
 
 
-        day_selection = "Saturday";
-        refresh_prescription_list();
-
-
         mRecyclerView = findViewById(R.id.prescription_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PrescriptionAdapter(prescription_list,this);
         mRecyclerView.setAdapter(adapter);
+
+        day_selection = "Monday";
+        refresh_prescription_list();
 
     }
 
@@ -91,6 +91,7 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     user_info = dataSnapshot;
+                    mUserName.setText(dataSnapshot.child("user_name").getValue(String.class));
                     Log.i("my tag", user_info.getValue().toString());
                     ArrayList<String> prescription_keys;
                     prescription_keys = new ArrayList<String>();
@@ -111,8 +112,6 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                 Log.i("my tag", "User data retrieval error");
             }
         });
-
-
     }
 
 
@@ -143,8 +142,6 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                 }
             });
         }
-
-
     }
 
 
@@ -154,6 +151,13 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_homepage, menu);
         return true;
+    }
+
+    public void launchMessages(MenuItem messages) {
+        Intent intent = new Intent(this, MessagesActivity.class);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
+        startActivity(intent);
     }
 
     public void launchProfile(MenuItem profile){

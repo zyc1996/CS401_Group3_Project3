@@ -58,33 +58,43 @@
         android:id="@+id/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_name"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:src="@drawable/default_profile" />
 
     <TextView
         android:id="@+id/user_code_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Doctor Code: 1A2B3C"
-        android:textSize="30sp"
+        android:text="@string/doctor_email_display"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/doctor_email_display" />
 
     <TextView
         android:id="@+id/join_date_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Member since: MM/DD/YY"
+        android:text="@string/member_since_mm_dd_yy"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_code_display" />
+
+    <TextView
+        android:id="@+id/doctor_email_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/doctor_email"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
