@@ -61,25 +61,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     //Re write the back button handling plz, state was never fixed
     public void onBack(MenuItem back) {
-        Intent intent;
-        if(ACCOUNT_TYPE == 2){
-            intent = new Intent(this, DoctorProfileActivity.class);
-            startActivity(intent);
-        }
-        else if(ACCOUNT_TYPE == 1) {
-            intent = new Intent(this, PatientProfileActivity.class);
-            startActivity(intent);
-        }else{
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            Toast.makeText(ProfileEditActivity.this,"ERROR ACCOUNT TYPE, APP LOGOUT",Toast.LENGTH_LONG).show();
-                        }
-                    },
-                    10000);
-            intent = new Intent(this, LoginStartActivity.class);
-            startActivity(intent);
-        }
+        finish();
     }
 
     public void confirmChanges(View view){

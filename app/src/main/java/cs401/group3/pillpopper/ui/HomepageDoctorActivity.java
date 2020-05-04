@@ -139,8 +139,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     }
 
     public void onLogout(MenuItem logout) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override

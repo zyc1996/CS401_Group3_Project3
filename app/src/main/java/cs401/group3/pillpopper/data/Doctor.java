@@ -48,20 +48,4 @@ public class Doctor extends User {
     public void set_doctor_id(String doctor_id) {
         this.doctor_id = doctor_id;
     }
-
-    public boolean add_patient(String patient_id_in){
-         //check in database if patient exists
-        //if exists
-        return false;
-
-        //if does not exist
-        //add then
-        //return true;
-    }
-
-    public boolean remove_patient(String patient_id_in){
-        //check in database
-        //remove patient ID if present
-        return true;
-    }
 }

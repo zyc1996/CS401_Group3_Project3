@@ -43,20 +43,6 @@ public class User {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public String login(String user_name, String password){
-        //Check if username exists in database
-        //first check doctor collection
-        //if it exists in doctor collection, return string + id
-        //return "doctor " + doctor id;
-
-        //next check patient collection
-        //if it exists in patient collection, return string + id
-        //return "patient " + patient id;
-
-        //else return none
-        return "none";
-    }
-
     //Send a message to another user
     public static boolean send_message(String content, String sender_id, String target_id){ //returns true if message was sent, false if error
             //check if sender exists and that we already have a conversation with the target

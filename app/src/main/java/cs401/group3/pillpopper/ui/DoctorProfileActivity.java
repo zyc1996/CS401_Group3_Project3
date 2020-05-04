@@ -80,8 +80,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
     }
 
     public void profileBack(MenuItem back) {
-        Intent intent = new Intent(this, DoctorProfileActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     //receiving changes

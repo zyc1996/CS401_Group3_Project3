@@ -88,8 +88,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     }
 
     public void profileBack(MenuItem back) {
-        Intent intent = new Intent(this, HomepagePatientActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     //receiving changes

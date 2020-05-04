@@ -66,8 +66,4 @@ public class Patient extends User {
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
         ref.child(patient_id).child("prescriptions").child(day).child(new_prescription.get_id()).setValue(true);
     }
-
-    public static void remove_prescription(String patient_id, String prescription_id, String day){
-        //database remove
-    }
 }
