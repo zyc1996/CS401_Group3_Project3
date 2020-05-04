@@ -17,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 import cs401.group3.pillpopper.R;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: Activity for adding new prescription and associated data
+ */
 public class AddPrescriptionActivity extends AppCompatActivity {
-
     private String userID;
     private int ACCOUNT_TYPE;
-
     private TextView mName;
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     private RadioGroup mScheduleType;
