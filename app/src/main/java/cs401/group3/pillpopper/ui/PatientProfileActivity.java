@@ -14,7 +14,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The Patient profile starting activity, what is shown on the patient profile screen
+ */
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;

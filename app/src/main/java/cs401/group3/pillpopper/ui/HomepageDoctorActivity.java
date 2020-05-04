@@ -24,7 +24,13 @@ import java.util.List;
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PatientAdapter;
 import cs401.group3.pillpopper.data.Patient;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The doctor homepage activity for after a patient signs in
+ */
 public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
 
     private String userID;

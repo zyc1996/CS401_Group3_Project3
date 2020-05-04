@@ -17,7 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 import cs401.group3.pillpopper.R;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The prescription editing activity for changing prescription information, and use data for patients
+ */
 public class EditPrescriptionActivity extends AppCompatActivity {
 
     private String userID;

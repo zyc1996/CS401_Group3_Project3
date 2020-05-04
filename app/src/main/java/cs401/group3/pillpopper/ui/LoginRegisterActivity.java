@@ -31,8 +31,13 @@ import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.User;
-
-// The page to register a new user
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The page to register a new user
+ */
 public class LoginRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase Authenticator object
