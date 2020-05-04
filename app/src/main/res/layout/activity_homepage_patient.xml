@@ -46,28 +46,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/monday_button" />
+            android:text="@string/monday_button"
+            android:onClick="mondayButton"/>
 
         <Button
             android:id="@+id/tuesday_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/tuesday_button" />
+            android:text="@string/tuesday_button"
+            android:onClick="tuesdayButton"/>
 
         <Button
             android:id="@+id/wednesday_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/wednesday_button" />
+            android:text="@string/wednesday_button"
+            android:onClick="wednesdayButton"/>
 
         <Button
             android:id="@+id/thursday_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/thursday_button" />
+            android:text="@string/thursday_button"
+            android:onClick="thursdayButton"/>
     </LinearLayout>
 
     <LinearLayout
@@ -85,21 +89,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/friday_button" />
+            android:text="@string/friday_button"
+            android:onClick="fridayButton"/>
 
         <Button
             android:id="@+id/staurday_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/saturday_button" />
+            android:text="@string/saturday_button"
+            android:onClick="saturdayButton"/>
 
         <Button
             android:id="@+id/sunday_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/sunday_button" />
+            android:text="@string/sunday_button"
+            android:onClick="sundayButton"/>
     </LinearLayout>
 
     <Button
