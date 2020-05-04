@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +33,8 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     private String userID;
     private int ACCOUNT_TYPE;
     private TextView mUserName;
-    private TextView mPatientEmail;
     private DataSnapshot user_info;
+    private EditText mPatientEmail;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
@@ -73,12 +74,15 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                 Log.i("my tag", "User data retrieval error");
             }
         });
+        mUserName = findViewById(R.id.user_name_title);
 
         mRecyclerView = findViewById(R.id.patient_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PatientAdapter(patients,this);
         mRecyclerView.setAdapter(adapter);
+
+        mPatientEmail = findViewById(R.id.patient_email_fill);
     }
 
 
@@ -129,15 +133,6 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     }
 
 
-    //needs database to find patient
-    //click on patient to add stuff
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
-
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
         intent.putExtra("user_ID",userID);
@@ -160,6 +155,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     }
 
     public void addPatient(View v){
+        String patientEmail = mPatientEmail.getText().toString();
 
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
