@@ -6,6 +6,8 @@ package cs401.group3.pillpopper.data;
  *
  * Purpose: A subclass of User for Doctor objects. Used for storing data for doctor accounts.
  */
+import android.graphics.Bitmap;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,6 +52,7 @@ public class Doctor extends User {
             public String password;
             public Date created_at;
             public String personal_description;
+            public Bitmap profile_picture;
         }
         Entry new_entry = new Entry();
         new_entry.user_name = this.user_name;
@@ -58,6 +61,7 @@ public class Doctor extends User {
         new_entry.password = this.password;
         new_entry.personal_description = this.get_personal_description();
         new_entry.created_at = this.created_at;
+        new_entry.profile_picture = this.getProfile_picture();
 
         DatabaseReference ref;
         ref = mDatabase.child("doctors").push();
@@ -93,14 +97,14 @@ public class Doctor extends User {
     /**
      * Update doctor in database with id, picture, and description
      * @param doctor_id_in String id for doctor
-     * @param pic_in string picture for doctor
+     * @param pic_in bitmap picture for doctor
      * @param desc_in string description of doctor
      */
-    public static void update_doctor(String doctor_id_in, String pic_in, String desc_in ){
+    public static void update_doctor(String doctor_id_in, Bitmap pic_in, String desc_in ){
         //database update
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("doctors");
         ref.child(doctor_id_in).child("personal_description").setValue(desc_in);
-        ref.child(doctor_id_in).child("picture_url").setValue(pic_in);
+        ref.child(doctor_id_in).child("profile_picture").setValue(pic_in);
     }
 }

@@ -1,4 +1,6 @@
 package cs401.group3.pillpopper.data;
+import android.graphics.Bitmap;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.Date;
@@ -60,6 +62,7 @@ public class Patient extends User {
             public Date created_at;
             public String picture_url;
             public String personal_description;
+            public Bitmap profile_picture;
         }
         Entry new_entry = new Entry();
         new_entry.user_name = this.user_name;
@@ -68,6 +71,7 @@ public class Patient extends User {
         new_entry.created_at = this.created_at;
         new_entry.picture_url = this.get_picture_url();
         new_entry.personal_description = this.get_personal_description();
+        new_entry.profile_picture = this.getProfile_picture();
 
         DatabaseReference ref;
         ref = mDatabase.child("patients").push();
@@ -112,14 +116,14 @@ public class Patient extends User {
     /**
      * Update patient in database with id, picture, and description
      * @param patient_id_in String id for patient
-     * @param pic_in string picture for patient
+     * @param pic_in bitmap picture for patient
      * @param desc_in string description of patient
      */
-    public static void update_patient(String patient_id_in, String pic_in, String desc_in ){
+    public static void update_patient(String patient_id_in, Bitmap pic_in, String desc_in ){
         //database update
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
         ref.child(patient_id_in).child("personal_description").setValue(desc_in);
-        ref.child(patient_id_in).child("picture_url").setValue(pic_in);
+        ref.child(patient_id_in).child("profile_picture").setValue(pic_in);
     }
 }

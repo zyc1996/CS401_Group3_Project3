@@ -98,6 +98,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
                     if(doctor.get_personal_description() != null) {
                         mDescription.setText(doctor.get_personal_description());
                     }
+                    mProfilePicture.setImageBitmap(doctor.getProfile_picture());
                     mName.setText(doctor.get_user_name());
                     mCode.setText(doctor.get_email());
                     mJoinDate.setText("Member since: "+doctor.get_created_at());
@@ -158,7 +159,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String up_desc = "" , up_pic = "";
+        String up_desc = "" ;
 
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
             if(data.hasExtra("dummy_data")){
@@ -174,7 +175,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
                 Log.d("TagD","Description returned");
                 up_desc = data.getExtras().getString("description");
             }
-            Doctor.update_doctor(userID, up_pic, up_desc);
+            Doctor.update_doctor(userID,mProfilePhoto, up_desc);
             mDescription.setText(up_desc);
         }
     }

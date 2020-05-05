@@ -1,5 +1,7 @@
 package cs401.group3.pillpopper.data;
 
+import android.graphics.Bitmap;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +29,8 @@ public class User {
             personal_description, //optional profile description
             password;
     protected Date created_at;
+
+    protected Bitmap profile_picture;
     protected DatabaseReference mDatabase;
 
     /**
@@ -41,6 +45,7 @@ public class User {
         created_at = new Date();
         created_at.getTime();
         accountType = 0;
+        profile_picture = Bitmap.createBitmap(1,1,Bitmap.Config.ARGB_8888);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -60,6 +65,7 @@ public class User {
         created_at = new Date();
         created_at.getTime();
         accountType = 0;
+        profile_picture = Bitmap.createBitmap(1,1,Bitmap.Config.ARGB_8888);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -199,5 +205,13 @@ public class User {
      */
     public void set_created_at(Date created_at) {
         this.created_at = created_at;
+    }
+
+    public Bitmap getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(Bitmap profile_picture) {
+        this.profile_picture = profile_picture;
     }
 }
