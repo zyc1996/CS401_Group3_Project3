@@ -27,83 +27,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addPrescriptionToolbar" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name">
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/monday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/monday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/tuesday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tuesday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/wednesday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/wednesday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/thursday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/thursday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/friday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/friday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/saturday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/saturday_button" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/sunday_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sunday_button" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <RadioGroup
         android:id="@+id/schedule_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="71dp"
-        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_name">
 
         <RadioButton
             android:id="@+id/timed_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/timed"
             android:onClick="checkButton"
+            android:text="@string/timed"
             android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/untimed_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/untimed"
-            android:onClick="checkButton"
             android:checked="true"
+            android:onClick="checkButton"
+            android:text="@string/untimed"
             android:textSize="24sp" />
 
     </RadioGroup>
@@ -113,12 +61,12 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/time_indose"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schedule_type" />
 
     <TextView

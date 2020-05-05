@@ -18,22 +18,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
-        android:id="@+id/patient_list_diaplay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/patient_code_fill">
-
-    </ScrollView>
-
     <TextView
         android:id="@+id/user_name_title"
         android:layout_width="wrap_content"
@@ -53,22 +37,38 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/add_a_patient_by_code_button"
+        android:text="@string/add_a_patient_by_email_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_title" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name_title"
+        android:onClick="addPatient"/>
 
     <EditText
-        android:id="@+id/patient_code_fill"
+        android:id="@+id/patient_email_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="@string/patient_code_fill_hint"
+        android:hint="@string/patient_email_fill_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_patient_button"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/add_patient_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/patient_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patient_email_fill"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

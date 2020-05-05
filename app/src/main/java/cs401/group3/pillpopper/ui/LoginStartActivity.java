@@ -8,18 +8,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import cs401.group3.pillpopper.R;
-
-// The "Main" starting activity, what is shown when the app is launched
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The "Main" starting activity, what is shown when the app is launched
+ */
 public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase authenticator
@@ -68,16 +74,61 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // STEP2: Data validation
         // Confirm that fields have data etc (username, password)
 
-        if (username == null) {
+        if (username.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a username.",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (password == null) {
+        } else if (password.equals("")) {
             Toast.makeText(LoginStartActivity.this, "Please enter a password.",
                     Toast.LENGTH_SHORT).show();
 
         } else {
+
+            DatabaseReference result = FirebaseDatabase.getInstance().getReference("patients");
+            Query q = result.orderByChild("email").equalTo(username);
+
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchPatientHomePageActivity(snapElement.getKey());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
+
+            result = FirebaseDatabase.getInstance().getReference("doctors");
+            q = result.orderByChild("email").equalTo(username);
+            q.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapElement : dataSnapshot.getChildren()) {
+                            if (snapElement.child("password").getValue().toString().equals(password)) {
+                                Log.i("my tag", "Logged in successfully");
+                                launchDoctorHomePageActivity(snapElement.getKey());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "Login error");
+                }
+            });
+
             // Step 3: Confirm sign in with mAuth
+/*
             mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -100,7 +151,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
                         }
 
                     });
-
+*/
         }
 
     }
@@ -112,8 +163,16 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private helper method to launch the home page
-    private void launchHomePageActivity() {
+    private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 1);
+        startActivity(intent);
+    }
+    private void launchDoctorHomePageActivity(String userID) {
+        Intent intent = new Intent(this, HomepageDoctorActivity.class);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type", 2);
         startActivity(intent);
     }
 

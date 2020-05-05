@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/toolbarMessages"
-        android:icon="@drawable/ic_menu_messages"
-        android:title="@string/toolbar_messages_button"
-        android:onClick="launchMessages"
-        app:showAsAction="ifRoom|withText" />
-    <item
         android:id="@+id/toolbarProfile"
         android:icon="@drawable/ic_menu_profile"
         android:title="@string/toolbar_profile_button"

@@ -35,24 +35,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/default_personal_description"
+        android:hint="@string/default_personal_description"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_title" />
-
-    <Button
-        android:id="@+id/unconfirmed_usage_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Go Back (redundant with toolbar?)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <TextView
         android:id="@+id/user_name"
@@ -70,48 +58,43 @@
         android:id="@+id/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unconfirmed_usage_button"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name"
+        tools:src="@drawable/default_profile" />
 
     <TextView
         android:id="@+id/user_code_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Doctor Code: 1A2B3C"
-        android:textSize="30sp"
+        android:text="@string/doctor_email_display"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/doctor_email_display" />
 
     <TextView
         android:id="@+id/join_date_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Member since: MM/DD/YY"
+        android:text="@string/member_since_mm_dd_yy"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_code_display" />
 
-    <Button
-        android:id="@+id/edit_button"
+    <TextView
+        android:id="@+id/doctor_email_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/edit_profile_button"
-        android:onClick="launchProfileEdit"
-        app:layout_constraintBottom_toTopOf="@+id/user_code_display"
+        android:layout_marginTop="20dp"
+        android:text="@string/doctor_email"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
-        app:layout_constraintTop_toBottomOf="@+id/unconfirmed_usage_button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

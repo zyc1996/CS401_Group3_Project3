@@ -23,12 +23,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="96dp"
         android:layout_marginEnd="32dp"
         android:text="@string/lorem_ipsum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/usernameTitle"
@@ -47,14 +46,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:autofillHints=""
         android:ems="10"
-        android:text="someone@gmail.com"
-        android:inputType="textPersonName"
         android:hint="@string/enter_username"
+        android:inputType="textPersonName"
+        android:text="somewherenew@some.place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/usernameTitle"
-        app:layout_constraintTop_toBottomOf="@+id/loginText"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/loginText" />
 
     <TextView
         android:id="@+id/passwordTitle"
@@ -78,9 +77,9 @@
         android:layout_marginEnd="24dp"
         android:autofillHints=""
         android:ems="10"
-        android:text="123456"
         android:hint="@string/enter_password"
         android:inputType="textPassword"
+        android:text="letmein"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/passwordTitle"
         app:layout_constraintTop_toBottomOf="@+id/editUsername" />
@@ -123,5 +122,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="232dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitle"
+        app:srcCompat="@drawable/pillpopperlogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,18 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_title" />
 
-    <Button
-        android:id="@+id/unconfirmed_usage_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Go Back (redundant with toolbar?)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
-
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
@@ -70,48 +58,44 @@
         android:id="@+id/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unconfirmed_usage_button"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name"
+        tools:src="@drawable/default_profile"  />
 
     <TextView
         android:id="@+id/user_code_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Patient Code: 1A2B3C"
-        android:textSize="30sp"
+        android:text="@string/patient_email_display"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/patient_email_title" />
 
     <TextView
         android:id="@+id/join_date_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Member since: MM/DD/YY"
+        android:text="@string/member_since_mm_dd_yy"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_code_display" />
 
-    <Button
-        android:id="@+id/edit_button"
+    <TextView
+        android:id="@+id/patient_email_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/edit_profile_button"
-        android:onClick="launchProfileEdit"
-        app:layout_constraintBottom_toTopOf="@+id/user_code_display"
+        android:layout_marginTop="20dp"
+        android:text="@string/patient_email_title"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
-        app:layout_constraintTop_toBottomOf="@+id/unconfirmed_usage_button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

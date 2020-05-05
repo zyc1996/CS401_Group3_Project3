@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,80 +35,100 @@ import cs401.group3.pillpopper.data.Prescription;
  * @since March 2020, SDK 13
  * @version 1.0
  *
- * Purpose: The patient homepage activity for after a patient signs in
+ * Purpose: Activity for a doctor to view a patient and their information
  */
-public class HomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
+public class DoctorViewHomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
 
-    private String userID;
-    private int ACCOUNT_TYPE;
+    private String patientID, patientName;
+    private final int ACCOUNT_TYPE = 1;
     private Patient patient;
     private int REQUEST_CODE_ADD = 2;
     private int REQUEST_CODE_EDIT = 3;
     private DataSnapshot user_info;
     private String day_selection;
 
-    private TextView mUserName;
+    private TextView mPatientName;
 
     //recyclerView
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
 
-    private List<Prescription> prescription_list= new ArrayList<>();
+    //dummy data (local)
+    private List<Prescription> prescription_list = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage_patient);
+        setContentView(R.layout.activity_homepage_patient_doctor_view);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.homepagePatientToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.doctor_view_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
-        mUserName = findViewById(R.id.user_name_title);
 
         Intent intent = getIntent();
-
-        if (intent.getExtras() == null) {
+        if(intent.getExtras() == null){
             return;
         }
+        mPatientName = findViewById(R.id.unique_view_patient_name_from_doc);
+        patientName = intent.getExtras().getString("patient_name");
+        Log.i("string check", patientName);
+        mPatientName.setText(patientName); //WHY DO YOU CRASH FOR NULL OBJECT REFERENCE WHEN THERE IS NO NULL OBJECT
+        Log.i("crash tag", mPatientName.getText().toString());
+        patientID = intent.getExtras().getString("patient_ID");
 
-        userID = intent.getExtras().getString("user_ID");
-        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
+        day_selection = "Monday";
 
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
 
+        result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_info = dataSnapshot;
+                    Log.i("my tag", user_info.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
+
+        refresh_prescription_list();
+
+        //set recyclerview bounds
         mRecyclerView = findViewById(R.id.prescription_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PrescriptionAdapter(prescription_list,this);
         mRecyclerView.setAdapter(adapter);
 
-        day_selection = "Monday";
-        refresh_prescription_list();
-
     }
 
-
-    public void refresh_prescription_list(){
+    public void refresh_prescription_list() {
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
-        result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     user_info = dataSnapshot;
-                    mUserName.setText(dataSnapshot.child("user_name").getValue(String.class));
                     Log.i("my tag", user_info.getValue().toString());
                     ArrayList<String> prescription_keys;
                     prescription_keys = new ArrayList<String>();
 
                     // for each day in the prescriptions section of the user's data,
                     // get the prescription keys for the selected day
-                    for(DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()){
-                        prescription_keys.add(key.getKey());
+                    if(dataSnapshot.child("prescriptions").exists()){
+                        for (DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()) {
+                            prescription_keys.add(key.getKey());
+                        }
                     }
-
                     //next, query the database with the keys you received.
                     populate_prescriptions(prescription_keys);
                 }
@@ -120,9 +141,9 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         });
     }
 
-
     public void populate_prescriptions(ArrayList<String> keys){
         prescription_list.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("prescriptions")
@@ -150,41 +171,26 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         }
     }
 
-
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+        getMenuInflater().inflate(R.menu.menu_back, menu);
         return true;
     }
-
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
-
-    public void launchProfile(MenuItem profile){
-        Intent intent = new Intent(this,PatientProfileActivity.class);
-        intent.putExtra("user_ID",userID);
-        intent.putExtra("account_type",ACCOUNT_TYPE);
-        startActivity(intent);
-    }
-
-    public void onLogout(MenuItem logout) {
+    public void onBack(MenuItem back) {
         finish();
     }
 
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);
-        String name = mUserName.getText().toString();
+        String name = mPatientName.getText().toString();
         intent.putExtra("name",name);
-        intent.putExtra("user_ID",userID);
+        intent.putExtra("user_ID", patientID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -232,25 +238,25 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                 if(days[i]){
                     switch (i) {
                         case 0:
-                            patient.add_prescription(userID,prescription,"Monday");
+                            patient.add_prescription(patientID,prescription,"Monday");
                             break;
                         case 1:
-                            patient.add_prescription(userID,prescription,"Tuesday");
+                            patient.add_prescription(patientID,prescription,"Tuesday");
                             break;
                         case 2:
-                            patient.add_prescription(userID,prescription,"Wednesday");
+                            patient.add_prescription(patientID,prescription,"Wednesday");
                             break;
                         case 3:
-                            patient.add_prescription(userID,prescription,"Thursday");
+                            patient.add_prescription(patientID,prescription,"Thursday");
                             break;
                         case 4:
-                            patient.add_prescription(userID,prescription,"Friday");
+                            patient.add_prescription(patientID,prescription,"Friday");
                             break;
                         case 5:
-                            patient.add_prescription(userID,prescription,"Saturday");
+                            patient.add_prescription(patientID,prescription,"Saturday");
                             break;
                         case 6:
-                            patient.add_prescription(userID,prescription,"Sunday");
+                            patient.add_prescription(patientID,prescription,"Sunday");
                             break;
                         default:
                             break;
@@ -261,7 +267,9 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         }
         else if (requestCode == REQUEST_CODE_EDIT && resultCode == RESULT_OK){
             int changeIndex = -1;
-
+            if(data.hasExtra("Dummy Extra")){
+                //idk dummy variables
+            }
             //check with ID first
             if(data.hasExtra("prescription_ID")){
                 String returnedID = data.getExtras().getString("prescription_ID");
@@ -303,19 +311,17 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
     @Override
     public void recyclerViewListClicked(int position) {
         Intent intent = new Intent(this, EditPrescriptionActivity.class);
-        String name = mUserName.getText().toString();
+        String name = mPatientName.getText().toString();
         intent.putExtra("name",name);
-        intent.putExtra("user_ID",userID);
+        intent.putExtra("user_ID", patientID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
-        intent.putExtra("prescription_ID",prescription_list.get(position).get_id());
+        intent.putExtra("prescription_ID", prescription_list.get(position).get_id());
 
-        Log.i("test tag", prescription_list.get(position).get_id());
-
-        intent.putExtra("schedule_type",prescription_list.get(position).is_timed());
-        intent.putExtra("start_time",prescription_list.get(position).get_Start_time());
-        intent.putExtra("times_per_day",prescription_list.get(position).get_times_per_day());
-        intent.putExtra("break_hours",prescription_list.get(position).get_time_between_dose());
-        intent.putExtra("description",prescription_list.get(position).get_content());
+        intent.putExtra("schedule_type", prescription_list.get(position).is_timed());
+        intent.putExtra("start_time", prescription_list.get(position).get_Start_time());
+        intent.putExtra("times_per_day", prescription_list.get(position).get_times_per_day());
+        intent.putExtra("break_hours", prescription_list.get(position).get_time_between_dose());
+        intent.putExtra("description", prescription_list.get(position).get_content());
         startActivityForResult(intent,REQUEST_CODE_EDIT);
     }
 

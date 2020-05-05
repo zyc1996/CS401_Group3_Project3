@@ -2,34 +2,133 @@ package cs401.group3.pillpopper.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cs401.group3.pillpopper.R;
+import cs401.group3.pillpopper.adapter.PatientAdapter;
 import cs401.group3.pillpopper.data.Doctor;
+import cs401.group3.pillpopper.data.Patient;
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The doctor homepage activity for after a patient signs in
+ */
+public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
 
-public class HomepageDoctorActivity extends AppCompatActivity {
-
+    private String userID;
+    private int ACCOUNT_TYPE;
     private TextView mUserName;
-    private Doctor doctor = new Doctor("Doc Mike","docmike@gmail.com","123456");
+    private DataSnapshot user_info;
+    private EditText mPatientEmail;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<Patient> patients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_doctor);
 
+
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.homepageDoctorToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        userID = intent.getExtras().getString("user_ID");
+        ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
+        refresh_patient_list();
+
         mUserName = findViewById(R.id.user_name_title);
-        mUserName.setText(doctor.get_user_name());
+
+        mRecyclerView = findViewById(R.id.patient_list);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new PatientAdapter(patients,this);
+        mRecyclerView.setAdapter(adapter);
+
+        mPatientEmail = findViewById(R.id.patient_email_fill);
+    }
+
+
+    public void refresh_patient_list(){
+        DatabaseReference result;
+
+        result = FirebaseDatabase.getInstance().getReference("doctors");
+        result.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_info = dataSnapshot;
+                    Log.i("my tag", user_info.getValue().toString());
+                    mUserName = findViewById(R.id.user_name_title);
+                    mUserName.setText(user_info.child("user_name").getValue(String.class));
+
+                    ArrayList<String> keys;
+                    keys = new ArrayList<String>();
+
+                    for(DataSnapshot key : user_info.child("patients").getChildren()){
+                        keys.add(key.getKey());
+                    }
+
+                    populate_patients(keys);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("my tag", "User data retrieval error");
+            }
+        });
+    }
+
+
+    public void populate_patients(ArrayList<String> keys){
+        patients.clear();
+        //for each key in keys, query the database
+        for(String key : keys){
+            FirebaseDatabase.getInstance().getReference("patients")
+                    .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataIn) {
+
+                    Patient new_entry = new Patient(
+                            dataIn.child("user_name").getValue(String.class),
+                            dataIn.child("email").getValue(String.class), "");
+                    new_entry.set_patient_id(dataIn.getKey());
+                    patients.add(new_entry);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("my tag", "User data retrieval error");
+                }
+            });
+        }
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -40,23 +139,48 @@ public class HomepageDoctorActivity extends AppCompatActivity {
         return true;
     }
 
-    public void launchMessages(MenuItem messages) {
-        Intent intent = new Intent(this, MessagesActivity.class);
-        startActivity(intent);
-    }
 
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
-        String doctorID = doctor.get_doctor_id();
-        intent.putExtra("doctor_ID",doctorID);
+        intent.putExtra("user_ID",userID);
+        intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivity(intent);
     }
 
     public void onLogout(MenuItem logout) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
+        finish();
+    }
+
+    @Override
+    public void onPatientClick(int position) {
+        Intent intent = new Intent(this,DoctorViewHomepagePatientActivity.class);
+        String patientName = patients.get(position).get_user_name();
+        intent.putExtra("patient_name",patientName);
+        String patientID = patients.get(position).get_patient_id();
+        intent.putExtra("patient_ID",patientID);
         startActivity(intent);
     }
 
-    //needs database to find patient
-    //click on patient to add stuff
+    public void addPatient(View v){
+        String patientEmail = mPatientEmail.getText().toString();
+
+        DatabaseReference result;
+        result = FirebaseDatabase.getInstance().getReference("patients");
+        result.orderByChild("email").equalTo(patientEmail).
+                limitToFirst(1).addValueEventListener(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot){
+                        Log.i("my tag", dataSnapshot.toString());
+
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            Doctor.add_patient(userID, data.getKey());
+                            refresh_patient_list();
+                        }
+                    }
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("my tag", "User data retrieval error");
+                    }
+        });
+    }
 }
+
