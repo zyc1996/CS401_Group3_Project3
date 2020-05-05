@@ -1,8 +1,6 @@
 package cs401.group3.pillpopper.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,15 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +23,13 @@ import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.User;
-
-// The page to register a new user
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The page to register a new user
+ */
 public class LoginRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase Authenticator object
@@ -50,7 +47,10 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
     private boolean check1;
     private boolean check2;
 
-    // When the page is created
+    /**
+     * On creation of activity initializes registration of new login activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +69,20 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
 
         email_taken = false;
     }
-    // When the page starts
+
+    /**
+     * When the page starts
+     */
     @Override
     public void onStart() {
         super.onStart();
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * enu icons are inflated just as they were with actionbar
+     * @param menu Menu inflated
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -83,16 +90,18 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
+    /**
+     * finish when back menu item is clicked
+     * @param back MenuItem for back
+     */
     public void onBack(MenuItem back) {
-        Intent intent = new Intent(this, LoginStartActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     /**
      * Event listener to perform firebase registration of new user using an email and password
      * @param v View from the activity to pass to onClick
      */
-
     @Override
     public void onClick(View v) {
 
@@ -225,15 +234,39 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    /**
+     * Register user with information in database
+     */
     void registerUser(){
         if(account_type == 1){
             new_user = new Patient(userFullName, email, password);
             ((Patient) new_user).register();
             Log.i("my tag", "Patient created");
+
+            Toast.makeText(LoginRegisterActivity.this, "Patient Account Successfully Registered.", Toast.LENGTH_LONG).show();
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            finish();
+                        }
+                    },
+                    5000);
+
         } else {
             new_user = new Doctor(userFullName, email, password);
             ((Doctor) new_user).register();
             Log.i("my tag", "Doctor created");
+
+            Toast.makeText(LoginRegisterActivity.this, "Doctor Account Successfully Registered.", Toast.LENGTH_LONG).show();
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            finish();
+                        }
+                    },
+                    5000);
         }
     }
 }
