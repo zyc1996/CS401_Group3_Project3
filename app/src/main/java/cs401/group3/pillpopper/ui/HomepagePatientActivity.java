@@ -23,13 +23,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.Prescription;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The patient homepage activity for after a patient signs in
+ */
 public class HomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
 
     private String userID;
@@ -48,7 +53,10 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
 
     private List<Prescription> prescription_list= new ArrayList<>();
 
-
+    /**
+     * On creation of activity initializes patient homepage activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +90,9 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
 
     }
 
-
+    /**
+     * pull prescription list data from Firebase
+     */
     public void refresh_prescription_list(){
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
@@ -114,16 +124,19 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         });
     }
 
-
+    /**
+     * populate prescription list with data pulled from Firebase
+     * @param keys ArrayList<String> of key data from database
+     */
     public void populate_prescriptions(ArrayList<String> keys){
         prescription_list.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("prescriptions")
                     .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataIn) {
-
                     Prescription new_entry = new Prescription(
                             dataIn.child("content").getValue(String.class),
                             dataIn.child("timed").getValue(Boolean.class),
@@ -144,8 +157,11 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         }
     }
 
-
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu item inflated
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -153,6 +169,10 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         return true;
     }
 
+    /**
+     * launch messages menu with menu item
+     * @param messages MenuItem for messages
+     */
     public void launchMessages(MenuItem messages) {
         Intent intent = new Intent(this, MessagesActivity.class);
         intent.putExtra("user_ID",userID);
@@ -160,6 +180,10 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         startActivity(intent);
     }
 
+    /**
+     * Launch patient profile
+     * @param profile MenuItem for patient profile
+     */
     public void launchProfile(MenuItem profile){
         Intent intent = new Intent(this,PatientProfileActivity.class);
         intent.putExtra("user_ID",userID);
@@ -167,10 +191,18 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         startActivity(intent);
     }
 
+    /**
+     * finish activity when patient logs out
+     * @param logout MenuItem logout button
+     */
     public void onLogout(MenuItem logout) {
         finish();
     }
 
+    /**
+     * Launch add prescription with input data
+     * @param view View current
+     */
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);
         String name = mUserName.getText().toString();
@@ -180,6 +212,12 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
 
+    /**
+     * Load all the data onto the database with selected choices
+     * @param requestCode Integer code requested
+     * @param resultCode Integer resulting code
+     * @param data resulting data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -289,11 +327,22 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                         prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
                     }
                 }
+                Prescription.update_prescription(returnedID,
+                        data.getExtras().getString("description"),
+                        data.getExtras().getInt("times_per_day"),
+                        data.getExtras().getInt("break_hours"),
+                        data.getExtras().getString("start_time"),
+                        data.getExtras().getBoolean("schedule_type"));
             }
+
             adapter.notifyItemChanged(changeIndex);
         }
     }
 
+    /**
+     * for clicking list tracked by position
+     * @param position Integer position clicked
+     */
     @Override
     public void recyclerViewListClicked(int position) {
         Intent intent = new Intent(this, EditPrescriptionActivity.class);
@@ -313,36 +362,64 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
         startActivityForResult(intent,REQUEST_CODE_EDIT);
     }
 
+    /**
+     * Select monday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void mondayButton(View v){
         day_selection = "Monday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select tuesday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void tuesdayButton(View v){
         day_selection = "Tuesday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select wednesday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void wednesdayButton(View v){
-        day_selection = "Monday";
+        day_selection = "Wednesday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select thursday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void thursdayButton(View v){
         day_selection = "Thursday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select friday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void fridayButton(View v){
         day_selection = "Friday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select saturday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void saturdayButton(View v){
         day_selection = "Saturday";
         refresh_prescription_list();
     }
 
+    /**
+     * Select sunday and refresh prescription list with day selection
+     * @param v View current
+     */
     public void sundayButton(View v){
         day_selection = "Sunday";
         refresh_prescription_list();

@@ -17,7 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 import cs401.group3.pillpopper.R;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The prescription editing activity for changing prescription information, and use data for patients
+ */
 public class EditPrescriptionActivity extends AppCompatActivity {
 
     private String userID;
@@ -34,6 +40,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
     private boolean scheduleType = false; //false = untimed, true = timed
 
+    /**
+     * On creation of activity initializes edit of presciption data
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +109,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * check button for timed or untimed prescription
+     * @param view
+     */
     public void checkButton(View view){
         int radioID = mScheduleType.getCheckedRadioButtonId();
         mSelected = findViewById(radioID);
@@ -117,29 +131,39 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Submit prescription to database with input information
+     * @param view current view
+     */
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time
         String startTime = "", description="";
-        int timesPerDay=-1, breakHours=-1;
+        int timesPerDay = -1, breakHours = -1;
         if(scheduleType){
-            startTime = mStartTime.getText().toString();
+            if(!mStartTime.getText().toString().isEmpty()) {
+                startTime = mStartTime.getText().toString();
+            }
+        }
+        if(!mTimesPerDay.getText().toString().isEmpty()) {
+            timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
+        }
+        if(!mBreakHours.getText().toString().isEmpty()){
+            breakHours = Integer.parseInt(mBreakHours.getText().toString());
+        }
+        if(!mDescription.getText().toString().isEmpty()) {
+            description = mDescription.getText().toString();
         }
 
-        timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
-        breakHours = Integer.parseInt(mBreakHours.getText().toString());
-        description = mDescription.getText().toString();
-
-        if(startTime.isEmpty() || description.isEmpty() || timesPerDay < 0 || breakHours < 0){
-            Toast.makeText(EditPrescriptionActivity.this, "Invalid variable field(s), Edit aborts", Toast.LENGTH_LONG).show();
+        if( description.isEmpty() || timesPerDay < 0 || breakHours < 0 || (startTime.isEmpty() && scheduleType)){
+            Toast.makeText(EditPrescriptionActivity.this, "Invalid variable field(s), creation aborts", Toast.LENGTH_LONG).show();
 
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
                             finish();
                         }
-                    },
-                    5000);
+                    }, 5000);
         }
 
         Intent replyIntent = new Intent();
@@ -147,6 +171,8 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         //if it is timed
         if(scheduleType){
             replyIntent.putExtra("start_time",startTime);
+        }else{
+            replyIntent.putExtra("start_time","");
         }
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);

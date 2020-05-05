@@ -24,8 +24,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import cs401.group3.pillpopper.R;
-
-// The "Main" starting activity, what is shown when the app is launched
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The "Main" starting activity, what is shown when the app is launched
+ */
 public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase authenticator
@@ -39,7 +44,10 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
     private String username;
     private String password;
 
-    // onCreate method (What happens when the layout is created)
+    /**
+     * On creation of activity initializes login activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,10 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         mLoginButton.setOnClickListener(this);
     }
 
+    /**
+     * Grab user info from GUI, do data validation
+     * @param v View pushed to function
+     */
     @Override
     public void onClick(View v) {
         // STEP 1: get user info from GUI
@@ -156,19 +168,29 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    // Private helper method to launch the register page
+    /**
+     * Private helper method to launch the register page
+     */
     private void launchRegisterActivity() {
         Intent intent = new Intent(this, LoginRegisterActivity.class);
         startActivity(intent);
     }
 
-    // Private helper method to launch the home page
+    /**
+     * Private helper method to launch the home page for patient
+     * @param userID String for id of user
+     */
     private void launchPatientHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepagePatientActivity.class);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type", 1);
         startActivity(intent);
     }
+
+    /**
+     * Private helper method to launch the home page for doctor
+     * @param userID String for id of user
+     */
     private void launchDoctorHomePageActivity(String userID) {
         Intent intent = new Intent(this, HomepageDoctorActivity.class);
         intent.putExtra("user_ID",userID);

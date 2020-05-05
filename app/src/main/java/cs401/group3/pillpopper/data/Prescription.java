@@ -5,20 +5,47 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: A class for tracking prescription data. Class objects can be added to patient accounts tied to doctors.
+ */
 public class Prescription {
+    /**
+     * String variables for prescription id, description of prescription, and start time of taking
+     */
     private String id;
     private String content;
     private String start_time;
-    private boolean timed; // true means that prescription is taken at a specific time
-                   // false means at any time that day (or with meals, etc)
-    private int times_per_day; // how many times prescription should repeat itself
-                       // <= 0 treated as once.
-    private int time_between_dose; // how long between each dose, if timed and times_per_day > 1
-                            // automatically repeat prescription in schedule after this much time
+    /**
+     * true means that prescription is taken at a specific time
+     * false means at any time that day (or with meals, etc)
+     */
+    private boolean timed;
+    /**
+     * how many times prescription should repeat itself
+     * <= 0 treated as once.
+     */
+    private int times_per_day;
+    /**
+     * how long between each dose, if timed and times_per_day > 1
+     * automatically repeat prescription in schedule after this much time
+     */
+    private int time_between_dose;
+    /**
+     * Date variable for creation date
+     */
     private Date created_at;
+    /**
+     * Database connectivity variable
+     */
     private DatabaseReference mDatabase;
 
+    /**
+     * Default constructor for Prescription
+     */
     public Prescription() {
         content = "";
         timed = false;
@@ -31,6 +58,14 @@ public class Prescription {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
+    /**
+     * Parameterized constructor for Prescription with description, whether or not timed, times per day, time between use, and start time
+     * @param content_in String content of prescription
+     * @param timed_in Boolean whether or not it is timed
+     * @param times_in Integer times per day
+     * @param time_between_in Integer time between use
+     * @param start_Time String Start time of prescription
+     */
     public Prescription(String content_in, boolean timed_in, int times_in
             , int time_between_in, String start_Time) {
         content = content_in;
@@ -44,10 +79,11 @@ public class Prescription {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void by_doctor(int id_in, String name_in){
-        //does doctor field exist in database object?
-    }
-
+    /**
+     * Registers a new prescription in the database
+     * Connects to Firebase database and sends class object of new prescription entry
+     * @return true if new prescription registered
+     */
     public boolean register(){
         class Entry{
             public String content;
@@ -75,56 +111,133 @@ public class Prescription {
         return true;
     }
 
+    /**
+     * getter for start_time
+     * @return String start time of prescription
+     */
     public String get_Start_time() {
         return start_time;
     }
 
+    /**
+     * setter for start_time
+     * @param String start time of prescription
+     */
     public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
+    /**
+     * getter for id
+     * @return String id of prescription
+     */
     public String get_id() {
         return this.id;
     }
 
+    /**
+     * setter for id
+     * @param String id of prescription
+     */
     public void set_id(String id) {
         this.id = id;
     }
 
+    /**
+     * getter for content
+     * @return String description of prescription
+     */
     public String get_content() {
         return this.content;
     }
 
+    /**
+     * setter for content
+     * @param String prescription of prescription
+     */
     public void set_content(String content) {
         this.content = content;
     }
 
+    /**
+     * getter for is_timed
+     * @return Boolean if prescription is taken at a specific time
+     */
     public boolean is_timed() {
         return this.timed;
     }
 
+    /**
+     * setter for is_timed
+     * @param Boolean if prescription is taken at a specific time
+     */
     public void set_timed(boolean timed) {
         this.timed = timed;
     }
 
+    /**
+     * getter for times_per_day
+     * @return Integer times to take prescription per day
+     */
     public int get_times_per_day() {
         return this.times_per_day;
     }
 
+    /**
+     * setter for times_per_day
+     * @param Integer times to take prescription per day
+     */
     public void set_times_per_day(int times_per_day) {
         this.times_per_day = times_per_day;
     }
 
+    /**
+     * getter for time_between_dose
+     * @return Integer time between prescription dose
+     */
     public int get_time_between_dose() {
         return this.time_between_dose;
     }
 
+    /**
+     * setter for time_between_dose
+     * @param Integer time between prescription dose
+     */
     public void set_time_between_dose(int time_between_dose) {
         this.time_between_dose = time_between_dose;
     }
 
+    /**
+     * getter for created_at
+     * @return String formatted date of creation
+     */
     public String get_created_at() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(created_at);
+    }
+
+    /**
+     * Update prescription in database with parameters
+     * @param prescription_id_in String id of prescrition
+     * @param description_in String description of prescription
+     * @param times_per_day_in Integer times taken per day
+     * @param break_hours Integer hours between taking
+     * @param start_time_in String date of prescription start
+     * @param schedule_in Boolean if scheduled
+     */
+    public static void update_prescription(String prescription_id_in,
+                                           String description_in, int times_per_day_in,
+                                           int break_hours,
+                                           String start_time_in, Boolean schedule_in){
+
+        //database update
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("prescriptions");
+        ref.child(prescription_id_in).child("content").setValue(description_in);
+        ref.child(prescription_id_in).child("start_time").setValue(start_time_in);
+        ref.child(prescription_id_in).child("time_between_dose").setValue(break_hours);
+        ref.child(prescription_id_in).child("timed").setValue(schedule_in);
+        ref.child(prescription_id_in).child("times_per_day").setValue(times_per_day_in);
+
     }
 }

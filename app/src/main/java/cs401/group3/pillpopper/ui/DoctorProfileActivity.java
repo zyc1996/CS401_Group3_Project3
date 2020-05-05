@@ -1,10 +1,12 @@
 package cs401.group3.pillpopper.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -21,8 +23,14 @@ import java.util.Date;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
-import cs401.group3.pillpopper.data.Doctor;
 
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The Doctor profile starting activity, what is shown on the doctor profile screen
+ */
 public class DoctorProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
@@ -36,7 +44,16 @@ public class DoctorProfileActivity extends AppCompatActivity {
     private TextView mName;
     private TextView mCode;
     private TextView mJoinDate;
+    private ImageView mProfilePicture;
+    private Bitmap mProfilePhoto;
 
+    public DoctorProfileActivity() {
+    }
+
+    /**
+     * On creation of activity initializes doctor profile activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +68,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
         mName = findViewById(R.id.user_name);
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
+        mProfilePicture = findViewById(R.id.profile_picture);
 
         //for database usage
         Intent intent = getIntent();
@@ -81,7 +99,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
                         mDescription.setText(doctor.get_personal_description());
                     }
                     mName.setText(doctor.get_user_name());
-                    mCode.setText("Doctor Email: " + doctor.get_email());
+                    mCode.setText(doctor.get_email());
                     mJoinDate.setText("Member since: "+doctor.get_created_at());
                 }
             }
@@ -94,7 +112,11 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu
+     * @return always true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,6 +124,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * edit profile of doctor
+     * @param profile MenuItem profile of doctor with doctor data
+     */
     public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
@@ -114,11 +140,20 @@ public class DoctorProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
+    /**
+     * Finishes activity
+     * @param back MenuItem back to previous
+     */
     public void profileBack(MenuItem back) {
         finish();
     }
 
-    //receiving changes
+    /**
+     * receiving changes
+     * @param requestCode Integer code requested
+     * @param resultCode Integer resulting code
+     * @param data information received
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -130,10 +165,9 @@ public class DoctorProfileActivity extends AppCompatActivity {
                 //dummy data idk
             }
             //updates picture URL
-            if(data.hasExtra("picture_URL")){
-                Log.d("TagP","Picture URL returned");
-                //TODO:Picture stuff later
-                up_pic = data.getExtras().getString("picture_URL");
+            if(data.hasExtra("profile_picture")){
+                mProfilePhoto = (Bitmap) data.getExtras().get("profile_picture");
+                mProfilePicture.setImageBitmap(mProfilePhoto);
             }
             //update personal description
             if(data.hasExtra("description")){
