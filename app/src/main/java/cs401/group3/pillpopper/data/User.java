@@ -193,6 +193,10 @@ public class User {
 
     }
 
+    /**
+     * setter for created_at
+     * @param String user creation date
+     */
     public void set_created_at(Date created_at) {
         this.created_at = created_at;
     }

@@ -46,6 +46,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     private RecyclerView.Adapter adapter;
     private List<Patient> patients = new ArrayList<>();
 
+    /**
+     * On creation of activity initializes doctor homepage activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +77,9 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         mPatientEmail = findViewById(R.id.patient_email_fill);
     }
 
-
+    /**
+     * Refresh list of associated patients from Firebase data
+     */
     public void refresh_patient_list(){
         DatabaseReference result;
 
@@ -105,7 +111,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         });
     }
 
-
+    /**
+     * populate app patient list with pulled patient data from Firebase
+     * @param keys ArrayList<String> keys from database
+     */
     public void populate_patients(ArrayList<String> keys){
         patients.clear();
         //for each key in keys, query the database
@@ -131,7 +140,11 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         }
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu inflated
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -139,7 +152,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         return true;
     }
 
-
+    /**
+     * launcgh profile with profile menu item
+     * @param profile MenuItem for profile
+     */
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
         intent.putExtra("user_ID",userID);
@@ -147,10 +163,18 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         startActivity(intent);
     }
 
+    /**
+     * finish activity on logout
+     * @param logout MenuItem for logging out of app
+     */
     public void onLogout(MenuItem logout) {
         finish();
     }
 
+    /**
+     * Select patient on click of specific patient name
+     * @param position Integer for position of patient click
+     */
     @Override
     public void onPatientClick(int position) {
         Intent intent = new Intent(this,DoctorViewHomepagePatientActivity.class);
@@ -161,6 +185,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         startActivity(intent);
     }
 
+    /**
+     * Add patient with input data
+     * @param v View current
+     */
     public void addPatient(View v){
         String patientEmail = mPatientEmail.getText().toString();
 

@@ -40,6 +40,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
     private boolean scheduleType = false; //false = untimed, true = timed
 
+    /**
+     * On creation of activity initializes edit of presciption data
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +109,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * check button for timed or untimed prescription
+     * @param view
+     */
     public void checkButton(View view){
         int radioID = mScheduleType.getCheckedRadioButtonId();
         mSelected = findViewById(radioID);
@@ -123,6 +131,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Submit prescription to database with input information
+     * @param view current view
+     */
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time

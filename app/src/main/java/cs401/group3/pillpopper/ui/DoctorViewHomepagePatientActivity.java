@@ -39,24 +39,51 @@ import cs401.group3.pillpopper.data.Prescription;
  */
 public class DoctorViewHomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
 
+    /**
+     * Strings for patient id and name
+     */
     private String patientID, patientName;
+    /**
+     * account type doctor
+     */
     private final int ACCOUNT_TYPE = 1;
+    /**
+     * patient object for adding
+     */
     private Patient patient;
+    /**
+     * request codes
+     */
     private int REQUEST_CODE_ADD = 2;
     private int REQUEST_CODE_EDIT = 3;
+    /**
+     * user info data
+     */
     private DataSnapshot user_info;
+    /**
+     * String for day selection
+     */
     private String day_selection;
-
+    /**
+     * text input for patient name
+     */
     private TextView mPatientName;
 
-    //recyclerView
+    /**
+     * recyclerView
+     */
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
 
-    //dummy data (local)
+    /**
+     *     dummy data (local)
+     */
     private List<Prescription> prescription_list = new ArrayList<>();
 
-
+    /**
+     * On creation of activity initializes doctor viewing homepage of patient
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +137,9 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
 
     }
 
+    /**
+     * pull presription data from database to populate app list
+     */
     public void refresh_prescription_list() {
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
@@ -141,6 +171,10 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         });
     }
 
+    /**
+     * populate app list with pulled data
+     * @param keys ArrayList<String> keys from database
+     */
     public void populate_prescriptions(ArrayList<String> keys){
         prescription_list.clear();
         adapter.notifyDataSetChanged();
@@ -172,16 +206,30 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     }
 
     // Menu icons are inflated just as they were with actionbar
+
+    /**
+     * Inflate the menu; this adds items to the action bar if it is present.
+     * @param menu Menu inflated
+     * @return true always
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_back, menu);
         return true;
     }
+
+    /**
+     * finishes activity on back
+     * @param back MenuItem back button
+     */
     public void onBack(MenuItem back) {
         finish();
     }
 
+    /**
+     * go to add prescription activity with input data
+     * @param view View current
+     */
     public void launchAddPrescription(View view){
         Intent intent = new Intent (this, AddPrescriptionActivity.class);
         String name = mPatientName.getText().toString();

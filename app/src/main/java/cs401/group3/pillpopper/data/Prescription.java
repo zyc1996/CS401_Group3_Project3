@@ -216,6 +216,15 @@ public class Prescription {
         return format.format(created_at);
     }
 
+    /**
+     * Update prescription in database with parameters
+     * @param prescription_id_in String id of prescrition
+     * @param description_in String description of prescription
+     * @param times_per_day_in Integer times taken per day
+     * @param break_hours Integer hours between taking
+     * @param start_time_in String date of prescription start
+     * @param schedule_in Boolean if scheduled
+     */
     public static void update_prescription(String prescription_id_in,
                                            String description_in, int times_per_day_in,
                                            int break_hours,

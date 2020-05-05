@@ -42,6 +42,10 @@ public class PatientProfileActivity extends AppCompatActivity {
     private TextView mCode;
     private TextView mJoinDate;
 
+    /**
+     * On creation of activity initializes patient profile activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +106,10 @@ public class PatientProfileActivity extends AppCompatActivity {
         });
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     *  Menu icons are inflated just as they were with actionbar
+     * @param menu Menu inflated
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -110,6 +117,10 @@ public class PatientProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * edit profile of patient passing chosen data
+     * @param profile MenuItem for profile to edit
+     */
     public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String patient_Name = mName.getText().toString();
@@ -123,11 +134,20 @@ public class PatientProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
+    /**
+     * finish activity on back item
+     * @param back MenuItem for back
+     */
     public void profileBack(MenuItem back) {
         finish();
     }
 
-    //receiving changes
+    /**
+     * receiving changes into database
+     * @param requestCode Integer code requested
+     * @param resultCode Integer resulting code
+     * @param data input data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

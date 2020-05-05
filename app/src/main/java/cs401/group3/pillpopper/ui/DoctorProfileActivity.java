@@ -43,6 +43,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
     private TextView mCode;
     private TextView mJoinDate;
 
+    /**
+     * On creation of activity initializes doctor profile activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +104,11 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu
+     * @return always true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -108,6 +116,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * edit profile of doctor
+     * @param profile MenuItem profile of doctor with doctor data
+     */
     public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
         String doctor_name = mName.getText().toString();
@@ -120,11 +132,20 @@ public class DoctorProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_CODE);
     }
 
+    /**
+     * Finishes activity
+     * @param back MenuItem back to previous
+     */
     public void profileBack(MenuItem back) {
         finish();
     }
 
-    //receiving changes
+    /**
+     * receiving changes
+     * @param requestCode Integer code requested
+     * @param resultCode Integer resulting code
+     * @param data information received
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
