@@ -185,10 +185,18 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    /**
+     * getter for profile picture
+     * @return the profile picture string
+     */
     public String getProfile_picture() {
         return profile_picture;
     }
 
+    /**
+     * setter for profile_picture
+     * @param profile_picture the profile_picture string
+     */
     public void setProfile_picture(String profile_picture) {
         this.profile_picture = profile_picture;
     }

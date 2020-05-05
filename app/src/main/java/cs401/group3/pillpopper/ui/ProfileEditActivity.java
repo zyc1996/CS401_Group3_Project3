@@ -37,8 +37,17 @@ public class ProfileEditActivity extends AppCompatActivity {
      */
     private int ACCOUNT_TYPE;
 
+    /**
+     * the button to trigger camera activity
+     */
     private ImageButton mPhotoButton; //the button to take a picture
+    /**
+     * the image view that holds the incoming picture
+     */
     private ImageView mPhotoView;   //display for the user's profile picture
+    /**
+     * the bitmap that holds the picture value
+     */
     private Bitmap mProfilePicture;
 
     /**
@@ -92,6 +101,10 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * a method that allows camera app access
+     * @param view
+     */
     public void takePicture(View view) {
         Intent takeImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takeImage.resolveActivity(getPackageManager()) != null) {
@@ -99,6 +112,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * a method that catches the picture from the camera and updates the bitmap value
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

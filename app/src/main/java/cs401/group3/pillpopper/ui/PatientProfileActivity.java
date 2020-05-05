@@ -76,7 +76,13 @@ public class PatientProfileActivity extends AppCompatActivity {
      */
     private TextView mJoinDate;
 
+    /**
+     * the image view that hold the profile picture
+     */
     private ImageView mProfilePicture;
+    /**
+     * the bitmap that holds the profile picture value
+     */
     private Bitmap mProfilePhoto;
 
     /**
@@ -215,6 +221,11 @@ public class PatientProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Encoding bitmap to string
+     * @param bitmap the profile picture bitmap
+     * @return profile picture string
+     */
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
@@ -224,7 +235,8 @@ public class PatientProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * @param encodedString
+     * encoding string to bitmap
+     * @param encodedString the profile picture string
      * @return bitmap (from given string)
      */
     public Bitmap StringToBitMap(String encodedString){
