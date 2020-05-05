@@ -18,6 +18,7 @@
     <string name="add_a_patient_by_email_button">Add a patient by Email</string>
     <string name="patient_email_fill_hint">Patient Email</string>
     <string name="wednesday_button">Wednesday</string>
+    <string name="photo_button_desc">Button to take a photo</string>
     <string name="monday_button">Monday</string>
     <string name="thursday_button">Thursday</string>
     <string name="tuesday_button">Tuesday</string>

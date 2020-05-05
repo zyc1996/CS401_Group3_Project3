@@ -131,9 +131,7 @@ public class User {
      * Getter for email
      * @return String user email
      */
-    public void set_email(String email) {
-        this.email = email;
-    }
+    public void set_email(String email) { this.email = email; }
 
     /**
      * Getter for picture_url

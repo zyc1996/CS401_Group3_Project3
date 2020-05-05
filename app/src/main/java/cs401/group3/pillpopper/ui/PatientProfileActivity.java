@@ -2,10 +2,12 @@ package cs401.group3.pillpopper.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -42,6 +44,9 @@ public class PatientProfileActivity extends AppCompatActivity {
     private TextView mCode;
     private TextView mJoinDate;
 
+    private ImageView mProfilePicture;
+    private Bitmap mProfilePhoto;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         mName = findViewById(R.id.user_name);
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
+        mProfilePicture = findViewById(R.id.profile_picture);
 
         //for database usage
         Intent intent = getIntent();
@@ -139,10 +145,9 @@ public class PatientProfileActivity extends AppCompatActivity {
                 //dummy data idk
             }
             //updates picture URL
-            if(data.hasExtra("picture_URL")){
-                Log.d("TagP","Picture URL returned");
-                //TODO:Picture stuff later
-                up_pic = data.getExtras().getString("picture_URL");
+            if(data.hasExtra("profile_picture")){
+                mProfilePhoto = (Bitmap) data.getExtras().get("profile_picture");
+                mProfilePicture.setImageBitmap(mProfilePhoto);
             }
             //update personal description
             if(data.hasExtra("description")){
