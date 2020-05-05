@@ -215,4 +215,20 @@ public class Prescription {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(created_at);
     }
+
+    public static void update_prescription(String prescription_id_in,
+                                           String description_in, int times_per_day_in,
+                                           int break_hours,
+                                           String start_time_in, Boolean schedule_in){
+
+        //database update
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("prescriptions");
+        ref.child(prescription_id_in).child("content").setValue(description_in);
+        ref.child(prescription_id_in).child("start_time").setValue(start_time_in);
+        ref.child(prescription_id_in).child("time_between_dose").setValue(break_hours);
+        ref.child(prescription_id_in).child("timed").setValue(schedule_in);
+        ref.child(prescription_id_in).child("times_per_day").setValue(times_per_day_in);
+
+    }
 }

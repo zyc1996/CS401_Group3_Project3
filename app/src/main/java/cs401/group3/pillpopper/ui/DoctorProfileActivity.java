@@ -87,7 +87,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
                         mDescription.setText(doctor.get_personal_description());
                     }
                     mName.setText(doctor.get_user_name());
-                    mCode.setText("Doctor Email: " + doctor.get_email());
+                    mCode.setText(doctor.get_email());
                     mJoinDate.setText("Member since: "+doctor.get_created_at());
                 }
             }

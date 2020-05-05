@@ -129,7 +129,6 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                     .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataIn) {
-
                     Prescription new_entry = new Prescription(
                             dataIn.child("content").getValue(String.class),
                             dataIn.child("timed").getValue(Boolean.class),
@@ -295,7 +294,14 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                         prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
                     }
                 }
+                Prescription.update_prescription(returnedID,
+                        data.getExtras().getString("description"),
+                        data.getExtras().getInt("times_per_day"),
+                        data.getExtras().getInt("break_hours"),
+                        data.getExtras().getString("start_time"),
+                        data.getExtras().getBoolean("schedule_type"));
             }
+
             adapter.notifyItemChanged(changeIndex);
         }
     }
@@ -330,7 +336,7 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
     }
 
     public void wednesdayButton(View v){
-        day_selection = "Monday";
+        day_selection = "Wednesday";
         refresh_prescription_list();
     }
 

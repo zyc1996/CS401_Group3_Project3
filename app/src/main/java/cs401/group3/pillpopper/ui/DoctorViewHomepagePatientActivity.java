@@ -303,6 +303,12 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                         prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
                     }
                 }
+                Prescription.update_prescription(returnedID,
+                        data.getExtras().getString("description"),
+                        data.getExtras().getInt("times_per_day"),
+                        data.getExtras().getInt("break_hours"),
+                        data.getExtras().getString("start_time"),
+                        data.getExtras().getBoolean("schedule_type"));
             }
             adapter.notifyItemChanged(changeIndex);
         }
@@ -336,7 +342,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     }
 
     public void wednesdayButton(View v){
-        day_selection = "Monday";
+        day_selection = "Wednesday";
         refresh_prescription_list();
     }
 

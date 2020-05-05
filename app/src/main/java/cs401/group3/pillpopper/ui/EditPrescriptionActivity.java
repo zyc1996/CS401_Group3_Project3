@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -125,21 +126,41 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time
-        String startTime = "", description;
-        int timesPerDay, breakHours;
+        String startTime = "", description="";
+        int timesPerDay = -1, breakHours = -1;
         if(scheduleType){
-            startTime = mStartTime.getText().toString();
+            if(!mStartTime.getText().toString().isEmpty()) {
+                startTime = mStartTime.getText().toString();
+            }
+        }
+        if(!mTimesPerDay.getText().toString().isEmpty()) {
+            timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
+        }
+        if(!mBreakHours.getText().toString().isEmpty()){
+            breakHours = Integer.parseInt(mBreakHours.getText().toString());
+        }
+        if(!mDescription.getText().toString().isEmpty()) {
+            description = mDescription.getText().toString();
         }
 
-        timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
-        breakHours = Integer.parseInt(mBreakHours.getText().toString());
-        description = mDescription.getText().toString();
+        if( description.isEmpty() || timesPerDay < 0 || breakHours < 0 || (startTime.isEmpty() && scheduleType)){
+            Toast.makeText(EditPrescriptionActivity.this, "Invalid variable field(s), creation aborts", Toast.LENGTH_LONG).show();
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            finish();
+                        }
+                    }, 5000);
+        }
 
         Intent replyIntent = new Intent();
         replyIntent.putExtra("schedule_type",scheduleType);
         //if it is timed
         if(scheduleType){
             replyIntent.putExtra("start_time",startTime);
+        }else{
+            replyIntent.putExtra("start_time","");
         }
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);

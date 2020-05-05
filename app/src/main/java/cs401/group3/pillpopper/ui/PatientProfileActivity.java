@@ -90,7 +90,7 @@ public class PatientProfileActivity extends AppCompatActivity {
                         mDescription.setText(patient.get_personal_description());
                     }
                     mName.setText(patient.get_user_name());
-                    mCode.setText("Patient Email: " + patient.get_email());
+                    mCode.setText(patient.get_email());
                     mJoinDate.setText("Member since: "+patient.get_created_at());
                 }
             }
