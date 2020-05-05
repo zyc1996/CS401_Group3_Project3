@@ -14,7 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import cs401.group3.pillpopper.R;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The profile editing activity for changing profile information
+ */
 public class ProfileEditActivity extends AppCompatActivity {
 
     private String userID;

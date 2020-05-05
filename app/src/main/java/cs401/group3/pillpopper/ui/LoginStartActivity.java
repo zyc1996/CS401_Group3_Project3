@@ -24,8 +24,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import cs401.group3.pillpopper.R;
-
-// The "Main" starting activity, what is shown when the app is launched
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The "Main" starting activity, what is shown when the app is launched
+ */
 public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Firebase authenticator

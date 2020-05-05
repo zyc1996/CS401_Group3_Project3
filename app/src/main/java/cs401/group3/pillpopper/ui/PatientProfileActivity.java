@@ -22,7 +22,13 @@ import java.util.Date;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Patient;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The Patient profile starting activity, what is shown on the patient profile screen
+ */
 public class PatientProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
@@ -84,7 +90,7 @@ public class PatientProfileActivity extends AppCompatActivity {
                         mDescription.setText(patient.get_personal_description());
                     }
                     mName.setText(patient.get_user_name());
-                    mCode.setText("Patient Email: " + patient.get_email());
+                    mCode.setText(patient.get_email());
                     mJoinDate.setText("Member since: "+patient.get_created_at());
                 }
             }

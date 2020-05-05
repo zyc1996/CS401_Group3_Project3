@@ -21,8 +21,14 @@ import java.util.Date;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
-import cs401.group3.pillpopper.data.Doctor;
 
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The Doctor profile starting activity, what is shown on the doctor profile screen
+ */
 public class DoctorProfileActivity extends AppCompatActivity {
 
     private int REQUEST_CODE = 1;
@@ -81,7 +87,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
                         mDescription.setText(doctor.get_personal_description());
                     }
                     mName.setText(doctor.get_user_name());
-                    mCode.setText("Doctor Email: " + doctor.get_email());
+                    mCode.setText(doctor.get_email());
                     mJoinDate.setText("Member since: "+doctor.get_created_at());
                 }
             }

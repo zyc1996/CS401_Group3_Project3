@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PillPopper</string>
     <string name="pill_popper">PillPopper</string>
-    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="lorem_ipsum">The PillPopper app is used to manage your medical prescriptions and correspond with your Doctor. Sign in below to access your account or tap \"register\" to get started!</string>
     <string name="username_title">Username:</string>
     <string name="password_title">Password:</string>
     <string name="register_button">Register</string>
@@ -11,7 +11,7 @@
     <string name="doctor_code_hint">Doctor code (optional)</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="password_fill_hint">Password</string>
-    <string name="regist_description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="regist_description">Set up a username and password to get started. Add a Doctor Code if you\'re a doctor and plan to use PillPopper to manage patients.</string>
     <string name="regist_title">Create a new account</string>
     <string name="username_fill_hint">Username (Your Email)</string>
     <string name="patient_homepage_title">Hi PatientName!</string>
@@ -54,4 +54,9 @@
     <string name="toolbar_logout_button">Logout</string>
     <string name="prescription_start_time">Prescription Start Time</string>
     <string name="currently_viewing">Currently Viewing</string>
+    <string name="patient_email_title">Patient Email</string>
+    <string name="patient_email_display">Example@email.org</string>
+    <string name="member_since_mm_dd_yy">Member since: MM/DD/YY</string>
+    <string name="doctor_email_display">Eample@email.org</string>
+    <string name="doctor_email">Doctor Email</string>
 </resources>

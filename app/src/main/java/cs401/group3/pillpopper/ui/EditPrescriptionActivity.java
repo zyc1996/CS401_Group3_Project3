@@ -5,19 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
 
 import cs401.group3.pillpopper.R;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The prescription editing activity for changing prescription information, and use data for patients
+ */
 public class EditPrescriptionActivity extends AppCompatActivity {
 
     private String userID;
@@ -25,7 +31,6 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     private String prescriptionID;
 
     private TextView mName;
-    private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     private RadioGroup mScheduleType;
     private RadioButton mSelected,mTimed,mUntimed;
     private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
@@ -53,91 +58,6 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
         mName = findViewById(R.id.user_name);
         mName.setText(name);
-
-        mMonday = findViewById(R.id.monday_checkbox);
-        mMonday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mMonday.isChecked()){
-                    days[0] = true;
-                }
-                else{
-                    days[0] = false;
-                }
-            }
-        });
-        mTuesday = findViewById(R.id.tuesday_checkbox);
-        mTuesday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mTuesday.isChecked()){
-                    days[1] = true;
-                }
-                else{
-                    days[1] = false;
-                }
-            }
-        });
-        mWednesday = findViewById(R.id.wednesday_checkbox);
-        mWednesday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mWednesday.isChecked()){
-                    days[2] = true;
-                }
-                else{
-                    days[2] = false;
-                }
-            }
-        });
-        mThursday = findViewById(R.id.thursday_checkbox);
-        mThursday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mThursday.isChecked()){
-                    days[3] = true;
-                }
-                else{
-                    days[3] = false;
-                }
-            }
-        });
-        mFriday = findViewById(R.id.friday_checkbox);
-        mFriday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mFriday.isChecked()){
-                    days[4] = true;
-                }
-                else{
-                    days[4] = false;
-                }
-            }
-        });
-        mSaturday = findViewById(R.id.saturday_checkbox);
-        mSaturday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mSaturday.isChecked()){
-                    days[5] = true;
-                }
-                else{
-                    days[5] = false;
-                }
-            }
-        });
-        mSunday = findViewById(R.id.sunday_checkbox);
-        mSunday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mSunday.isChecked()){
-                    days[6] = true;
-                }
-                else{
-                    days[6] = false;
-                }
-            }
-        });
 
         mScheduleType = findViewById(R.id.schedule_type);
         mTimed = findViewById(R.id.timed_radio_button);
@@ -206,21 +126,41 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time
-        String startTime = "", description;
-        int timesPerDay, breakHours;
+        String startTime = "", description="";
+        int timesPerDay = -1, breakHours = -1;
         if(scheduleType){
-            startTime = mStartTime.getText().toString();
+            if(!mStartTime.getText().toString().isEmpty()) {
+                startTime = mStartTime.getText().toString();
+            }
+        }
+        if(!mTimesPerDay.getText().toString().isEmpty()) {
+            timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
+        }
+        if(!mBreakHours.getText().toString().isEmpty()){
+            breakHours = Integer.parseInt(mBreakHours.getText().toString());
+        }
+        if(!mDescription.getText().toString().isEmpty()) {
+            description = mDescription.getText().toString();
         }
 
-        timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
-        breakHours = Integer.parseInt(mBreakHours.getText().toString());
-        description = mDescription.getText().toString();
+        if( description.isEmpty() || timesPerDay < 0 || breakHours < 0 || (startTime.isEmpty() && scheduleType)){
+            Toast.makeText(EditPrescriptionActivity.this, "Invalid variable field(s), creation aborts", Toast.LENGTH_LONG).show();
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            finish();
+                        }
+                    }, 5000);
+        }
 
         Intent replyIntent = new Intent();
         replyIntent.putExtra("schedule_type",scheduleType);
         //if it is timed
         if(scheduleType){
             replyIntent.putExtra("start_time",startTime);
+        }else{
+            replyIntent.putExtra("start_time","");
         }
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);

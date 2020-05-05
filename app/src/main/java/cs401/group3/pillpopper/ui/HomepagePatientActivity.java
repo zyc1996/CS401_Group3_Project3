@@ -29,7 +29,13 @@ import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
 import cs401.group3.pillpopper.data.Patient;
 import cs401.group3.pillpopper.data.Prescription;
-
+/**
+ * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
+ * @since March 2020, SDK 13
+ * @version 1.0
+ *
+ * Purpose: The patient homepage activity for after a patient signs in
+ */
 public class HomepagePatientActivity extends AppCompatActivity implements PrescriptionAdapter.RecyclerViewClickListener{
 
     private String userID;
@@ -123,7 +129,6 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                     .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataIn) {
-
                     Prescription new_entry = new Prescription(
                             dataIn.child("content").getValue(String.class),
                             dataIn.child("timed").getValue(Boolean.class),
@@ -289,7 +294,14 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
                         prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
                     }
                 }
+                Prescription.update_prescription(returnedID,
+                        data.getExtras().getString("description"),
+                        data.getExtras().getInt("times_per_day"),
+                        data.getExtras().getInt("break_hours"),
+                        data.getExtras().getString("start_time"),
+                        data.getExtras().getBoolean("schedule_type"));
             }
+
             adapter.notifyItemChanged(changeIndex);
         }
     }
@@ -324,7 +336,7 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
     }
 
     public void wednesdayButton(View v){
-        day_selection = "Monday";
+        day_selection = "Wednesday";
         refresh_prescription_list();
     }
 
