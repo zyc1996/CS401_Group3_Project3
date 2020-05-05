@@ -4,6 +4,9 @@ import org.junit.Test;
 import com.google.firebase.database.DatabaseReference;
 import static org.junit.Assert.*;
 
+/**
+ * Tester class for Doctor Unit Testing
+ */
 public class DoctorTest {
 
     /**

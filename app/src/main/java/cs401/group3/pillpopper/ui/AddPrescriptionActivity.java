@@ -31,42 +31,52 @@ public class AddPrescriptionActivity extends AppCompatActivity {
      * String for user id
      */
     private String userID;
+
     /**
      * Integer for assigning doctor or patient
      */
     private int ACCOUNT_TYPE;
+
     /**
      * TextView name of prescription
      */
     private TextView mName;
+
     /**
      * CheckBox for each day of the week
      */
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
+
     /**
      * RadioGroup for type of schedule
      */
     private RadioGroup mScheduleType;
+
     /**
      * RadioButton selected item
      */
     private RadioButton mSelected;
+
     /**
      * EditText fields for start time, times per day, break hours, and description
      */
     private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
+
     /**
      * Calendar for tracking prescription
      */
     Calendar calendar;
+
     /**
      * Integers for hour and minute tracking
      */
     int hour, minute;
+
     /**
      * Boolean tracking days selected
      */
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
+
     /**
      * Boolean track if prescription needs to be taken at a specific time
      */

@@ -36,14 +36,44 @@ import cs401.group3.pillpopper.data.Patient;
  */
 public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
 
+    /**
+     * The string of the userID
+     */
     private String userID;
+
+    /**
+     * The int to represent the account type. 1 = Patient, 2 = Doctor
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The TextView widget of the username
+     */
     private TextView mUserName;
-    private DataSnapshot user_info;
+
+    /**
+     * The data snapshot of user info
+     */
+    private DataSnapshot userInfo;
+
+    /**
+     * The EditText widget of the email
+     */
     private EditText mPatientEmail;
 
+    /**
+     * The recycler view to display patients
+     */
     private RecyclerView mRecyclerView;
+
+    /**
+     * The adapter for the recycler view
+     */
     private RecyclerView.Adapter adapter;
+
+    /**
+     * The list of patients for the recycler view
+     */
     private List<Patient> patients = new ArrayList<>();
 
     /**
@@ -88,15 +118,15 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    user_info = dataSnapshot;
-                    Log.i("my tag", user_info.getValue().toString());
+                    userInfo = dataSnapshot;
+                    Log.i("my tag", userInfo.getValue().toString());
                     mUserName = findViewById(R.id.user_name_title);
-                    mUserName.setText(user_info.child("user_name").getValue(String.class));
+                    mUserName.setText(userInfo.child("user_name").getValue(String.class));
 
                     ArrayList<String> keys;
                     keys = new ArrayList<String>();
 
-                    for(DataSnapshot key : user_info.child("patients").getChildren()){
+                    for(DataSnapshot key : userInfo.child("patients").getChildren()){
                         keys.add(key.getKey());
                     }
 
@@ -117,6 +147,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
      */
     public void populate_patients(ArrayList<String> keys){
         patients.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("patients")
@@ -128,6 +159,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                             dataIn.child("user_name").getValue(String.class),
                             dataIn.child("email").getValue(String.class), "");
                     new_entry.set_patient_id(dataIn.getKey());
+                    new_entry.set_personal_description(dataIn.child("personal_description").getValue(String.class));
                     patients.add(new_entry);
                     adapter.notifyDataSetChanged();
                 }
@@ -187,7 +219,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
 
     /**
      * Add patient with input data
-     * @param v View current
+     * @param v current view
      */
     public void addPatient(View v){
         String patientEmail = mPatientEmail.getText().toString();

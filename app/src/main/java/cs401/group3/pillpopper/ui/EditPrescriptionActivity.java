@@ -26,19 +26,90 @@ import cs401.group3.pillpopper.R;
  */
 public class EditPrescriptionActivity extends AppCompatActivity {
 
+    /**
+     * The string of the userID
+     */
     private String userID;
+
+    /**
+     * The int to represent the account type. 1 = Patient, 2 = Doctor
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The String of the prescriptionID
+     */
     private String prescriptionID;
 
+    /**
+     * The TextView to represent the name
+     */
     private TextView mName;
-    private RadioGroup mScheduleType;
-    private RadioButton mSelected,mTimed,mUntimed;
-    private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
-    Calendar calendar;
-    int hour, minute;
 
+    /**
+     * A group of Radio buttons to set the schedule type
+     */
+    private RadioGroup mScheduleType;
+
+    /**
+     * The RadioButton to set if selected
+     */
+    private RadioButton mSelected;
+
+    /**
+     * The RadioButton to set if timed
+     */
+    private RadioButton mTimed;
+
+    /**
+     * The RadioButton to set if untimed
+     */
+    private RadioButton mUntimed;
+
+    /**
+     * The EditText widget to set the start time
+     */
+    private EditText mStartTime;
+
+    /**
+     * The EditText widget to set the times per day
+     */
+    private EditText mTimesPerDay;
+
+    /**
+     * The EditText widget for the break hours
+     */
+    private EditText mBreakHours;
+
+    /**
+     * The EditText widget for the description
+     */
+    private EditText mDescription;
+
+    /**
+     * The Calendar to set the start time for the prescription
+     */
+    Calendar calendar;
+
+    /**
+     * The hour on the calendar
+     */
+    int hour;
+
+    /**
+     * The minute on the calendar
+     */
+    int minute;
+
+    /**
+     * Array of booleans to flag if the prescription is checked for that day
+     */
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
-    private boolean scheduleType = false; //false = untimed, true = timed
+
+    /**
+     * Flag to set if the schedule should be timed or untimed. false = untimed, true = timed
+     */
+    private boolean scheduleType = false;
 
     /**
      * On creation of activity initializes edit of presciption data
@@ -111,7 +182,7 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
     /**
      * check button for timed or untimed prescription
-     * @param view
+     * @param view The view passed to the button
      */
     public void checkButton(View view){
         int radioID = mScheduleType.getCheckedRadioButtonId();
@@ -133,7 +204,7 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
     /**
      * Submit prescription to database with input information
-     * @param view current view
+     * @param view The view passed
      */
     public void submitPrescription(View view){
 

@@ -33,15 +33,29 @@ import cs401.group3.pillpopper.R;
  */
 public class LoginStartActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Firebase authenticator
+    /**
+     * Firebase authenticator
+     */
     private FirebaseAuth mAuth;
 
-    // Buttons
+    /**
+     * The Register Button
+     */
     private Button mRegisterButton;
+
+    /**
+     * The Login Button
+     */
     private Button mLoginButton;
 
-    // Strings to store username/password
+    /**
+     * String to store username
+     */
     private String username;
+
+    /**
+     * String to store password
+     */
     private String password;
 
     /**

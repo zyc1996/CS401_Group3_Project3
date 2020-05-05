@@ -31,15 +31,44 @@ import cs401.group3.pillpopper.data.Patient;
  */
 public class PatientProfileActivity extends AppCompatActivity {
 
+    /**
+     * The Request Code to edit the profile
+     */
     private int REQUEST_CODE = 1;
-    //dummy variable
+
+    /**
+     * String of the user's ID
+     */
     private String userID;
+
+    /**
+     * Code for the account type (Patient = 1, Doctor = 2)
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The patient object to store GUI data
+     */
     private Patient patient;
 
+    /**
+     * The TextView widget for the description
+     */
     private TextView mDescription;
+
+    /**
+     * The TextView widget for the name
+     */
     private TextView mName;
+
+    /**
+     * The TextView widget for the code
+     */
     private TextView mCode;
+
+    /**
+     * The TextView widget for the join date
+     */
     private TextView mJoinDate;
 
     /**

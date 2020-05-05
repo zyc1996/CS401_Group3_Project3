@@ -7,6 +7,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Tester class for the prescription unit testing
+ */
 public class PrescriptionTest {
 
     /**

@@ -17,6 +17,7 @@ public class User {
     /**
      * int variable to denote whether user is doctor or patient
      * String variables for user name, email, url of profile image, personal description, password
+     * The picture URL was a placeholder for the profile image functionality which we ended up not being able to implement
      * Date variable for creation date
      * DatabaseReference variable for use in database connection
      */
@@ -65,31 +66,6 @@ public class User {
     }
 
     /**
-     * Send a message to another user with content from sender to target
-     * @param content String content of message
-     * @param sender_id String sender id
-     * @param target_id String id for message target
-     * @return true if target exists or false if target does not exist
-     */
-    public static boolean send_message(String content, String sender_id, String target_id){ //returns true if message was sent, false if error
-            //check if sender exists and that we already have a conversation with the target
-            //if we do, we call
-            //Conversation.send_message(content, sender_id, conv_id);
-
-
-        //if we reached this point, we do not have a conversation with the target yet
-        //check if target id exists in database
-
-        //if they do
-        Conversation new_convo = new Conversation(sender_id, target_id);
-        Conversation.send_message(content, sender_id, new_convo.get_id());
-
-
-        //if target does not exist, return false
-        return false;
-    }
-
-    /**
      * Check if user is doctor
      * @return true if account type is 2 for doctor, false if not
      */
@@ -121,15 +97,21 @@ public class User {
 
     /**
      * Setter for user_name
-     * @param String user name
+     * @param u_name user name to set
+     */
+    public void set_user_name(String u_name) { user_name = u_name; }
+
+    /**
+     * Getter for email
+     * @return email as String
      */
     public String get_email() {
         return email;
     }
 
     /**
-     * Getter for email
-     * @return String user email
+     * Setter for email
+     * @param email String to set email to
      */
     public void set_email(String email) {
         this.email = email;
@@ -145,7 +127,7 @@ public class User {
 
     /**
      * Setter for picture_url
-     * @param String user picture url
+     * @param picture_url user picture url
      */
     public void set_picture_url(String picture_url) {
         this.picture_url = picture_url;
@@ -161,7 +143,7 @@ public class User {
 
     /**
      * Setter for personal_description
-     * @param String short user personal description
+     * @param personal_description short user personal description
      */
     public void set_personal_description(String personal_description) {
         this.personal_description = personal_description;
@@ -177,7 +159,7 @@ public class User {
 
     /**
      * Setter for password
-     * @param String user password
+     * @param password user password
      */
     public void set_password(String password) {
         this.password = password;
@@ -190,12 +172,11 @@ public class User {
     public String get_created_at() {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         return format.format(created_at);
-
     }
 
     /**
      * setter for created_at
-     * @param String user creation date
+     * @param created_at user creation date
      */
     public void set_created_at(Date created_at) {
         this.created_at = created_at;

@@ -83,6 +83,11 @@ public class Doctor extends User {
         this.doctor_id = doctor_id;
     }
 
+    /**
+     * Adds a patient's key to the doctor's entry in the database
+     * @param doctor_id Doctor entry to update
+     * @param patient_id Patient entry to add
+     */
     public static void add_patient(String doctor_id, String patient_id){
         //database add
         DatabaseReference ref;

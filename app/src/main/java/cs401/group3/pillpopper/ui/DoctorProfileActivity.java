@@ -30,17 +30,44 @@ import cs401.group3.pillpopper.data.Doctor;
  * Purpose: The Doctor profile starting activity, what is shown on the doctor profile screen
  */
 public class DoctorProfileActivity extends AppCompatActivity {
-
+    /**
+     * Integer to act as code for data intent requests
+     */
     private int REQUEST_CODE = 1;
+
+    /**
+     * The String to represent the user ID
+     */
     private String userID;
+
+    /**
+     * The int to represent the type of account Doctor
+     */
     private int ACCOUNT_TYPE;
-    //dummy doctor
+
+    /**
+     * The sample doctor to fill GUI data with
+     */
     private Doctor doctor;
 
-
+    /**
+     * The TextView for the description
+     */
     private TextView mDescription;
+
+    /**
+     * The TextView for the name
+     */
     private TextView mName;
+
+    /**
+     * The TextView for the Doctor Code
+     */
     private TextView mCode;
+
+    /**
+     * The TextView for the Join Date
+     */
     private TextView mJoinDate;
 
     /**

@@ -11,6 +11,9 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
+/**
+ *
+ */
 public class UserTest {
 
     /**
@@ -45,28 +48,6 @@ public class UserTest {
     @Before
     public void init(){
         testUser = new User();
-    }
-
-    /**
-     * Method to test User's send_message method with a target that does not exist
-     */
-    @Test
-    public void testSend_messageFalse() {
-        //check if sender exists and that we already have a conversation with the target
-        //if we do, we call
-        //Conversation.send_message(content, sender_id, conv_id);
-
-
-        //if we reached this point, we do not have a conversation with the target yet
-        //check if target id exists in database
-
-        //if they do
-        //Conversation new_convo = new Conversation(sender_id, target_id);
-        //Conversation.send_message(content, sender_id, new_convo.get_id());
-
-        assertFalse(testUser.send_message("test", "sender_id", String "test_id"));
-        //if target does not exist, return false
-
     }
 
     /**

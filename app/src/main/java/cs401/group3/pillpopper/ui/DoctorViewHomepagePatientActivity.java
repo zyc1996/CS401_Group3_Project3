@@ -43,40 +43,54 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
      * Strings for patient id and name
      */
     private String patientID, patientName;
+
     /**
      * account type doctor
      */
     private final int ACCOUNT_TYPE = 1;
+
     /**
      * patient object for adding
      */
     private Patient patient;
+
     /**
-     * request codes
+     * request code to add a prescription
      */
     private int REQUEST_CODE_ADD = 2;
+
+    /**
+     * request code to edit a prescription
+     */
     private int REQUEST_CODE_EDIT = 3;
+
     /**
      * user info data
      */
     private DataSnapshot user_info;
+
     /**
      * String for day selection
      */
     private String day_selection;
+
     /**
      * text input for patient name
      */
     private TextView mPatientName;
 
     /**
-     * recyclerView
+     * RecyclerView of the patients for the doctor
      */
     private RecyclerView mRecyclerView;
+
+    /**
+     * RecyclerView Adapter for the patients of the doctor
+     */
     private RecyclerView.Adapter adapter;
 
     /**
-     *     dummy data (local)
+     * List to store prescription data
      */
     private List<Prescription> prescription_list = new ArrayList<>();
 
@@ -102,7 +116,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         mPatientName = findViewById(R.id.unique_view_patient_name_from_doc);
         patientName = intent.getExtras().getString("patient_name");
         Log.i("string check", patientName);
-        mPatientName.setText(patientName); //WHY DO YOU CRASH FOR NULL OBJECT REFERENCE WHEN THERE IS NO NULL OBJECT
+        mPatientName.setText(patientName);
         Log.i("crash tag", mPatientName.getText().toString());
         patientID = intent.getExtras().getString("patient_ID");
 
@@ -138,7 +152,7 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
     }
 
     /**
-     * pull presription data from database to populate app list
+     * pull prescription data from database to populate app list
      */
     public void refresh_prescription_list() {
         DatabaseReference result;
@@ -205,8 +219,6 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         }
     }
 
-    // Menu icons are inflated just as they were with actionbar
-
     /**
      * Inflate the menu; this adds items to the action bar if it is present.
      * @param menu Menu inflated
@@ -239,7 +251,12 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
 
-
+    /**
+     * When the activity receives a result, handle receiving data
+     * @param requestCode The integer to request data for
+     * @param resultCode The integer of the type of resulting data
+     * @param data The data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -362,6 +379,10 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         }
     }
 
+    /**
+     * When an item on the recycler view for prescriptions is clicked
+     * @param position Position in the recycler view of the clicked item
+     */
     @Override
     public void recyclerViewListClicked(int position) {
         Intent intent = new Intent(this, EditPrescriptionActivity.class);
@@ -379,36 +400,64 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         startActivityForResult(intent,REQUEST_CODE_EDIT);
     }
 
+    /**
+     * When clicked the Monday button
+     * @param v The view passed to the prescription
+     */
     public void mondayButton(View v){
         day_selection = "Monday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Tuesday button
+     * @param v The view passed to the prescription
+     */
     public void tuesdayButton(View v){
         day_selection = "Tuesday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Wednesday button
+     * @param v The view passed to the prescription
+     */
     public void wednesdayButton(View v){
         day_selection = "Wednesday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Thursday button
+     * @param v The view passed to the prescription
+     */
     public void thursdayButton(View v){
         day_selection = "Thursday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Friday button
+     * @param v The view passed to the prescription
+     */
     public void fridayButton(View v){
         day_selection = "Friday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Saturday button
+     * @param v The view passed to the prescription
+     */
     public void saturdayButton(View v){
         day_selection = "Saturday";
         refresh_prescription_list();
     }
 
+    /**
+     * When clicked the Sunday button
+     * @param v The view passed to the prescription
+     */
     public void sundayButton(View v){
         day_selection = "Sunday";
         refresh_prescription_list();

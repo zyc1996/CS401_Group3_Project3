@@ -121,7 +121,7 @@ public class Prescription {
 
     /**
      * setter for start_time
-     * @param String start time of prescription
+     * @param start_time Start time of prescription
      */
     public void setStart_time(String start_time) {
         this.start_time = start_time;
@@ -137,7 +137,7 @@ public class Prescription {
 
     /**
      * setter for id
-     * @param String id of prescription
+     * @param id String id of prescription
      */
     public void set_id(String id) {
         this.id = id;
@@ -153,7 +153,7 @@ public class Prescription {
 
     /**
      * setter for content
-     * @param String prescription of prescription
+     * @param content String for prescription of prescription
      */
     public void set_content(String content) {
         this.content = content;
@@ -169,7 +169,7 @@ public class Prescription {
 
     /**
      * setter for is_timed
-     * @param Boolean if prescription is taken at a specific time
+     * @param timed Boolean if prescription is taken at a specific time
      */
     public void set_timed(boolean timed) {
         this.timed = timed;
@@ -185,7 +185,7 @@ public class Prescription {
 
     /**
      * setter for times_per_day
-     * @param Integer times to take prescription per day
+     * @param times_per_day Integer as times to take prescription per day
      */
     public void set_times_per_day(int times_per_day) {
         this.times_per_day = times_per_day;
@@ -201,7 +201,7 @@ public class Prescription {
 
     /**
      * setter for time_between_dose
-     * @param Integer time between prescription dose
+     * @param time_between_dose Integer time between prescription dose
      */
     public void set_time_between_dose(int time_between_dose) {
         this.time_between_dose = time_between_dose;

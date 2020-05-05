@@ -7,6 +7,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Test class for the Patient unit testing
+ */
 public class PatientTest {
 
     /**

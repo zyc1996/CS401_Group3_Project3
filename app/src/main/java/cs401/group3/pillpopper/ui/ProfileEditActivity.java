@@ -23,7 +23,14 @@ import cs401.group3.pillpopper.R;
  */
 public class ProfileEditActivity extends AppCompatActivity {
 
+    /**
+     * The string to store the user's ID
+     */
     private String userID;
+
+    /**
+     * The int to tell the account type (Patient = 1, Doctor = 2)
+     */
     private int ACCOUNT_TYPE;
 
     /**
@@ -111,6 +118,5 @@ public class ProfileEditActivity extends AppCompatActivity {
         setResult(RESULT_OK,replyIntent);
         finish();
     }
-
 
 }

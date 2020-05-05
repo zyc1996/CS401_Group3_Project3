@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.data.Doctor;
 import cs401.group3.pillpopper.data.Patient;
-import cs401.group3.pillpopper.data.User;
+
 /**
  * @author Lauren Dennedy, Yucheng Zheng, John Gilcreast, John Berge
  * @since March 2020, SDK 13
@@ -32,19 +32,54 @@ import cs401.group3.pillpopper.data.User;
  */
 public class LoginRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Firebase Authenticator object
-    //private FirebaseAuth mAuth;
-
-    // Class variables to hold Username, Password, Doctor Code
+    /**
+     * The string of the user's name
+     */
     private String userFullName;
+
+    /**
+     * The string of the user's email
+     */
     private String email;
+
+    /**
+     * The string of the user's password
+     */
     private String password;
+
+    /**
+     * The string to confirm the user's password
+     */
     private String confirmPassword;
+
+    /**
+     * The string of the user's doctor code
+     */
     private String doctorCode;
-    private int account_type;
-    private Object new_user;
-    private boolean email_taken;
+
+    /**
+     * The int of the user's account type (1 = Doctor, 2 = Patient)
+     */
+    private int accountType;
+
+    /**
+     * The object to temporarily
+     */
+    private Object newUser;
+
+    /**
+     * Boolean to see if the email is taken
+     */
+    private boolean emailTaken;
+
+    /**
+     * Check 1 for confirmation
+     */
     private boolean check1;
+
+    /**
+     * Check 2 for confirmation
+     */
     private boolean check2;
 
     /**
@@ -67,7 +102,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // Grab object pointing to button in GUI and register THIS class as its event handler
         ((Button) findViewById(R.id.registerButton)).setOnClickListener(this);
 
-        email_taken = false;
+        emailTaken = false;
     }
 
     /**
@@ -79,7 +114,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
     }
 
     /**
-     * enu icons are inflated just as they were with actionbar
+     * Inflate the toolbar
      * @param menu Menu inflated
      * @return true
      */
@@ -141,7 +176,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
             DatabaseReference r1, r2;
             if(!doctorCode.equals("")){
                 if(doctorCode.equals("doctor_code")){
-                    account_type = 2;
+                    accountType = 2;
 
                 }else{
                     Toast.makeText(LoginRegisterActivity.this, "Doctor code is incorrect." +
@@ -150,7 +185,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                     return;
                 }
             }else{
-                account_type = 1;
+                accountType = 1;
             }
             r1 = FirebaseDatabase.getInstance().getReference("patients");
             r2 = FirebaseDatabase.getInstance().getReference("doctors");
@@ -163,7 +198,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                     if(dataSnapshot.exists()){
                         Toast.makeText(LoginRegisterActivity.this, "This email has already been used.",
                                 Toast.LENGTH_SHORT).show();
-                            email_taken = true;
+                            emailTaken = true;
                     }else{
                         check1 = true;
                         if(check1 && check2){
@@ -186,7 +221,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                     if(dataSnapshot.exists()){
                         Toast.makeText(LoginRegisterActivity.this, "This email has already been used.",
                                 Toast.LENGTH_SHORT).show();
-                        email_taken = true;
+                        emailTaken = true;
                     }else{
                         check2 = true;
                         if(check1 && check2){
@@ -238,9 +273,9 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
      * Register user with information in database
      */
     void registerUser(){
-        if(account_type == 1){
-            new_user = new Patient(userFullName, email, password);
-            ((Patient) new_user).register();
+        if(accountType == 1){
+            newUser = new Patient(userFullName, email, password);
+            ((Patient) newUser).register();
             Log.i("my tag", "Patient created");
 
             Toast.makeText(LoginRegisterActivity.this, "Patient Account Successfully Registered.", Toast.LENGTH_LONG).show();
@@ -254,8 +289,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
                     5000);
 
         } else {
-            new_user = new Doctor(userFullName, email, password);
-            ((Doctor) new_user).register();
+            newUser = new Doctor(userFullName, email, password);
+            ((Doctor) newUser).register();
             Log.i("my tag", "Doctor created");
 
             Toast.makeText(LoginRegisterActivity.this, "Doctor Account Successfully Registered.", Toast.LENGTH_LONG).show();
