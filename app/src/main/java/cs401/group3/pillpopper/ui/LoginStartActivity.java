@@ -8,14 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,7 +66,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         mAuth = FirebaseAuth.getInstance();
 
         // Link the register button to send you to the register page
-        mRegisterButton = findViewById(R.id.registerButton);
+        mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +75,7 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         });
 
         // Link the login button to send you to the home page
-        mLoginButton = findViewById(R.id.signInButton);
+        mLoginButton = findViewById(R.id.sign_in_button);
         mLoginButton.setOnClickListener(this);
     }
 
@@ -94,8 +89,8 @@ public class LoginStartActivity extends AppCompatActivity implements View.OnClic
         // Grab username, password, confirm password, doctor code the user typed in
         // Note: Need to rename XML Ids
 
-        username = ((EditText) findViewById(R.id.editUsername)).getText().toString();
-        password = ((EditText) findViewById(R.id.editPassword)).getText().toString();
+        username = ((EditText) findViewById(R.id.edit_username)).getText().toString();
+        password = ((EditText) findViewById(R.id.edit_password)).getText().toString();
 
         // STEP2: Data validation
         // Confirm that fields have data etc (username, password)

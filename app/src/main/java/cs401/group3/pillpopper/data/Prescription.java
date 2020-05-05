@@ -18,7 +18,7 @@ public class Prescription {
      */
     private String id;
     private String content;
-    private String start_time;
+    private String startTime;
     /**
      * true means that prescription is taken at a specific time
      * false means at any time that day (or with meals, etc)
@@ -28,16 +28,16 @@ public class Prescription {
      * how many times prescription should repeat itself
      * <= 0 treated as once.
      */
-    private int times_per_day;
+    private int timesPerDay;
     /**
-     * how long between each dose, if timed and times_per_day > 1
+     * how long between each dose, if timed and timesPerDay > 1
      * automatically repeat prescription in schedule after this much time
      */
-    private int time_between_dose;
+    private int timeBetweenDose;
     /**
      * Date variable for creation date
      */
-    private Date created_at;
+    private Date createdAt;
     /**
      * Database connectivity variable
      */
@@ -49,32 +49,32 @@ public class Prescription {
     public Prescription() {
         content = "";
         timed = false;
-        start_time = "";
-        times_per_day = 0;
-        time_between_dose = 0; //Should this mean minutes?
-        created_at = new Date();
-        created_at.getTime();
+        startTime = "";
+        timesPerDay = 0;
+        timeBetweenDose = 0; //Should this mean minutes?
+        createdAt = new Date();
+        createdAt.getTime();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     /**
      * Parameterized constructor for Prescription with description, whether or not timed, times per day, time between use, and start time
-     * @param content_in String content of prescription
-     * @param timed_in Boolean whether or not it is timed
-     * @param times_in Integer times per day
-     * @param time_between_in Integer time between use
-     * @param start_Time String Start time of prescription
+     * @param contentIn String content of prescription
+     * @param timedIn Boolean whether or not it is timed
+     * @param timesIn Integer times per day
+     * @param timeBetweenIn Integer time between use
+     * @param startTime String Start time of prescription
      */
-    public Prescription(String content_in, boolean timed_in, int times_in
-            , int time_between_in, String start_Time) {
-        content = content_in;
-        timed = timed_in;
-        start_time = start_Time;
-        times_per_day = times_in;
-        time_between_dose = time_between_in; //Should this mean minutes?
-        created_at = new Date();
-        created_at.getTime();
+    public Prescription(String contentIn, boolean timedIn, int timesIn
+            , int timeBetweenIn, String startTime) {
+        content = contentIn;
+        timed = timedIn;
+        this.startTime = startTime;
+        timesPerDay = timesIn;
+        timeBetweenDose = timeBetweenIn; //Should this mean minutes?
+        createdAt = new Date();
+        createdAt.getTime();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -94,17 +94,17 @@ public class Prescription {
             public Date created_at;
         }
 
-        Entry new_entry = new Entry();
-        new_entry.content = this.content;
-        new_entry.timed = this.timed;
-        new_entry.start_time = this.start_time;
-        new_entry.times_per_day = this.times_per_day;
-        new_entry.time_between_dose = this.time_between_dose;
-        new_entry.created_at = this.created_at;
+        Entry newEntry = new Entry();
+        newEntry.content = this.content;
+        newEntry.timed = this.timed;
+        newEntry.start_time = this.startTime;
+        newEntry.times_per_day = this.timesPerDay;
+        newEntry.time_between_dose = this.timeBetweenDose;
+        newEntry.created_at = this.createdAt;
 
         DatabaseReference ref;
         ref = mDatabase.child("prescriptions").push();
-        ref.setValue(new_entry);
+        ref.setValue(newEntry);
 
         this.id = ref.getKey();
 
@@ -115,23 +115,23 @@ public class Prescription {
      * getter for start_time
      * @return String start time of prescription
      */
-    public String get_Start_time() {
-        return start_time;
+    public String getStartTime() {
+        return startTime;
     }
 
     /**
      * setter for start_time
-     * @param start_time Start time of prescription
+     * @param startTime Start time of prescription
      */
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     /**
      * getter for id
      * @return String id of prescription
      */
-    public String get_id() {
+    public String getId() {
         return this.id;
     }
 
@@ -139,7 +139,7 @@ public class Prescription {
      * setter for id
      * @param id String id of prescription
      */
-    public void set_id(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -147,7 +147,7 @@ public class Prescription {
      * getter for content
      * @return String description of prescription
      */
-    public String get_content() {
+    public String getContent() {
         return this.content;
     }
 
@@ -155,7 +155,7 @@ public class Prescription {
      * setter for content
      * @param content String for prescription of prescription
      */
-    public void set_content(String content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
@@ -163,7 +163,7 @@ public class Prescription {
      * getter for is_timed
      * @return Boolean if prescription is taken at a specific time
      */
-    public boolean is_timed() {
+    public boolean isTimed() {
         return this.timed;
     }
 
@@ -171,7 +171,7 @@ public class Prescription {
      * setter for is_timed
      * @param timed Boolean if prescription is taken at a specific time
      */
-    public void set_timed(boolean timed) {
+    public void setTimed(boolean timed) {
         this.timed = timed;
     }
 
@@ -179,65 +179,65 @@ public class Prescription {
      * getter for times_per_day
      * @return Integer times to take prescription per day
      */
-    public int get_times_per_day() {
-        return this.times_per_day;
+    public int getTimesPerDay() {
+        return this.timesPerDay;
     }
 
     /**
-     * setter for times_per_day
-     * @param times_per_day Integer as times to take prescription per day
+     * setter for timesPerDay
+     * @param timesPerDay Integer as times to take prescription per day
      */
-    public void set_times_per_day(int times_per_day) {
-        this.times_per_day = times_per_day;
+    public void setTimesPerDay(int timesPerDay) {
+        this.timesPerDay = timesPerDay;
     }
 
     /**
      * getter for time_between_dose
      * @return Integer time between prescription dose
      */
-    public int get_time_between_dose() {
-        return this.time_between_dose;
+    public int getTimeBetweenDose() {
+        return this.timeBetweenDose;
     }
 
     /**
-     * setter for time_between_dose
-     * @param time_between_dose Integer time between prescription dose
+     * setter for timeBetweenDose
+     * @param timeBetweenDose Integer time between prescription dose
      */
-    public void set_time_between_dose(int time_between_dose) {
-        this.time_between_dose = time_between_dose;
+    public void setTimeBetweenDose(int timeBetweenDose) {
+        this.timeBetweenDose = timeBetweenDose;
     }
 
     /**
      * getter for created_at
      * @return String formatted date of creation
      */
-    public String get_created_at() {
+    public String getCreatedAt() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(created_at);
+        return format.format(createdAt);
     }
 
     /**
      * Update prescription in database with parameters
-     * @param prescription_id_in String id of prescrition
-     * @param description_in String description of prescription
-     * @param times_per_day_in Integer times taken per day
-     * @param break_hours Integer hours between taking
-     * @param start_time_in String date of prescription start
-     * @param schedule_in Boolean if scheduled
+     * @param prescriptionIdIn String id of prescrition
+     * @param descriptionIn String description of prescription
+     * @param timesPerDayIn Integer times taken per day
+     * @param breakHours Integer hours between taking
+     * @param startTimeIn String date of prescription start
+     * @param scheduleIn Boolean if scheduled
      */
-    public static void update_prescription(String prescription_id_in,
-                                           String description_in, int times_per_day_in,
-                                           int break_hours,
-                                           String start_time_in, Boolean schedule_in){
+    public static void updatePrescription(String prescriptionIdIn,
+                                          String descriptionIn, int timesPerDayIn,
+                                          int breakHours,
+                                          String startTimeIn, Boolean scheduleIn){
 
         //database update
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("prescriptions");
-        ref.child(prescription_id_in).child("content").setValue(description_in);
-        ref.child(prescription_id_in).child("start_time").setValue(start_time_in);
-        ref.child(prescription_id_in).child("time_between_dose").setValue(break_hours);
-        ref.child(prescription_id_in).child("timed").setValue(schedule_in);
-        ref.child(prescription_id_in).child("times_per_day").setValue(times_per_day_in);
+        ref.child(prescriptionIdIn).child("content").setValue(descriptionIn);
+        ref.child(prescriptionIdIn).child("start_time").setValue(startTimeIn);
+        ref.child(prescriptionIdIn).child("time_between_dose").setValue(breakHours);
+        ref.child(prescriptionIdIn).child("timed").setValue(scheduleIn);
+        ref.child(prescriptionIdIn).child("times_per_day").setValue(timesPerDayIn);
 
     }
 }

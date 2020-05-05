@@ -266,6 +266,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                        finish();
                    }
                }, 5000);
+           return;
        }
 
         Intent replyIntent = new Intent();

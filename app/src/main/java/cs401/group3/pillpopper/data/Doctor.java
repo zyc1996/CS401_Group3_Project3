@@ -16,7 +16,7 @@ public class Doctor extends User {
     /**
      * String variable for doctor id code
      */
-    private String doctor_id;
+    private String doctorId;
 
     /**
      * Default constructor for Doctor
@@ -28,12 +28,12 @@ public class Doctor extends User {
 
     /**
      * Parameterized constructor with name, email, and password
-     * @param name_in String doctor name
-     * @param email_in String doctor email
-     * @param password_in String doctor account password
+     * @param nameIn String doctor name
+     * @param emailIn String doctor email
+     * @param passwordIn String doctor account password
      */
-     public Doctor(String name_in, String email_in, String password_in){
-         super(name_in, email_in, password_in);
+     public Doctor(String nameIn, String emailIn, String passwordIn){
+         super(nameIn, emailIn, passwordIn);
          accountType = 2;
     }
 
@@ -51,61 +51,61 @@ public class Doctor extends User {
             public Date created_at;
             public String personal_description;
         }
-        Entry new_entry = new Entry();
-        new_entry.user_name = this.user_name;
-        new_entry.email = this.email;
-        new_entry.picture_url = this.picture_url;
-        new_entry.password = this.password;
-        new_entry.personal_description = this.get_personal_description();
-        new_entry.created_at = this.created_at;
+        Entry newEntry = new Entry();
+        newEntry.user_name = this.userName;
+        newEntry.email = this.email;
+        newEntry.picture_url = this.pictureUrl;
+        newEntry.password = this.password;
+        newEntry.personal_description = this.getPersonalDescription();
+        newEntry.created_at = this.createdAt;
 
         DatabaseReference ref;
         ref = mDatabase.child("doctors").push();
-        ref.setValue(new_entry);
-        this.doctor_id = ref.getKey();
+        ref.setValue(newEntry);
+        this.doctorId = ref.getKey();
 
         return true;
     }
 
     /**
-     * doctor_id getter
-     * @return doctor_id String doctor identification code
+     * doctorId getter
+     * @return doctorId String doctor identification code
      */
-    public String get_doctor_id() {
-        return doctor_id;
+    public String getDoctorId() {
+        return doctorId;
     }
 
     /**
-     * doctor_id setter
-     * @param doctor_id String doctor identification code
+     * doctorId setter
+     * @param doctorId String doctor identification code
      */
-    public void set_doctor_id(String doctor_id) {
-        this.doctor_id = doctor_id;
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
     }
 
     /**
      * Adds a patient's key to the doctor's entry in the database
-     * @param doctor_id Doctor entry to update
-     * @param patient_id Patient entry to add
+     * @param doctorId Doctor entry to update
+     * @param patientId Patient entry to add
      */
-    public static void add_patient(String doctor_id, String patient_id){
+    public static void addPatient(String doctorId, String patientId){
         //database add
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("doctors");
-        ref.child(doctor_id).child("patients").child(patient_id).setValue(true);
+        ref.child(doctorId).child("patients").child(patientId).setValue(true);
     }
 
     /**
      * Update doctor in database with id, picture, and description
-     * @param doctor_id_in String id for doctor
-     * @param pic_in string picture for doctor
-     * @param desc_in string description of doctor
+     * @param doctorIdIn String id for doctor
+     * @param picIn string picture for doctor
+     * @param descIn string description of doctor
      */
-    public static void update_doctor(String doctor_id_in, String pic_in, String desc_in ){
+    public static void updateDoctor(String doctorIdIn, String picIn, String descIn ){
         //database update
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("doctors");
-        ref.child(doctor_id_in).child("personal_description").setValue(desc_in);
-        ref.child(doctor_id_in).child("picture_url").setValue(pic_in);
+        ref.child(doctorIdIn).child("personal_description").setValue(descIn);
+        ref.child(doctorIdIn).child("picture_url").setValue(picIn);
     }
 }

@@ -87,14 +87,14 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
 
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.homepageDoctorToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.homepage_doctor_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
-        refresh_patient_list();
+        refreshPatientList();
 
         mUserName = findViewById(R.id.user_name_title);
 
@@ -110,7 +110,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     /**
      * Refresh list of associated patients from Firebase data
      */
-    public void refresh_patient_list(){
+    public void refreshPatientList(){
         DatabaseReference result;
 
         result = FirebaseDatabase.getInstance().getReference("doctors");
@@ -130,7 +130,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                         keys.add(key.getKey());
                     }
 
-                    populate_patients(keys);
+                    populatePatients(keys);
 
                 }
             }
@@ -145,7 +145,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
      * populate app patient list with pulled patient data from Firebase
      * @param keys ArrayList<String> keys from database
      */
-    public void populate_patients(ArrayList<String> keys){
+    public void populatePatients(ArrayList<String> keys){
         patients.clear();
         adapter.notifyDataSetChanged();
         //for each key in keys, query the database
@@ -155,12 +155,12 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                 @Override
                 public void onDataChange(DataSnapshot dataIn) {
 
-                    Patient new_entry = new Patient(
+                    Patient newEntry = new Patient(
                             dataIn.child("user_name").getValue(String.class),
                             dataIn.child("email").getValue(String.class), "");
-                    new_entry.set_patient_id(dataIn.getKey());
-                    new_entry.set_personal_description(dataIn.child("personal_description").getValue(String.class));
-                    patients.add(new_entry);
+                    newEntry.setPatientId(dataIn.getKey());
+                    newEntry.setPersonalDescription(dataIn.child("personal_description").getValue(String.class));
+                    patients.add(newEntry);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -210,9 +210,9 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
     @Override
     public void onPatientClick(int position) {
         Intent intent = new Intent(this,DoctorViewHomepagePatientActivity.class);
-        String patientName = patients.get(position).get_user_name();
+        String patientName = patients.get(position).getUserName();
         intent.putExtra("patient_name",patientName);
-        String patientID = patients.get(position).get_patient_id();
+        String patientID = patients.get(position).getPatientId();
         intent.putExtra("patient_ID",patientID);
         startActivity(intent);
     }
@@ -233,8 +233,8 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                         Log.i("my tag", dataSnapshot.toString());
 
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            Doctor.add_patient(userID, data.getKey());
-                            refresh_patient_list();
+                            Doctor.addPatient(userID, data.getKey());
+                            refreshPatientList();
                         }
                     }
                     public void onCancelled(DatabaseError databaseError) {

@@ -92,7 +92,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_login_register);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.register_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
@@ -100,7 +100,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         //mAuth = FirebaseAuth.getInstance();
 
         // Grab object pointing to button in GUI and register THIS class as its event handler
-        ((Button) findViewById(R.id.registerButton)).setOnClickListener(this);
+        ((Button) findViewById(R.id.register_button)).setOnClickListener(this);
 
         emailTaken = false;
     }
@@ -144,10 +144,10 @@ public class LoginRegisterActivity extends AppCompatActivity implements View.OnC
         // Grab username, password, confirm password, doctor code the user typed in
         // Note: Need to rename XML Ids
         userFullName = ((EditText) findViewById(R.id.name_field)).getText().toString();
-        email = ((EditText) findViewById(R.id.usernameEdit)).getText().toString();
-        password = ((EditText) findViewById(R.id.passwordEdit)).getText().toString();
-        confirmPassword = ((EditText) findViewById(R.id.confirmPassword)).getText().toString();
-        doctorCode = ((EditText) findViewById(R.id.doctorCode)).getText().toString();
+        email = ((EditText) findViewById(R.id.username_edit)).getText().toString();
+        password = ((EditText) findViewById(R.id.password_edit)).getText().toString();
+        confirmPassword = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
+        doctorCode = ((EditText) findViewById(R.id.doctor_code)).getText().toString();
         check1 = false;
         check2 = false;
 

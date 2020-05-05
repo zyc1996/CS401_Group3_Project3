@@ -67,8 +67,8 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         int tempImage = R.drawable.default_profile;
 
         holder.mPatientProfile.setImageResource(tempImage);
-        holder.mPatientName.setText(onePatient.get_user_name());
-        holder.mPatientDescription.setText(onePatient.get_personal_description());
+        holder.mPatientName.setText(onePatient.getUserName());
+        holder.mPatientDescription.setText(onePatient.getPersonalDescription());
     }
 
     /**

@@ -1,10 +1,8 @@
 package cs401.group3.pillpopper.data;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Date;
@@ -29,7 +27,7 @@ public class UserTest {
     /**
      * string class testing objects for user_name, email, picture_url, personal_description, and password
      */
-    private String user_name,
+    private String userName,
             email,
             picture_url, //option url for profile image
             personal_description, //optional profile description
@@ -38,7 +36,7 @@ public class UserTest {
     /**
      * Date class testing object
      */
-    private Date created_at;
+    private Date createdAt;
 
     protected DatabaseReference mDatabase;
 
@@ -54,18 +52,18 @@ public class UserTest {
      * Method to test User's is_doctor method
      */
     @Test
-    public void testIs_doctor() {
+    public void testIsDoctor() {
         //testUser accountType = 0
-        assertFalse(testUser.is_doctor());
+        assertFalse(testUser.isDoctor());
     }
 
     /**
      * Method to test User's is_patient method
      */
     @Test
-    public void testIs_patient() {
+    public void testIsPatient() {
         //testUser accountType = 0
-        assertFalse(testUser.is_patient());
+        assertFalse(testUser.isPatient());
     }
 
 }

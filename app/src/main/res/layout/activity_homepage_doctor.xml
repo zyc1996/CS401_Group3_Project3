@@ -8,7 +8,7 @@
     android:orientation="vertical" >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/homepageDoctorToolbar"
+        android:id="@+id/homepage_doctor_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageDoctorToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/homepage_doctor_toolbar" />
 
     <Button
         android:id="@+id/add_patient_button"

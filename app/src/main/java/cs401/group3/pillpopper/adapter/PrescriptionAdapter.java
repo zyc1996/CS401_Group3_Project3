@@ -70,12 +70,12 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Prescription onePrescription = prescription.get(position);
 
-        if(onePrescription.get_Start_time().isEmpty()) {
+        if(onePrescription.getStartTime().isEmpty()) {
             holder.mPrescriptionStartTime.setText("Un-timed Prescription");
         }else{
-            holder.mPrescriptionStartTime.setText(onePrescription.get_Start_time());
+            holder.mPrescriptionStartTime.setText(onePrescription.getStartTime());
         }
-        holder.mPrescriptionDescription.setText(onePrescription.get_content());
+        holder.mPrescriptionDescription.setText(onePrescription.getContent());
     }
     /**
      * Get the item count in the RecyclerView

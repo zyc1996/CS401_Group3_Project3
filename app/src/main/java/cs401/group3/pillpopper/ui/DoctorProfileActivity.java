@@ -80,7 +80,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_doctor);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileDoctorToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profile_doctor_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
@@ -109,17 +109,17 @@ public class DoctorProfileActivity extends AppCompatActivity {
                     doctor = new Doctor(dataSnapshot.child("user_name").getValue(String.class),
                             dataSnapshot.child("email").getValue(String.class),
                             "");
-                    doctor.set_personal_description(dataSnapshot.child("personal_description").getValue(String.class));
-                    doctor.set_created_at(dataSnapshot.child("created_at").getValue(Date.class));
+                    doctor.setPersonalDescription(dataSnapshot.child("personal_description").getValue(String.class));
+                    doctor.setCreatedAt(dataSnapshot.child("created_at").getValue(Date.class));
 
                     Log.i("my tag", dataSnapshot.getValue().toString());
 
-                    if(doctor.get_personal_description() != null) {
-                        mDescription.setText(doctor.get_personal_description());
+                    if(doctor.getPersonalDescription() != null) {
+                        mDescription.setText(doctor.getPersonalDescription());
                     }
-                    mName.setText(doctor.get_user_name());
-                    mCode.setText(doctor.get_email());
-                    mJoinDate.setText("Member since: "+doctor.get_created_at());
+                    mName.setText(doctor.getUserName());
+                    mCode.setText(doctor.getEmail());
+                    mJoinDate.setText("Member since: "+doctor.getCreatedAt());
                 }
             }
 
@@ -149,11 +149,11 @@ public class DoctorProfileActivity extends AppCompatActivity {
      */
     public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
-        String doctor_name = mName.getText().toString();
-        String doctor_description = mDescription.getText().toString();
+        String doctorName = mName.getText().toString();
+        String doctorDescription = mDescription.getText().toString();
 
-        intent.putExtra("name",doctor_name);
-        intent.putExtra("description",doctor_description);
+        intent.putExtra("name",doctorName);
+        intent.putExtra("description",doctorDescription);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
@@ -177,7 +177,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String up_desc = "" , up_pic = "";
+        String upDesc = "" , upPic = "";
 
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
             if(data.hasExtra("dummy_data")){
@@ -187,15 +187,15 @@ public class DoctorProfileActivity extends AppCompatActivity {
             if(data.hasExtra("picture_URL")){
                 Log.d("TagP","Picture URL returned");
                 //TODO:Picture stuff later
-                up_pic = data.getExtras().getString("picture_URL");
+                upPic = data.getExtras().getString("picture_URL");
             }
             //update personal description
             if(data.hasExtra("description")){
                 Log.d("TagD","Description returned");
-                up_desc = data.getExtras().getString("description");
+                upDesc = data.getExtras().getString("description");
             }
-            Doctor.update_doctor(userID, up_pic, up_desc);
-            mDescription.setText(up_desc);
+            Doctor.updateDoctor(userID, upPic, upDesc);
+            mDescription.setText(upDesc);
         }
     }
 

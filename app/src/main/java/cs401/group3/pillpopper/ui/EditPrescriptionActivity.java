@@ -109,7 +109,7 @@ public class EditPrescriptionActivity extends AppCompatActivity {
     /**
      * Flag to set if the schedule should be timed or untimed. false = untimed, true = timed
      */
-    private boolean scheduleType = false;
+    private boolean scheduleType;
 
     /**
      * On creation of activity initializes edit of presciption data
@@ -139,8 +139,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         mUntimed = findViewById(R.id.untimed_radio_button);
         boolean isTimed = intent.getExtras().getBoolean("schedule_type");
         if(isTimed){
+            scheduleType = true;
             mTimed.setChecked(true);
         }else{
+            scheduleType = false;
             mUntimed.setChecked(true);
         }
 
@@ -235,6 +237,7 @@ public class EditPrescriptionActivity extends AppCompatActivity {
                             finish();
                         }
                     }, 5000);
+            return;
         }
 
         Intent replyIntent = new Intent();
