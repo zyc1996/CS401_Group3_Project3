@@ -117,6 +117,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
      */
     public void populate_patients(ArrayList<String> keys){
         patients.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("patients")
