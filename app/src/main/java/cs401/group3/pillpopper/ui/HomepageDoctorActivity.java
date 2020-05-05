@@ -129,6 +129,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                             dataIn.child("user_name").getValue(String.class),
                             dataIn.child("email").getValue(String.class), "");
                     new_entry.set_patient_id(dataIn.getKey());
+                    new_entry.set_personal_description(dataIn.child("personal_description").getValue(String.class));
                     patients.add(new_entry);
                     adapter.notifyDataSetChanged();
                 }
