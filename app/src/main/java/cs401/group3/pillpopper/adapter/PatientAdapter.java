@@ -1,5 +1,8 @@
 package cs401.group3.pillpopper.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +69,15 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         Patient onePatient = patient.get(position);
         int tempImage = R.drawable.default_profile;
 
-        holder.mPatientProfile.setImageResource(tempImage);
+        if(onePatient.getProfile_picture() == null){
+            holder.mPatientProfile.setImageResource(tempImage);
+        }else{
+            holder.mPatientProfile.setImageBitmap(StringToBitMap(onePatient.getProfile_picture()));
+        }
+
         holder.mPatientName.setText(onePatient.getUserName());
         holder.mPatientDescription.setText(onePatient.getPersonalDescription());
+
     }
 
     /**
@@ -99,6 +108,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
          */
         TextView mPatientDescription;
 
+
         /**
          * The listener for clicking on a patient
          */
@@ -115,6 +125,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             mPatientProfile = (ImageView) itemView.findViewById(R.id.patient_profile);
             mPatientName = (TextView) itemView.findViewById(R.id.patient_name);
             mPatientDescription = (TextView) itemView.findViewById(R.id.patient_description);
+
 
             this.onPatientListener = onPatientListener;
 
@@ -136,5 +147,20 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
      */
     public interface OnPatientListener{
         void onPatientClick (int position);
+    }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

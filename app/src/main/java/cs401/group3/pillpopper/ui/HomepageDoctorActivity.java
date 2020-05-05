@@ -160,6 +160,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                             dataIn.child("email").getValue(String.class), "");
                     newEntry.setPatientId(dataIn.getKey());
                     newEntry.setPersonalDescription(dataIn.child("personal_description").getValue(String.class));
+                    newEntry.setProfile_picture(dataIn.child("profile_picture").getValue(String.class));
                     patients.add(newEntry);
                     adapter.notifyDataSetChanged();
                 }

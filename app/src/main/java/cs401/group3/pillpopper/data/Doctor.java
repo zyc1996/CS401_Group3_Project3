@@ -24,6 +24,7 @@ public class Doctor extends User {
     public Doctor() {
         super();
         accountType = -1;
+        profile_picture = "";
     }
 
     /**
@@ -35,6 +36,8 @@ public class Doctor extends User {
      public Doctor(String nameIn, String emailIn, String passwordIn){
          super(nameIn, emailIn, passwordIn);
          accountType = 2;
+         profile_picture = "";
+
     }
 
     /**
@@ -50,6 +53,7 @@ public class Doctor extends User {
             public String password;
             public Date created_at;
             public String personal_description;
+            public String profile_picture;
         }
         Entry newEntry = new Entry();
         newEntry.user_name = this.userName;
@@ -58,6 +62,7 @@ public class Doctor extends User {
         newEntry.password = this.password;
         newEntry.personal_description = this.getPersonalDescription();
         newEntry.created_at = this.createdAt;
+        newEntry.profile_picture = this.getProfile_picture();
 
         DatabaseReference ref;
         ref = mDatabase.child("doctors").push();
@@ -106,6 +111,6 @@ public class Doctor extends User {
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("doctors");
         ref.child(doctorIdIn).child("personal_description").setValue(descIn);
-        ref.child(doctorIdIn).child("picture_url").setValue(picIn);
+        ref.child(doctorIdIn).child("profile_picture").setValue(picIn);
     }
 }

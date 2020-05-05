@@ -2,6 +2,7 @@ package cs401.group3.pillpopper.ui;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -111,6 +112,8 @@ public class EditPrescriptionActivity extends AppCompatActivity {
      */
     private boolean scheduleType;
 
+    private Bitmap profilePicture;
+
     /**
      * On creation of activity initializes edit of presciption data
      * @param savedInstanceState Bundle for saving instance of activity
@@ -129,6 +132,7 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         userID = intent.getExtras().getString("user_ID");
         ACCOUNT_TYPE = intent.getExtras().getInt("account_type");
         prescriptionID = intent.getExtras().getString("prescription_ID");
+//        profilePicture = (Bitmap)intent.getExtras().get("profile_picture");
 
 
         mName = findViewById(R.id.user_name);

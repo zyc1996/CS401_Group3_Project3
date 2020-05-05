@@ -27,6 +27,7 @@ public class Patient extends User {
         password = "";
         createdAt = new Date();
         accountType = 1;
+        profile_picture = "";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -43,6 +44,7 @@ public class Patient extends User {
         this.password = passwordIn;
         createdAt = new Date();
         accountType = 1;
+        profile_picture = "";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -60,6 +62,7 @@ public class Patient extends User {
             public Date created_at;
             public String picture_url;
             public String personal_description;
+            public String profile_picture;
         }
         Entry newEntry = new Entry();
         newEntry.user_name = this.userName;
@@ -68,6 +71,7 @@ public class Patient extends User {
         newEntry.created_at = this.createdAt;
         newEntry.picture_url = this.getPictureUrl();
         newEntry.personal_description = this.getPersonalDescription();
+        newEntry.profile_picture = this.getProfile_picture();
 
         DatabaseReference ref;
         ref = mDatabase.child("patients").push();
@@ -120,6 +124,8 @@ public class Patient extends User {
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
         ref.child(patientIdIn).child("personal_description").setValue(descIn);
-        ref.child(patientIdIn).child("picture_url").setValue(picIn);
+        ref.child(patientIdIn).child("profile_picture").setValue(picIn);
     }
+
+
 }

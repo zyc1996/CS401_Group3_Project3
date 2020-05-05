@@ -29,6 +29,7 @@ public class User {
             password;
     protected Date createdAt;
     protected DatabaseReference mDatabase;
+    protected String profile_picture;
 
     /**
      * Default constructor for User
@@ -42,6 +43,7 @@ public class User {
         createdAt = new Date();
         createdAt.getTime();
         accountType = 0;
+        profile_picture = "";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -61,6 +63,7 @@ public class User {
         createdAt = new Date();
         createdAt.getTime();
         accountType = 0;
+        profile_picture = "";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -180,5 +183,13 @@ public class User {
      */
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
     }
 }

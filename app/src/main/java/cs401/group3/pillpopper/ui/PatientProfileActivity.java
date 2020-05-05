@@ -2,10 +2,14 @@ package cs401.group3.pillpopper.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import cs401.group3.pillpopper.R;
@@ -71,6 +76,9 @@ public class PatientProfileActivity extends AppCompatActivity {
      */
     private TextView mJoinDate;
 
+    private ImageView mProfilePicture;
+    private Bitmap mProfilePhoto;
+
     /**
      * On creation of activity initializes patient profile activity
      * @param savedInstanceState Bundle for saving instance of activity
@@ -90,6 +98,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         mName = findViewById(R.id.user_name);
         mCode = findViewById(R.id.user_code_display);
         mJoinDate = findViewById(R.id.join_date_display);
+        mProfilePicture = findViewById(R.id.profile_picture);
 
         //for database usage
         Intent intent = getIntent();
@@ -116,6 +125,8 @@ public class PatientProfileActivity extends AppCompatActivity {
                             "");
                     patient.setPersonalDescription(dataSnapshot.child("personal_description").getValue(String.class));
                     patient.setCreatedAt(dataSnapshot.child("created_at").getValue(Date.class));
+                    mProfilePhoto = StringToBitMap(dataSnapshot.child("profile_picture").getValue(String.class));
+                    mProfilePicture.setImageBitmap(mProfilePhoto);
 
                     Log.i("my tag", dataSnapshot.getValue().toString());
 
@@ -160,6 +171,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         intent.putExtra("description",patientDescription);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
+        intent.putExtra("profile_picture",mProfilePhoto);
         startActivityForResult(intent,REQUEST_CODE);
     }
 
@@ -188,10 +200,10 @@ public class PatientProfileActivity extends AppCompatActivity {
                 //dummy data idk
             }
             //updates picture URL
-            if(data.hasExtra("picture_URL")){
-                Log.d("TagP","Picture URL returned");
-                //TODO:Picture stuff later
-                upPic = data.getExtras().getString("picture_URL");
+            if(data.hasExtra("profile_picture")){
+                mProfilePhoto = (Bitmap) data.getExtras().get("profile_picture");
+                mProfilePicture.setImageBitmap(mProfilePhoto);
+                upPic = BitMapToString(mProfilePhoto);
             }
             //update personal description
             if(data.hasExtra("description")){
@@ -200,6 +212,29 @@ public class PatientProfileActivity extends AppCompatActivity {
             }
             Patient.updatePatient(userID, upPic, upDesc);
             mDescription.setText(upDesc);
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
         }
     }
 }
