@@ -2,11 +2,10 @@ package cs401.group3.pillpopper.data;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import java.util.ArrayList;
-import java.util.Date;
 
+/**
+ * Test class for the Patient unit testing
+ */
 public class PatientTest {
 
     /**
@@ -40,10 +39,10 @@ public class PatientTest {
      * Method to test add_prescription method to add Prescription class object to database by patient id with day
      */
     @Test
-    public void testAdd_prescription() {
+    public void testAddPrescription() {
 
         //database add
-        testPat.add_prescription("test_id", testPre, "mon");
+        testPat.addPrescription("test_id", testPre, "mon");
     }
 
 }

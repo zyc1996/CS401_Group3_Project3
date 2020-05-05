@@ -15,17 +15,17 @@ public class Patient extends User {
     /**
      * String variable for patient id for database
      */
-    private String patient_id; //database key
+    private String patientId; //database key
 
     /**
      * Default constructor for Patient
      */
     public Patient() {
-        this.patient_id = "-1";
-        user_name = "";
+        this.patientId = "-1";
+        userName = "";
         email = "";
         password = "";
-        created_at = new Date();
+        createdAt = new Date();
         accountType = 1;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -33,15 +33,15 @@ public class Patient extends User {
 
     /**
      * Parameterized constructor for Patient with name, email, and password
-     * @param name_in String patient name
-     * @param email_in String patient email
-     * @param password_in String patient account password
+     * @param nameIn String patient name
+     * @param emailIn String patient email
+     * @param passwordIn String patient account password
      */
-    public Patient(String name_in, String email_in, String password_in) {
-        this.user_name = name_in;
-        this.email = email_in;
-        this.password = password_in;
-        created_at = new Date();
+    public Patient(String nameIn, String emailIn, String passwordIn) {
+        this.userName = nameIn;
+        this.email = emailIn;
+        this.password = passwordIn;
+        createdAt = new Date();
         accountType = 1;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -61,65 +61,65 @@ public class Patient extends User {
             public String picture_url;
             public String personal_description;
         }
-        Entry new_entry = new Entry();
-        new_entry.user_name = this.user_name;
-        new_entry.email = this.email;
-        new_entry.password = this.password;
-        new_entry.created_at = this.created_at;
-        new_entry.picture_url = this.get_picture_url();
-        new_entry.personal_description = this.get_personal_description();
+        Entry newEntry = new Entry();
+        newEntry.user_name = this.userName;
+        newEntry.email = this.email;
+        newEntry.password = this.password;
+        newEntry.created_at = this.createdAt;
+        newEntry.picture_url = this.getPictureUrl();
+        newEntry.personal_description = this.getPersonalDescription();
 
         DatabaseReference ref;
         ref = mDatabase.child("patients").push();
-        ref.setValue(new_entry);
+        ref.setValue(newEntry);
 
-        this.patient_id = ref.getKey();
+        this.patientId = ref.getKey();
         return true;
     }
 
     /**
-     * patient_id getter
-     * @return patient_id String patient identification code
+     * patientId getter
+     * @return patientId String patient identification code
      */
-    public String get_patient_id() {
-        return patient_id;
+    public String getPatientId() {
+        return patientId;
     }
 
     /**
-     * patient_id setter
-     * @param patient_id String patient identification code
+     * patientId setter
+     * @param patientId String patient identification code
      */
-    public void set_patient_id(String patient_id) {
-        this.patient_id = patient_id;
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 
     /**
      * Connect to Firebase database and add new prescription object to patient by id
      * Day also added to database
-     * @param patient_id String patient identification code
-     * @param new_prescription Prescription new prescription object added under patient by id
+     * @param patientId String patient identification code
+     * @param newPrescription Prescription new prescription object added under patient by id
      * @param day String day of prescription
      */
-    public static void add_prescription(String patient_id, Prescription new_prescription, String day){
+    public static void addPrescription(String patientId, Prescription newPrescription, String day){
 
         //database add
-        new_prescription.register();
+        newPrescription.register();
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
-        ref.child(patient_id).child("prescriptions").child(day).child(new_prescription.get_id()).setValue(true);
+        ref.child(patientId).child("prescriptions").child(day).child(newPrescription.getId()).setValue(true);
     }
 
     /**
      * Update patient in database with id, picture, and description
-     * @param patient_id_in String id for patient
-     * @param pic_in string picture for patient
-     * @param desc_in string description of patient
+     * @param patientIdIn String id for patient
+     * @param picIn string picture for patient
+     * @param descIn string description of patient
      */
-    public static void update_patient(String patient_id_in, String pic_in, String desc_in ){
+    public static void updatePatient(String patientIdIn, String picIn, String descIn ){
         //database update
         DatabaseReference ref;
         ref = FirebaseDatabase.getInstance().getReference().child("patients");
-        ref.child(patient_id_in).child("personal_description").setValue(desc_in);
-        ref.child(patient_id_in).child("picture_url").setValue(pic_in);
+        ref.child(patientIdIn).child("personal_description").setValue(descIn);
+        ref.child(patientIdIn).child("picture_url").setValue(picIn);
     }
 }

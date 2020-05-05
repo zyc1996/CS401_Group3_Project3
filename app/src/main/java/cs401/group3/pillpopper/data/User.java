@@ -17,29 +17,30 @@ public class User {
     /**
      * int variable to denote whether user is doctor or patient
      * String variables for user name, email, url of profile image, personal description, password
+     * The picture URL was a placeholder for the profile image functionality which we ended up not being able to implement
      * Date variable for creation date
      * DatabaseReference variable for use in database connection
      */
     protected int accountType; //0 is user, 1 is patient, 2 is doctor
-    protected String user_name,
+    protected String userName,
             email,
-            picture_url, //option url for profile image
-            personal_description, //optional profile description
+            pictureUrl, //option url for profile image
+            personalDescription, //optional profile description
             password;
-    protected Date created_at;
+    protected Date createdAt;
     protected DatabaseReference mDatabase;
 
     /**
      * Default constructor for User
      */
     public User(){
-        user_name = "";
+        userName = "";
         email = "";
-        picture_url = "";
-        personal_description = "";
+        pictureUrl = "";
+        personalDescription = "";
         password = "";
-        created_at = new Date();
-        created_at.getTime();
+        createdAt = new Date();
+        createdAt.getTime();
         accountType = 0;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -47,53 +48,28 @@ public class User {
 
     /**
      * Parameterized constructor for user with name, email, and account password
-     * @param name_in String user name
-     * @param email_in String user email
-     * @param password_in String user account password
+     * @param nameIn String user name
+     * @param emailIn String user email
+     * @param passwordIn String user account password
      */
-    public User(String name_in, String email_in, String password_in){
-        user_name = name_in;
-        email = email_in;
-        password = password_in;
-        picture_url = "";
-        personal_description = "";
-        created_at = new Date();
-        created_at.getTime();
+    public User(String nameIn, String emailIn, String passwordIn){
+        userName = nameIn;
+        email = emailIn;
+        password = passwordIn;
+        pictureUrl = "";
+        personalDescription = "";
+        createdAt = new Date();
+        createdAt.getTime();
         accountType = 0;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     /**
-     * Send a message to another user with content from sender to target
-     * @param content String content of message
-     * @param sender_id String sender id
-     * @param target_id String id for message target
-     * @return true if target exists or false if target does not exist
-     */
-    public static boolean send_message(String content, String sender_id, String target_id){ //returns true if message was sent, false if error
-            //check if sender exists and that we already have a conversation with the target
-            //if we do, we call
-            //Conversation.send_message(content, sender_id, conv_id);
-
-
-        //if we reached this point, we do not have a conversation with the target yet
-        //check if target id exists in database
-
-        //if they do
-        Conversation new_convo = new Conversation(sender_id, target_id);
-        Conversation.send_message(content, sender_id, new_convo.get_id());
-
-
-        //if target does not exist, return false
-        return false;
-    }
-
-    /**
      * Check if user is doctor
      * @return true if account type is 2 for doctor, false if not
      */
-    public boolean is_doctor(){
+    public boolean isDoctor(){
         if(accountType == 2){
             return true;
         }
@@ -104,7 +80,7 @@ public class User {
      * Check if user is patient
      * @return true if account type is 1 for patient, false if not
      */
-    public boolean is_patient(){
+    public boolean isPatient(){
         if(accountType == 1){
             return true;
         }
@@ -112,26 +88,32 @@ public class User {
     }
 
     /**
-     * Getter for user_name
+     * Getter for user name
      * @return String user name
      */
-    public String get_user_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
     /**
      * Setter for user_name
-     * @param String user name
+     * @param uName user name to set
      */
-    public String get_email() {
+    public void setUserName(String uName) { userName = uName; }
+
+    /**
+     * Getter for email
+     * @return email as String
+     */
+    public String getEmail() {
         return email;
     }
 
     /**
-     * Getter for email
-     * @return String user email
+     * Setter for email
+     * @param email String to set email to
      */
-    public void set_email(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -139,47 +121,47 @@ public class User {
      * Getter for picture_url
      * @return String user picture url
      */
-    public String get_picture_url() {
-        return picture_url;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
     /**
-     * Setter for picture_url
-     * @param String user picture url
+     * Setter for pictureUrl
+     * @param pictureUrl user picture url
      */
-    public void set_picture_url(String picture_url) {
-        this.picture_url = picture_url;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     /**
      * Getter for personal_description
      * @return String short user personal description
      */
-    public String get_personal_description() {
-        return personal_description;
+    public String getPersonalDescription() {
+        return personalDescription;
     }
 
     /**
-     * Setter for personal_description
-     * @param String short user personal description
+     * Setter for personalDescription
+     * @param personalDescription short user personal description
      */
-    public void set_personal_description(String personal_description) {
-        this.personal_description = personal_description;
+    public void setPersonalDescription(String personalDescription) {
+        this.personalDescription = personalDescription;
     }
 
     /**
      * Getter for password
      * @return String user password
      */
-    public String get_password() {
+    public String getPassword() {
         return password;
     }
 
     /**
      * Setter for password
-     * @param String user password
+     * @param password user password
      */
-    public void set_password(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -187,17 +169,16 @@ public class User {
      * Getter for created_at
      * @return String user creation date
      */
-    public String get_created_at() {
+    public String getCreatedAt() {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        return format.format(created_at);
-
+        return format.format(createdAt);
     }
 
     /**
-     * setter for created_at
-     * @param String user creation date
+     * setter for createdAt
+     * @param createdAt user creation date
      */
-    public void set_created_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

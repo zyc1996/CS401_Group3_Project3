@@ -18,8 +18,6 @@
         <activity android:name=".ui.EditPrescriptionActivity" />
         <activity android:name=".adapter.PatientAdapter" />
         <activity android:name=".adapter.PrescriptionAdapter" />
-        <activity android:name=".ui.MessageViewActivity" />
-        <activity android:name=".ui.MessagesActivity" />
         <activity android:name=".ui.HomepageDoctorActivity" />
 
         <activity

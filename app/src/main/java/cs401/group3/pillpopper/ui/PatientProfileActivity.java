@@ -31,15 +31,44 @@ import cs401.group3.pillpopper.data.Patient;
  */
 public class PatientProfileActivity extends AppCompatActivity {
 
+    /**
+     * The Request Code to edit the profile
+     */
     private int REQUEST_CODE = 1;
-    //dummy variable
+
+    /**
+     * String of the user's ID
+     */
     private String userID;
+
+    /**
+     * Code for the account type (Patient = 1, Doctor = 2)
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The patient object to store GUI data
+     */
     private Patient patient;
 
+    /**
+     * The TextView widget for the description
+     */
     private TextView mDescription;
+
+    /**
+     * The TextView widget for the name
+     */
     private TextView mName;
+
+    /**
+     * The TextView widget for the code
+     */
     private TextView mCode;
+
+    /**
+     * The TextView widget for the join date
+     */
     private TextView mJoinDate;
 
     /**
@@ -53,7 +82,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_patient);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profilePatientToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profile_patient_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
@@ -85,17 +114,17 @@ public class PatientProfileActivity extends AppCompatActivity {
                     patient = new Patient(dataSnapshot.child("user_name").getValue(String.class),
                             dataSnapshot.child("email").getValue(String.class),
                             "");
-                    patient.set_personal_description(dataSnapshot.child("personal_description").getValue(String.class));
-                    patient.set_created_at(dataSnapshot.child("created_at").getValue(Date.class));
+                    patient.setPersonalDescription(dataSnapshot.child("personal_description").getValue(String.class));
+                    patient.setCreatedAt(dataSnapshot.child("created_at").getValue(Date.class));
 
                     Log.i("my tag", dataSnapshot.getValue().toString());
 
-                    if(patient.get_personal_description() != null) {
-                        mDescription.setText(patient.get_personal_description());
+                    if(patient.getPersonalDescription() != null) {
+                        mDescription.setText(patient.getPersonalDescription());
                     }
-                    mName.setText(patient.get_user_name());
-                    mCode.setText(patient.get_email());
-                    mJoinDate.setText("Member since: "+patient.get_created_at());
+                    mName.setText(patient.getUserName());
+                    mCode.setText(patient.getEmail());
+                    mJoinDate.setText("Member since: "+patient.getCreatedAt());
                 }
             }
 
@@ -123,12 +152,12 @@ public class PatientProfileActivity extends AppCompatActivity {
      */
     public void editProfile(MenuItem profile) {
         Intent intent  = new Intent(this, ProfileEditActivity.class);
-        String patient_Name = mName.getText().toString();
-        String patient_description = mDescription.getText().toString();
+        String patientName = mName.getText().toString();
+        String patientDescription = mDescription.getText().toString();
 
         //pass the name and description over, no picture URL yet
-        intent.putExtra("name",patient_Name);
-        intent.putExtra("description",patient_description);
+        intent.putExtra("name",patientName);
+        intent.putExtra("description",patientDescription);
         intent.putExtra("user_ID",userID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
         startActivityForResult(intent,REQUEST_CODE);
@@ -152,7 +181,7 @@ public class PatientProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String up_desc = "" , up_pic = "";
+        String upDesc = "" , upPic = "";
 
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
             if(data.hasExtra("dummy_data")){
@@ -162,15 +191,15 @@ public class PatientProfileActivity extends AppCompatActivity {
             if(data.hasExtra("picture_URL")){
                 Log.d("TagP","Picture URL returned");
                 //TODO:Picture stuff later
-                up_pic = data.getExtras().getString("picture_URL");
+                upPic = data.getExtras().getString("picture_URL");
             }
             //update personal description
             if(data.hasExtra("description")){
                 Log.d("TagD","Description returned");
-                up_desc = data.getExtras().getString("description");
+                upDesc = data.getExtras().getString("description");
             }
-            Patient.update_patient(userID, up_pic, up_desc);
-            mDescription.setText(up_desc);
+            Patient.updatePatient(userID, upPic, upDesc);
+            mDescription.setText(upDesc);
         }
     }
 }

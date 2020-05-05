@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import cs401.group3.pillpopper.R;
 import cs401.group3.pillpopper.adapter.PrescriptionAdapter;
@@ -43,42 +42,56 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
      * Strings for patient id and name
      */
     private String patientID, patientName;
+
     /**
      * account type doctor
      */
     private final int ACCOUNT_TYPE = 1;
+
     /**
      * patient object for adding
      */
     private Patient patient;
+
     /**
-     * request codes
+     * request code to add a prescription
      */
     private int REQUEST_CODE_ADD = 2;
+
+    /**
+     * request code to edit a prescription
+     */
     private int REQUEST_CODE_EDIT = 3;
+
     /**
      * user info data
      */
-    private DataSnapshot user_info;
+    private DataSnapshot userInfo;
+
     /**
      * String for day selection
      */
-    private String day_selection;
+    private String daySelection;
+
     /**
      * text input for patient name
      */
     private TextView mPatientName;
 
     /**
-     * recyclerView
+     * RecyclerView of the patients for the doctor
      */
     private RecyclerView mRecyclerView;
+
+    /**
+     * RecyclerView Adapter for the patients of the doctor
+     */
     private RecyclerView.Adapter adapter;
 
     /**
-     *     dummy data (local)
+     * List to store prescription data
      */
-    private List<Prescription> prescription_list = new ArrayList<>();
+    private List<Prescription> prescriptionList = new ArrayList<>();
 
     /**
      * On creation of activity initializes doctor viewing homepage of patient
@@ -102,11 +115,11 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         mPatientName = findViewById(R.id.unique_view_patient_name_from_doc);
         patientName = intent.getExtras().getString("patient_name");
         Log.i("string check", patientName);
-        mPatientName.setText(patientName); //WHY DO YOU CRASH FOR NULL OBJECT REFERENCE WHEN THERE IS NO NULL OBJECT
+        mPatientName.setText(patientName);
         Log.i("crash tag", mPatientName.getText().toString());
         patientID = intent.getExtras().getString("patient_ID");
 
-        day_selection = "Monday";
+        daySelection = "Monday";
 
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
@@ -115,8 +128,8 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    user_info = dataSnapshot;
-                    Log.i("my tag", user_info.getValue().toString());
+                    userInfo = dataSnapshot;
+                    Log.i("my tag", userInfo.getValue().toString());
                 }
             }
 
@@ -126,41 +139,41 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
             }
         });
 
-        refresh_prescription_list();
+        refreshPrescriptionList();
 
         //set recyclerview bounds
         mRecyclerView = findViewById(R.id.prescription_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PrescriptionAdapter(prescription_list,this);
+        adapter = new PrescriptionAdapter(prescriptionList,this);
         mRecyclerView.setAdapter(adapter);
 
     }
 
     /**
-     * pull presription data from database to populate app list
+     * pull prescription data from database to populate app list
      */
-    public void refresh_prescription_list() {
+    public void refreshPrescriptionList() {
         DatabaseReference result;
         result = FirebaseDatabase.getInstance().getReference("patients");
         result.child(patientID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    user_info = dataSnapshot;
-                    Log.i("my tag", user_info.getValue().toString());
-                    ArrayList<String> prescription_keys;
-                    prescription_keys = new ArrayList<String>();
+                    userInfo = dataSnapshot;
+                    Log.i("my tag", userInfo.getValue().toString());
+                    ArrayList<String> prescriptionKeys;
+                    prescriptionKeys = new ArrayList<String>();
 
                     // for each day in the prescriptions section of the user's data,
                     // get the prescription keys for the selected day
                     if(dataSnapshot.child("prescriptions").exists()){
-                        for (DataSnapshot key : dataSnapshot.child("prescriptions").child(day_selection).getChildren()) {
-                            prescription_keys.add(key.getKey());
+                        for (DataSnapshot key : dataSnapshot.child("prescriptions").child(daySelection).getChildren()) {
+                            prescriptionKeys.add(key.getKey());
                         }
                     }
                     //next, query the database with the keys you received.
-                    populate_prescriptions(prescription_keys);
+                    populatePrescriptions(prescriptionKeys);
                 }
             }
 
@@ -175,8 +188,8 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
      * populate app list with pulled data
      * @param keys ArrayList<String> keys from database
      */
-    public void populate_prescriptions(ArrayList<String> keys){
-        prescription_list.clear();
+    public void populatePrescriptions(ArrayList<String> keys){
+        prescriptionList.clear();
         adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
@@ -185,15 +198,15 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                 @Override
                 public void onDataChange(DataSnapshot dataIn) {
 
-                    Prescription new_entry = new Prescription(
+                    Prescription newEntry = new Prescription(
                             dataIn.child("content").getValue(String.class),
                             dataIn.child("timed").getValue(Boolean.class),
                             dataIn.child("times_per_day").getValue(Integer.class),
                             dataIn.child("time_between_dose").getValue(Integer.class),
                             dataIn.child("start_time").getValue(String.class)
                     );
-                    new_entry.set_id(dataIn.getKey());
-                    prescription_list.add(new_entry);
+                    newEntry.setId(dataIn.getKey());
+                    prescriptionList.add(newEntry);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -204,8 +217,6 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
             });
         }
     }
-
-    // Menu icons are inflated just as they were with actionbar
 
     /**
      * Inflate the menu; this adds items to the action bar if it is present.
@@ -239,7 +250,12 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
 
-
+    /**
+     * When the activity receives a result, handle receiving data
+     * @param requestCode The integer to request data for
+     * @param resultCode The integer of the type of resulting data
+     * @param data The data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -286,25 +302,25 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                 if(days[i]){
                     switch (i) {
                         case 0:
-                            patient.add_prescription(patientID,prescription,"Monday");
+                            patient.addPrescription(patientID,prescription,"Monday");
                             break;
                         case 1:
-                            patient.add_prescription(patientID,prescription,"Tuesday");
+                            patient.addPrescription(patientID,prescription,"Tuesday");
                             break;
                         case 2:
-                            patient.add_prescription(patientID,prescription,"Wednesday");
+                            patient.addPrescription(patientID,prescription,"Wednesday");
                             break;
                         case 3:
-                            patient.add_prescription(patientID,prescription,"Thursday");
+                            patient.addPrescription(patientID,prescription,"Thursday");
                             break;
                         case 4:
-                            patient.add_prescription(patientID,prescription,"Friday");
+                            patient.addPrescription(patientID,prescription,"Friday");
                             break;
                         case 5:
-                            patient.add_prescription(patientID,prescription,"Saturday");
+                            patient.addPrescription(patientID,prescription,"Saturday");
                             break;
                         case 6:
-                            patient.add_prescription(patientID,prescription,"Sunday");
+                            patient.addPrescription(patientID,prescription,"Sunday");
                             break;
                         default:
                             break;
@@ -324,9 +340,9 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                 //fetch the correct prescription
 
                 Log.i("return tag1",returnedID);
-                for(int i = 0; i < prescription_list.size(); i++){
-                    Log.i("return tag2", prescription_list.get(i).get_id());
-                    if(prescription_list.get(i).get_id().equals(returnedID)){
+                for(int i = 0; i < prescriptionList.size(); i++){
+                    Log.i("return tag2", prescriptionList.get(i).getId());
+                    if(prescriptionList.get(i).getId().equals(returnedID)){
                         changeIndex = i;
                     }
                 }
@@ -334,24 +350,24 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
                     return;
                 }else{// if found
                     if(data.hasExtra("schedule_type")){
-                        prescription_list.get(changeIndex).set_timed(data.getExtras().getBoolean("schedule_type"));
+                        prescriptionList.get(changeIndex).setTimed(data.getExtras().getBoolean("schedule_type"));
                         if(data.getExtras().getBoolean("schedule_type")){
-                            prescription_list.get(changeIndex).setStart_time(data.getExtras().getString("start_time"));
+                            prescriptionList.get(changeIndex).setStartTime(data.getExtras().getString("start_time"));
                         }else{
-                            prescription_list.get(changeIndex).setStart_time("");
+                            prescriptionList.get(changeIndex).setStartTime("");
                         }
                     }
                     if(data.hasExtra("times_per_day")){
-                        prescription_list.get(changeIndex).set_times_per_day(data.getExtras().getInt("times_per_day"));
+                        prescriptionList.get(changeIndex).setTimesPerDay(data.getExtras().getInt("times_per_day"));
                     }
                     if(data.hasExtra("break_hours")){
-                        prescription_list.get(changeIndex).set_time_between_dose(data.getExtras().getInt("break_hours"));
+                        prescriptionList.get(changeIndex).setTimeBetweenDose(data.getExtras().getInt("break_hours"));
                     }
                     if(data.hasExtra("description")){
-                        prescription_list.get(changeIndex).set_content(data.getExtras().getString("description"));
+                        prescriptionList.get(changeIndex).setContent(data.getExtras().getString("description"));
                     }
                 }
-                Prescription.update_prescription(returnedID,
+                Prescription.updatePrescription(returnedID,
                         data.getExtras().getString("description"),
                         data.getExtras().getInt("times_per_day"),
                         data.getExtras().getInt("break_hours"),
@@ -362,6 +378,10 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         }
     }
 
+    /**
+     * When an item on the recycler view for prescriptions is clicked
+     * @param position Position in the recycler view of the clicked item
+     */
     @Override
     public void recyclerViewListClicked(int position) {
         Intent intent = new Intent(this, EditPrescriptionActivity.class);
@@ -369,48 +389,76 @@ public class DoctorViewHomepagePatientActivity extends AppCompatActivity impleme
         intent.putExtra("name",name);
         intent.putExtra("user_ID", patientID);
         intent.putExtra("account_type",ACCOUNT_TYPE);
-        intent.putExtra("prescription_ID", prescription_list.get(position).get_id());
+        intent.putExtra("prescription_ID", prescriptionList.get(position).getId());
 
-        intent.putExtra("schedule_type", prescription_list.get(position).is_timed());
-        intent.putExtra("start_time", prescription_list.get(position).get_Start_time());
-        intent.putExtra("times_per_day", prescription_list.get(position).get_times_per_day());
-        intent.putExtra("break_hours", prescription_list.get(position).get_time_between_dose());
-        intent.putExtra("description", prescription_list.get(position).get_content());
+        intent.putExtra("schedule_type", prescriptionList.get(position).isTimed());
+        intent.putExtra("start_time", prescriptionList.get(position).getStartTime());
+        intent.putExtra("times_per_day", prescriptionList.get(position).getTimesPerDay());
+        intent.putExtra("break_hours", prescriptionList.get(position).getTimeBetweenDose());
+        intent.putExtra("description", prescriptionList.get(position).getContent());
         startActivityForResult(intent,REQUEST_CODE_EDIT);
     }
 
+    /**
+     * When clicked the Monday button
+     * @param v The view passed to the prescription
+     */
     public void mondayButton(View v){
-        day_selection = "Monday";
-        refresh_prescription_list();
+        daySelection = "Monday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Tuesday button
+     * @param v The view passed to the prescription
+     */
     public void tuesdayButton(View v){
-        day_selection = "Tuesday";
-        refresh_prescription_list();
+        daySelection = "Tuesday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Wednesday button
+     * @param v The view passed to the prescription
+     */
     public void wednesdayButton(View v){
-        day_selection = "Wednesday";
-        refresh_prescription_list();
+        daySelection = "Wednesday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Thursday button
+     * @param v The view passed to the prescription
+     */
     public void thursdayButton(View v){
-        day_selection = "Thursday";
-        refresh_prescription_list();
+        daySelection = "Thursday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Friday button
+     * @param v The view passed to the prescription
+     */
     public void fridayButton(View v){
-        day_selection = "Friday";
-        refresh_prescription_list();
+        daySelection = "Friday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Saturday button
+     * @param v The view passed to the prescription
+     */
     public void saturdayButton(View v){
-        day_selection = "Saturday";
-        refresh_prescription_list();
+        daySelection = "Saturday";
+        refreshPrescriptionList();
     }
 
+    /**
+     * When clicked the Sunday button
+     * @param v The view passed to the prescription
+     */
     public void sundayButton(View v){
-        day_selection = "Sunday";
-        refresh_prescription_list();
+        daySelection = "Sunday";
+        refreshPrescriptionList();
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".ui.ProfileEditActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profileEditToolbar"
+        android:id="@+id/profile_edit_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -52,7 +52,7 @@
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileEditToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_toolbar" />
 
     <ImageView
         android:id="@+id/profile_picture"

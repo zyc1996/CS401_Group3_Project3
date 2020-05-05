@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +22,14 @@ import cs401.group3.pillpopper.R;
  */
 public class ProfileEditActivity extends AppCompatActivity {
 
+    /**
+     * The string to store the user's ID
+     */
     private String userID;
+
+    /**
+     * The int to tell the account type (Patient = 1, Doctor = 2)
+     */
     private int ACCOUNT_TYPE;
 
     /**
@@ -49,7 +55,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_edit);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileEditToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profile_edit_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
 
@@ -111,6 +117,5 @@ public class ProfileEditActivity extends AppCompatActivity {
         setResult(RESULT_OK,replyIntent);
         finish();
     }
-
 
 }
