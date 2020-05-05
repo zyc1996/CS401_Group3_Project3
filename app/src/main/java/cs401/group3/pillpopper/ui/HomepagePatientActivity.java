@@ -131,6 +131,7 @@ public class HomepagePatientActivity extends AppCompatActivity implements Prescr
      */
     public void populate_prescriptions(ArrayList<String> keys){
         prescription_list.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("prescriptions")
