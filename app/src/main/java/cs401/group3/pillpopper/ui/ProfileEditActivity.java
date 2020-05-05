@@ -26,10 +26,23 @@ public class ProfileEditActivity extends AppCompatActivity {
     private String userID;
     private int ACCOUNT_TYPE;
 
-    private EditText mPictureURL; //holds the profile picture URL
-    private EditText mDescription; //hold the personal description
-    private TextView mName; //hold the user's name
+    /**
+     * EditText holds the profile picture URL
+     */
+    private EditText mPictureURL;
+    /**
+     * EditText hold the personal description
+     */
+    private EditText mDescription;
+    /**
+     * hold the user's name
+     */
+    private TextView mName;
 
+    /**
+     * On creation of activity initializes editing of profile activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +70,11 @@ public class ProfileEditActivity extends AppCompatActivity {
         mDescription.setText(description);
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu inflated
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -65,11 +82,18 @@ public class ProfileEditActivity extends AppCompatActivity {
         return true;
     }
 
-    //Re write the back button handling plz, state was never fixed
+    /**
+     * finish activity on back button
+     * @param back MenuItem for back
+     */
     public void onBack(MenuItem back) {
         finish();
     }
 
+    /**
+     * For confirming changes in edited profile
+     * @param view View for changes
+     */
     public void confirmChanges(View view){
 
         String pictureURL = mPictureURL.getText().toString();

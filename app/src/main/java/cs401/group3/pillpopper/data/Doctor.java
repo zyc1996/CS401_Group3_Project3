@@ -90,6 +90,12 @@ public class Doctor extends User {
         ref.child(doctor_id).child("patients").child(patient_id).setValue(true);
     }
 
+    /**
+     * Update doctor in database with id, picture, and description
+     * @param doctor_id_in String id for doctor
+     * @param pic_in string picture for doctor
+     * @param desc_in string description of doctor
+     */
     public static void update_doctor(String doctor_id_in, String pic_in, String desc_in ){
         //database update
         DatabaseReference ref;

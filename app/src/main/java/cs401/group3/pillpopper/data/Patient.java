@@ -109,6 +109,12 @@ public class Patient extends User {
         ref.child(patient_id).child("prescriptions").child(day).child(new_prescription.get_id()).setValue(true);
     }
 
+    /**
+     * Update patient in database with id, picture, and description
+     * @param patient_id_in String id for patient
+     * @param pic_in string picture for patient
+     * @param desc_in string description of patient
+     */
     public static void update_patient(String patient_id_in, String pic_in, String desc_in ){
         //database update
         DatabaseReference ref;
