@@ -20,14 +20,17 @@
 
     <TextView
         android:id="@+id/loginText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="349dp"
+        android:layout_height="80dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="14dp"
         android:text="@string/lorem_ipsum"
+        app:layout_constraintBottom_toTopOf="@+id/usernameTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/usernameTitle"
@@ -124,10 +127,10 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="232dp"
-        android:layout_height="249dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/imageView2"
+        android:layout_width="228dp"
+        android:layout_height="223dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTitle"

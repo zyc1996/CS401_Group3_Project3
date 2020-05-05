@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,19 +26,66 @@ import cs401.group3.pillpopper.R;
  * Purpose: Activity for adding new prescription and associated data
  */
 public class AddPrescriptionActivity extends AppCompatActivity {
+
+    /**
+     * String for user id
+     */
     private String userID;
+
+    /**
+     * Integer for assigning doctor or patient
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * TextView name of prescription
+     */
     private TextView mName;
+
+    /**
+     * CheckBox for each day of the week
+     */
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
+
+    /**
+     * RadioGroup for type of schedule
+     */
     private RadioGroup mScheduleType;
+
+    /**
+     * RadioButton selected item
+     */
     private RadioButton mSelected;
+
+    /**
+     * EditText fields for start time, times per day, break hours, and description
+     */
     private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
+
+    /**
+     * Calendar for tracking prescription
+     */
     Calendar calendar;
+
+    /**
+     * Integers for hour and minute tracking
+     */
     int hour, minute;
 
+    /**
+     * Boolean tracking days selected
+     */
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
+
+    /**
+     * Boolean track if prescription needs to be taken at a specific time
+     */
     private boolean scheduleType = false; //false = untimed, true = timed
 
+    /**
+     * On creation of activity initializes add prescription options
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +184,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             }
         });
 
+
         mScheduleType = findViewById(R.id.schedule_type);
         mStartTime = findViewById(R.id.dose_time_fill);
         mStartTime.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +211,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Check button for timed and untimed
+     * @param view View on page
+     */
     public void checkButton(View view){
         int radioID = mScheduleType.getCheckedRadioButtonId();
         mSelected = findViewById(radioID);
@@ -180,18 +233,40 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Submit prescription with selected options
+     * @param view View on page
+     */
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time
-        String startTime = "", description;
-        int timesPerDay, breakHours;
+        String startTime = "", description="";
+        int timesPerDay = -1, breakHours = -1;
         if(scheduleType){
-            startTime = mStartTime.getText().toString();
+            if(!mStartTime.getText().toString().isEmpty()) {
+                startTime = mStartTime.getText().toString();
+            }
         }
+        if(!mTimesPerDay.getText().toString().isEmpty()) {
+            timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
+        }
+        if(!mBreakHours.getText().toString().isEmpty()){
+            breakHours = Integer.parseInt(mBreakHours.getText().toString());
+        }
+       if(!mDescription.getText().toString().isEmpty()) {
+           description = mDescription.getText().toString();
+       }
 
-        timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
-        breakHours = Integer.parseInt(mBreakHours.getText().toString());
-        description = mDescription.getText().toString();
+       if( description.isEmpty() || timesPerDay < 0 || breakHours < 0 || (startTime.isEmpty() && scheduleType)){
+           Toast.makeText(AddPrescriptionActivity.this, "Invalid variable field(s), creation aborts", Toast.LENGTH_LONG).show();
+
+           new android.os.Handler().postDelayed(
+               new Runnable() {
+                   public void run() {
+                       finish();
+                   }
+               }, 5000);
+       }
 
         Intent replyIntent = new Intent();
         replyIntent.putExtra("days",days);

@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,20 +26,95 @@ import cs401.group3.pillpopper.R;
  */
 public class EditPrescriptionActivity extends AppCompatActivity {
 
+    /**
+     * The string of the userID
+     */
     private String userID;
+
+    /**
+     * The int to represent the account type. 1 = Patient, 2 = Doctor
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The String of the prescriptionID
+     */
     private String prescriptionID;
 
+    /**
+     * The TextView to represent the name
+     */
     private TextView mName;
+
+    /**
+     * A group of Radio buttons to set the schedule type
+     */
     private RadioGroup mScheduleType;
-    private RadioButton mSelected,mTimed,mUntimed;
-    private EditText mStartTime, mTimesPerDay, mBreakHours,mDescription;
+
+    /**
+     * The RadioButton to set if selected
+     */
+    private RadioButton mSelected;
+
+    /**
+     * The RadioButton to set if timed
+     */
+    private RadioButton mTimed;
+
+    /**
+     * The RadioButton to set if untimed
+     */
+    private RadioButton mUntimed;
+
+    /**
+     * The EditText widget to set the start time
+     */
+    private EditText mStartTime;
+
+    /**
+     * The EditText widget to set the times per day
+     */
+    private EditText mTimesPerDay;
+
+    /**
+     * The EditText widget for the break hours
+     */
+    private EditText mBreakHours;
+
+    /**
+     * The EditText widget for the description
+     */
+    private EditText mDescription;
+
+    /**
+     * The Calendar to set the start time for the prescription
+     */
     Calendar calendar;
-    int hour, minute;
 
+    /**
+     * The hour on the calendar
+     */
+    int hour;
+
+    /**
+     * The minute on the calendar
+     */
+    int minute;
+
+    /**
+     * Array of booleans to flag if the prescription is checked for that day
+     */
     private boolean days[] = new boolean[]{false,false,false,false,false,false,false};
-    private boolean scheduleType = false; //false = untimed, true = timed
 
+    /**
+     * Flag to set if the schedule should be timed or untimed. false = untimed, true = timed
+     */
+    private boolean scheduleType = false;
+
+    /**
+     * On creation of activity initializes edit of presciption data
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +180,10 @@ public class EditPrescriptionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * check button for timed or untimed prescription
+     * @param view The view passed to the button
+     */
     public void checkButton(View view){
         int radioID = mScheduleType.getCheckedRadioButtonId();
         mSelected = findViewById(radioID);
@@ -122,24 +202,48 @@ public class EditPrescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Submit prescription to database with input information
+     * @param view The view passed
+     */
     public void submitPrescription(View view){
 
         //if it is timed, returns the starting time
-        String startTime = "", description;
-        int timesPerDay, breakHours;
+        String startTime = "", description="";
+        int timesPerDay = -1, breakHours = -1;
         if(scheduleType){
-            startTime = mStartTime.getText().toString();
+            if(!mStartTime.getText().toString().isEmpty()) {
+                startTime = mStartTime.getText().toString();
+            }
+        }
+        if(!mTimesPerDay.getText().toString().isEmpty()) {
+            timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
+        }
+        if(!mBreakHours.getText().toString().isEmpty()){
+            breakHours = Integer.parseInt(mBreakHours.getText().toString());
+        }
+        if(!mDescription.getText().toString().isEmpty()) {
+            description = mDescription.getText().toString();
         }
 
-        timesPerDay = Integer.parseInt(mTimesPerDay.getText().toString());
-        breakHours = Integer.parseInt(mBreakHours.getText().toString());
-        description = mDescription.getText().toString();
+        if( description.isEmpty() || timesPerDay < 0 || breakHours < 0 || (startTime.isEmpty() && scheduleType)){
+            Toast.makeText(EditPrescriptionActivity.this, "Invalid variable field(s), creation aborts", Toast.LENGTH_LONG).show();
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            finish();
+                        }
+                    }, 5000);
+        }
 
         Intent replyIntent = new Intent();
         replyIntent.putExtra("schedule_type",scheduleType);
         //if it is timed
         if(scheduleType){
             replyIntent.putExtra("start_time",startTime);
+        }else{
+            replyIntent.putExtra("start_time","");
         }
         replyIntent.putExtra("times_per_day", timesPerDay);
         replyIntent.putExtra("break_hours", breakHours);

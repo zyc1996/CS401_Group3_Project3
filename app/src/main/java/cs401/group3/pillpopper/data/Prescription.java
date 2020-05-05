@@ -121,7 +121,7 @@ public class Prescription {
 
     /**
      * setter for start_time
-     * @param String start time of prescription
+     * @param start_time Start time of prescription
      */
     public void setStart_time(String start_time) {
         this.start_time = start_time;
@@ -137,7 +137,7 @@ public class Prescription {
 
     /**
      * setter for id
-     * @param String id of prescription
+     * @param id String id of prescription
      */
     public void set_id(String id) {
         this.id = id;
@@ -153,7 +153,7 @@ public class Prescription {
 
     /**
      * setter for content
-     * @param String prescription of prescription
+     * @param content String for prescription of prescription
      */
     public void set_content(String content) {
         this.content = content;
@@ -169,7 +169,7 @@ public class Prescription {
 
     /**
      * setter for is_timed
-     * @param Boolean if prescription is taken at a specific time
+     * @param timed Boolean if prescription is taken at a specific time
      */
     public void set_timed(boolean timed) {
         this.timed = timed;
@@ -185,7 +185,7 @@ public class Prescription {
 
     /**
      * setter for times_per_day
-     * @param Integer times to take prescription per day
+     * @param times_per_day Integer as times to take prescription per day
      */
     public void set_times_per_day(int times_per_day) {
         this.times_per_day = times_per_day;
@@ -201,7 +201,7 @@ public class Prescription {
 
     /**
      * setter for time_between_dose
-     * @param Integer time between prescription dose
+     * @param time_between_dose Integer time between prescription dose
      */
     public void set_time_between_dose(int time_between_dose) {
         this.time_between_dose = time_between_dose;
@@ -214,5 +214,30 @@ public class Prescription {
     public String get_created_at() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(created_at);
+    }
+
+    /**
+     * Update prescription in database with parameters
+     * @param prescription_id_in String id of prescrition
+     * @param description_in String description of prescription
+     * @param times_per_day_in Integer times taken per day
+     * @param break_hours Integer hours between taking
+     * @param start_time_in String date of prescription start
+     * @param schedule_in Boolean if scheduled
+     */
+    public static void update_prescription(String prescription_id_in,
+                                           String description_in, int times_per_day_in,
+                                           int break_hours,
+                                           String start_time_in, Boolean schedule_in){
+
+        //database update
+        DatabaseReference ref;
+        ref = FirebaseDatabase.getInstance().getReference().child("prescriptions");
+        ref.child(prescription_id_in).child("content").setValue(description_in);
+        ref.child(prescription_id_in).child("start_time").setValue(start_time_in);
+        ref.child(prescription_id_in).child("time_between_dose").setValue(break_hours);
+        ref.child(prescription_id_in).child("timed").setValue(schedule_in);
+        ref.child(prescription_id_in).child("times_per_day").setValue(times_per_day_in);
+
     }
 }

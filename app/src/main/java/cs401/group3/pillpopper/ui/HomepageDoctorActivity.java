@@ -36,16 +36,50 @@ import cs401.group3.pillpopper.data.Patient;
  */
 public class HomepageDoctorActivity extends AppCompatActivity implements PatientAdapter.OnPatientListener {
 
+    /**
+     * The string of the userID
+     */
     private String userID;
+
+    /**
+     * The int to represent the account type. 1 = Patient, 2 = Doctor
+     */
     private int ACCOUNT_TYPE;
+
+    /**
+     * The TextView widget of the username
+     */
     private TextView mUserName;
-    private DataSnapshot user_info;
+
+    /**
+     * The data snapshot of user info
+     */
+    private DataSnapshot userInfo;
+
+    /**
+     * The EditText widget of the email
+     */
     private EditText mPatientEmail;
 
+    /**
+     * The recycler view to display patients
+     */
     private RecyclerView mRecyclerView;
+
+    /**
+     * The adapter for the recycler view
+     */
     private RecyclerView.Adapter adapter;
+
+    /**
+     * The list of patients for the recycler view
+     */
     private List<Patient> patients = new ArrayList<>();
 
+    /**
+     * On creation of activity initializes doctor homepage activity
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +107,9 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         mPatientEmail = findViewById(R.id.patient_email_fill);
     }
 
-
+    /**
+     * Refresh list of associated patients from Firebase data
+     */
     public void refresh_patient_list(){
         DatabaseReference result;
 
@@ -82,15 +118,15 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    user_info = dataSnapshot;
-                    Log.i("my tag", user_info.getValue().toString());
+                    userInfo = dataSnapshot;
+                    Log.i("my tag", userInfo.getValue().toString());
                     mUserName = findViewById(R.id.user_name_title);
-                    mUserName.setText(user_info.child("user_name").getValue(String.class));
+                    mUserName.setText(userInfo.child("user_name").getValue(String.class));
 
                     ArrayList<String> keys;
                     keys = new ArrayList<String>();
 
-                    for(DataSnapshot key : user_info.child("patients").getChildren()){
+                    for(DataSnapshot key : userInfo.child("patients").getChildren()){
                         keys.add(key.getKey());
                     }
 
@@ -105,9 +141,13 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         });
     }
 
-
+    /**
+     * populate app patient list with pulled patient data from Firebase
+     * @param keys ArrayList<String> keys from database
+     */
     public void populate_patients(ArrayList<String> keys){
         patients.clear();
+        adapter.notifyDataSetChanged();
         //for each key in keys, query the database
         for(String key : keys){
             FirebaseDatabase.getInstance().getReference("patients")
@@ -119,6 +159,7 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
                             dataIn.child("user_name").getValue(String.class),
                             dataIn.child("email").getValue(String.class), "");
                     new_entry.set_patient_id(dataIn.getKey());
+                    new_entry.set_personal_description(dataIn.child("personal_description").getValue(String.class));
                     patients.add(new_entry);
                     adapter.notifyDataSetChanged();
                 }
@@ -131,7 +172,11 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         }
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     * @param menu Menu inflated
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -139,7 +184,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         return true;
     }
 
-
+    /**
+     * launcgh profile with profile menu item
+     * @param profile MenuItem for profile
+     */
     public void launchProfile(MenuItem profile) {
         Intent intent = new Intent(this,DoctorProfileActivity.class);
         intent.putExtra("user_ID",userID);
@@ -147,10 +195,18 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         startActivity(intent);
     }
 
+    /**
+     * finish activity on logout
+     * @param logout MenuItem for logging out of app
+     */
     public void onLogout(MenuItem logout) {
         finish();
     }
 
+    /**
+     * Select patient on click of specific patient name
+     * @param position Integer for position of patient click
+     */
     @Override
     public void onPatientClick(int position) {
         Intent intent = new Intent(this,DoctorViewHomepagePatientActivity.class);
@@ -161,6 +217,10 @@ public class HomepageDoctorActivity extends AppCompatActivity implements Patient
         startActivity(intent);
     }
 
+    /**
+     * Add patient with input data
+     * @param v current view
+     */
     public void addPatient(View v){
         String patientEmail = mPatientEmail.getText().toString();
 

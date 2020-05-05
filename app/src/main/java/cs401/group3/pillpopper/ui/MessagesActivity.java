@@ -12,6 +12,11 @@ import android.os.Bundle;
  */
 public class MessagesActivity extends AppCompatActivity {
 
+    /**
+     * On creation of activity initializes message activity
+     * Unfinished
+     * @param savedInstanceState Bundle for saving instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
